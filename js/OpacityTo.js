@@ -24,7 +24,7 @@ define( function( require ) {
       duration: 500, // {number} duration of the animation, in ms
       startOpacity: node.opacity, // {number} 0-1, initial opacity at start of animation
       endOpacity: 1, // {number} 0-1, opacity at completion of animation
-
+      easing: TWEEN.Easing.Quadratic.InOut, // {function} see Tween.Easing
       onStart: function() {}, // {function} called when the animation starts
       onUpdate: function() {}, // {function} called on each animation update
       onComplete: function() {}, // {function} called when the animation completes
@@ -44,6 +44,7 @@ define( function( require ) {
     // @private
     this.tween = new TWEEN.Tween( parameters )
       .to( { opacity: options.endOpacity }, options.duration )
+      .easing( options.easing )
       .onStart( function() {
         node.opacity = parameters.opacity;
         node.visible = true;

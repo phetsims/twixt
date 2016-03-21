@@ -26,10 +26,10 @@ define( function( require ) {
       startOpacity: node.opacity, // {number} 0-1, initial opacity at start of animation
       endOpacity: 1, // {number} 0-1, opacity at completion of animation
       easing: TWEEN.Easing.Quadratic.InOut, // {function} see Tween.Easing
-      onStart: function() {}, // {function} called when the animation starts
-      onUpdate: function() {}, // {function} called on each animation update
-      onComplete: function() {}, // {function} called when the animation completes
-      onStop: function() {} // {function} called if the animation is stopped
+      onStart: null, // {function|null} called when the animation starts
+      onUpdate: null, // {function|null} called on each animation update
+      onComplete: null, // {function|null} called when the animation completes
+      onStop: null // {function|null} called if the animation is stopped
 
     }, options );
 
@@ -50,13 +50,14 @@ define( function( require ) {
       .onStart( function() {
         node.opacity = parameters.opacity;
         node.visible = true;
-        options.onStart();
+        options.onStart && options.onStart();
       } )
       .onUpdate( function() {
         node.opacity = parameters.opacity;
+        options.onUpdate && options.onUpdate();
       } )
       .onComplete( function() {
-        options.onComplete();
+        options.onComplete && options.onComplete();
       } );
   }
 
@@ -72,7 +73,7 @@ define( function( require ) {
     // @public stops the animation, onComplete is not called
     stop: function() {
       this.tween.stop();
-      this.onStop(); //TODO move this to tween instance when we upgrade to a version that supports onStop
+      this.onStop && this.onStop(); //TODO move this to tween instance when we upgrade to a version that supports onStop
     }
   } );
 } );

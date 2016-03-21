@@ -9,8 +9,8 @@ define( function( require ) {
   'use strict';
 
   // modules
-  var functionBuilder = require( 'FUNCTION_BUILDER/functionBuilder' );
   var inherit = require( 'PHET_CORE/inherit' );
+  var twixt = require( 'TWIXT/twixt' );
 
   /**
    * @param {Node} node
@@ -60,7 +60,7 @@ define( function( require ) {
       } );
   }
 
-  functionBuilder.register( 'OpacityTo', OpacityTo );
+  twixt.register( 'OpacityTo', OpacityTo );
 
   return inherit( Object, OpacityTo, {
 

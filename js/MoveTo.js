@@ -25,13 +25,9 @@ define( function( require ) {
       // {number} if constantSpeed:false, this is the total time of the animation, in ms.
       //          if constantSpeed:true, this is the time in ms to move 1 unit of distance
       duration: 1,
-
-      // {boolean} keeps speed constant, regardless of distance
-      constantSpeed: true,
-
-      // {function} see Tween.Easing
-      easing: TWEEN.Easing.Quadratic.InOut,
-
+      constantSpeed: true,// {boolean} keeps speed constant, regardless of distance
+      delay: 0, // {number} delay after calling start, in ms
+      easing: TWEEN.Easing.Quadratic.InOut, // {function} see Tween.Easing
       onStart: function() {}, // {function} called when the animation starts
       onUpdate: function() {}, // {function} called on each animation update
       onComplete: function() {}, // {function} called when the animation completes
@@ -52,6 +48,7 @@ define( function( require ) {
     this.tween = new TWEEN.Tween( node )
       .to( { centerX: destination.x, centerY: destination.y }, duration )
       .easing( options.easing )
+      .delay( options.delay )
       .onStart( function() {
         options.onStart();
       } )

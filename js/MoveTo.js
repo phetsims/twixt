@@ -36,7 +36,6 @@ define( function( require ) {
 
     assert && assert( options.duration >= 0 );
 
-    this.node = node; // @private
     this.onStop = options.onStop; // @private
 
     // normalize duration
@@ -44,15 +43,19 @@ define( function( require ) {
       ? ( node.translation.distance( destination ) * options.duration )
       : options.duration;
 
+    var parameters = { x: node.x, y: node.y };
+
     // @private
-    this.tween = new TWEEN.Tween( node )
-      .to( { centerX: destination.x, centerY: destination.y }, duration )
+    this.tween = new TWEEN.Tween( parameters )
+      .to( { x: destination.x, y: destination.y }, duration )
       .easing( options.easing )
       .delay( options.delay )
       .onStart( function() {
         options.onStart && options.onStart();
       } )
       .onUpdate( function() {
+        node.x = parameters.x;
+        node.y = parameters.y;
         options.onUpdate && options.onUpdate();
       } )
       .onComplete( function() {

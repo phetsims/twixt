@@ -69,7 +69,7 @@ define( function( require ) {
 
     // @public starts the animation
     start: function() {
-      this.tween.start();
+      this.tween.start( phet.joist.elapsedTime );
     },
 
     // @public stops the animation, onComplete is not called

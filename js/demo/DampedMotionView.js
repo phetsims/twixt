@@ -24,7 +24,7 @@ define( function( require ) {
   /**
    * @constructor
    */
-  function EasingDemoView() {
+  function DampedMotionView() {
     var self = this;
 
     ScreenView.call( this );
@@ -134,9 +134,9 @@ define( function( require ) {
     } ) );
   }
 
-  twixt.register( 'EasingDemoView', EasingDemoView );
+  twixt.register( 'DampedMotionView', DampedMotionView );
 
-  return inherit( ScreenView, EasingDemoView, {
+  return inherit( ScreenView, DampedMotionView, {
     step: function( dt ) {
       this.xAnimation.step( dt );
       this.yAnimation.step( dt );

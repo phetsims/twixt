@@ -9,5 +9,8 @@
   "devDependencies": {
     "grunt": "~1.0.0",
     "grunt-eslint": "~19.0.0"
+  },
+  "phet": {
+    "requirejsNamespace": "TWIXT"
   }
 }

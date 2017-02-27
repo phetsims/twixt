@@ -1,7 +1,10 @@
 // Copyright 2016, University of Colorado Boulder
 
 /**
- * TODO: doc
+ * WARNING: PROTOTYPE, see https://github.com/phetsims/twixt/issues/3 before using!
+ * Not fully documented or stabilized. May be deleted.
+ *
+ * Allows animations with different easing/durations. Based on deltas, so that animations can be stacked.
  *
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */
@@ -25,7 +28,6 @@ define( function( require ) {
 
       delta: null
     }, options );
-
 
     this.easing = options.easing;
     this.duration = options.duration;

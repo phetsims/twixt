@@ -88,8 +88,8 @@ define( function( require ) {
     function moveToEvent( event ) {
       var localPoint = self.globalToLocalPoint( event.pointer.point );
       targetCircle.translation = localPoint;
-      self.xAnimation.retarget( localPoint.x );
-      self.yAnimation.retarget( localPoint.y );
+      self.xAnimation.targetValue = localPoint.x;
+      self.yAnimation.targetValue = localPoint.y;
     }
 
     this.addInputListener( {

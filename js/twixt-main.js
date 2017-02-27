@@ -30,20 +30,20 @@ define( function( require ) {
     var screens = [
       new Screen(
         function() { return {}; },
-        function( model ) { return new DampedMotionView(); },
-        {
-          name: 'Damped Motion',
-          backgroundColorProperty: new Property( 'white' )
-        }
-      ),
-      new Screen(
-        function() { return {}; },
         function( model ) { return new EasingDemoView(); },
         {
           name: 'Easing',
           backgroundColorProperty: new Property( 'white' )
         }
       ),
+      new Screen(
+        function() { return {}; },
+        function( model ) { return new DampedMotionView(); },
+        {
+          name: 'Damped Motion',
+          backgroundColorProperty: new Property( 'white' )
+        }
+      )
     ];
 
     new Sim( twixtTitleString, screens, simOptions ).start();

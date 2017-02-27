@@ -52,9 +52,9 @@ define( function( require ) {
 
     this.timeElapsed = 0;
 
-    this.targetValue = null; // set in retarget
+    this._targetValue = null; // set in retarget
 
-    this.retarget( options.targetValue );
+    this.retarget( this._targetValue );
   }
 
   twixt.register( 'DampedAnimation', DampedAnimation );
@@ -62,20 +62,20 @@ define( function( require ) {
   return inherit( Object, DampedAnimation, {
     // Change the target value that we are moving towards.
     set targetValue( value ) {
-      this.targetValue = value;
+      this._targetValue = value;
       this.recompute();
     },
 
     // On a change, we need to recompute our harmonic (that plots out the motion to the target)
     recompute: function() {
       this.timeElapsed = 0;
-      this.harmonic = new DampedHarmonic( 1, Math.sqrt( 4 * this.force ) * this.damping, this.force, this.valueProperty.value - this.targetValue, this.velocityProperty.value );
+      this.harmonic = new DampedHarmonic( 1, Math.sqrt( 4 * this.force ) * this.damping, this.force, this.valueProperty.value - this._targetValue, this.velocityProperty.value );
     },
 
     step: function( dt ) {
       this.timeElapsed += dt;
 
-      this.valueProperty.value = this.targetValue + this.harmonic.getValue( this.timeElapsed );
+      this.valueProperty.value = this._targetValue + this.harmonic.getValue( this.timeElapsed );
       this.velocityProperty.value = this.harmonic.getDerivative( this.timeElapsed );
     }
   } );

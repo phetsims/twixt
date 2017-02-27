@@ -79,7 +79,9 @@ define( function( require ) {
     this.addChild( animatedCircle );
 
     var targetCircle = new Circle( 20, {
-      stroke: 'red'
+      stroke: 'red',
+      x: xProperty.value,
+      y: yProperty.value
     } );
     this.addChild( targetCircle );
 
@@ -103,16 +105,6 @@ define( function( require ) {
       }
     } );
 
-    this.addChild( sliderGroup( forceProperty, new Range( 5, 200 ), 'Force', [ 5, 200 ], {
-      left: 10,
-      top: 10
-    } ) );
-
-    this.addChild( sliderGroup( dampingProperty, new Range( 0.1, 3 ), 'Damping', [ 0.1, 1, 3 ], {
-      right: this.layoutBounds.right - 10,
-      top: 10
-    } ) );
-
     function sliderGroup( property, range, label, majorTicks, options ) {
       var labelNode = new Text( label, { font: new PhetFont( 20 ) } );
       var slider = new HSlider( property, range, {
@@ -126,6 +118,16 @@ define( function( require ) {
         spacing: 10
       }, options ) );
     }
+
+    this.addChild( sliderGroup( forceProperty, new Range( 5, 200 ), 'Force', [ 5, 200 ], {
+      left: 10,
+      top: 10
+    } ) );
+
+    this.addChild( sliderGroup( dampingProperty, new Range( 0.1, 3 ), 'Damping', [ 0.1, 1, 3 ], {
+      right: this.layoutBounds.right - 10,
+      top: 10
+    } ) );
 
     this.addChild( new Text( 'Click or drag to move the animation target', {
       font: new PhetFont( 30 ),

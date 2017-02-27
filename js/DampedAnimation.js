@@ -52,9 +52,7 @@ define( function( require ) {
 
     this.timeElapsed = 0;
 
-    this._targetValue = null; // set in retarget
-
-    this.retarget( this._targetValue );
+    this.targetValue = options.targetValue; // Sets this._targetValue
   }
 
   twixt.register( 'DampedAnimation', DampedAnimation );

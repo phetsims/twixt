@@ -130,9 +130,9 @@ define( function( require ) {
       { node: new Text( 'Quartic in-out', comboTextOptions ), value: Easing.QUARTIC_IN_OUT },
       { node: new Text( 'Quartic in', comboTextOptions ), value: Easing.QUARTIC_IN },
       { node: new Text( 'Quartic out', comboTextOptions ), value: Easing.QUARTIC_OUT },
-      { node: new Text( 'Qunitic in-out', comboTextOptions ), value: Easing.QUINTIC_IN_OUT },
-      { node: new Text( 'Qunitic in', comboTextOptions ), value: Easing.QUINTIC_IN },
-      { node: new Text( 'Qunitic out', comboTextOptions ), value: Easing.QUINTIC_OUT },
+      { node: new Text( 'Quintic in-out', comboTextOptions ), value: Easing.QUINTIC_IN_OUT },
+      { node: new Text( 'Quintic in', comboTextOptions ), value: Easing.QUINTIC_IN },
+      { node: new Text( 'Quintic out', comboTextOptions ), value: Easing.QUINTIC_OUT },
     ], easingProperty, listParent, {
       right: this.layoutBounds.right - 10,
       top: 10

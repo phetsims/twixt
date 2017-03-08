@@ -22,7 +22,7 @@ define( function( require ) {
   function EaseAnimation( options ) {
     options = _.extend( {
       easing: Easing.CUBIC_IN_OUT,
-      duration: 1,
+      duration: 1, // in seconds
       initialValue: 0,
       targetValue: 0,
 
@@ -40,6 +40,12 @@ define( function( require ) {
   twixt.register( 'EaseAnimation', EaseAnimation );
 
   return inherit( Object, EaseAnimation, {
+
+    /**
+     * @param {number} dt - elapsed time in seconds
+     * @return {number} how much time has elapsed since the animation would have ended, so that chained animations can
+     *                  function properly (queueing one animation right after another)
+     */
     step: function( dt ) {
       var oldRatio = this.ratio;
 

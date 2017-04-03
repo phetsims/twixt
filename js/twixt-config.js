@@ -1,6 +1,6 @@
 // Copyright 2017, University of Colorado Boulder
 
-// RequireJS configuration file for Joist demo.
+// RequireJS configuration file for twixt demo.
 require.config( {
   deps: [ 'twixt-main' ],
 

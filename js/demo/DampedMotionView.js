@@ -1,7 +1,9 @@
-// Copyright 2015, University of Colorado Boulder
+// Copyright 2017, University of Colorado Boulder
 
 /**
  * TODO
+ *
+ * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */
 define( function( require ) {
   'use strict';

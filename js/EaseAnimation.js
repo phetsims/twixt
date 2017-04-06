@@ -43,7 +43,7 @@ define( function( require ) {
 
     /**
      * @param {number} dt - elapsed time in seconds
-     * @return {number} how much time has elapsed since the animation would have ended, so that chained animations can
+     * @returns {number} how much time has elapsed since the animation would have ended, so that chained animations can
      *                  function properly (queueing one animation right after another)
      */
     step: function( dt ) {

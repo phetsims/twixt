@@ -12,9 +12,9 @@ define( function( require ) {
   'use strict';
 
   // modules
+  var Easing = require( 'TWIXT/Easing' );
   var inherit = require( 'PHET_CORE/inherit' );
   var twixt = require( 'TWIXT/twixt' );
-  var Easing = require( 'TWIXT/Easing' );
 
   /**
    * @constructor

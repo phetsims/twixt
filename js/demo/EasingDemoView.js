@@ -9,22 +9,22 @@ define( function( require ) {
   'use strict';
 
   // modules
-  var inherit = require( 'PHET_CORE/inherit' );
-  var ScreenView = require( 'JOIST/ScreenView' );
   var Circle = require( 'SCENERY/nodes/Circle' );
-  var Plane = require( 'SCENERY/nodes/Plane' );
+  var ComboBox = require( 'SUN/ComboBox' );
+  var Dimension2 = require( 'DOT/Dimension2' );
+  var EaseAnimation = require( 'TWIXT/EaseAnimation' );
+  var Easing = require( 'TWIXT/Easing' );
+  var HSlider = require( 'SUN/HSlider' );
+  var inherit = require( 'PHET_CORE/inherit' );
   var Node = require( 'SCENERY/nodes/Node' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
+  var Plane = require( 'SCENERY/nodes/Plane' );
   var Property = require( 'AXON/Property' );
-  var Text = require( 'SCENERY/nodes/Text' );
-  var VBox = require( 'SCENERY/nodes/VBox' );
-  var twixt = require( 'TWIXT/twixt' );
-  var Dimension2 = require( 'DOT/Dimension2' );
   var Range = require( 'DOT/Range' );
-  var EaseAnimation = require( 'TWIXT/EaseAnimation' );
-  var HSlider = require( 'SUN/HSlider' );
-  var ComboBox = require( 'SUN/ComboBox' );
-  var Easing = require( 'TWIXT/Easing' );
+  var ScreenView = require( 'JOIST/ScreenView' );
+  var Text = require( 'SCENERY/nodes/Text' );
+  var twixt = require( 'TWIXT/twixt' );
+  var VBox = require( 'SCENERY/nodes/VBox' );
 
   /**
    * @constructor

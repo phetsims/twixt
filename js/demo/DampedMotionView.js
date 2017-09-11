@@ -9,19 +9,19 @@ define( function( require ) {
   'use strict';
 
   // modules
+  var Circle = require( 'SCENERY/nodes/Circle' );
+  var DampedAnimation = require( 'TWIXT/DampedAnimation' );
+  var Dimension2 = require( 'DOT/Dimension2' );
+  var HSlider = require( 'SUN/HSlider' );
   var inherit = require( 'PHET_CORE/inherit' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
-  var ScreenView = require( 'JOIST/ScreenView' );
-  var Range = require( 'DOT/Range' );
-  var Dimension2 = require( 'DOT/Dimension2' );
-  var Text = require( 'SCENERY/nodes/Text' );
-  var Circle = require( 'SCENERY/nodes/Circle' );
   var Plane = require( 'SCENERY/nodes/Plane' );
-  var VBox = require( 'SCENERY/nodes/VBox' );
   var Property = require( 'AXON/Property' );
-  var HSlider = require( 'SUN/HSlider' );
+  var Range = require( 'DOT/Range' );
+  var ScreenView = require( 'JOIST/ScreenView' );
+  var Text = require( 'SCENERY/nodes/Text' );
   var twixt = require( 'TWIXT/twixt' );
-  var DampedAnimation = require( 'TWIXT/DampedAnimation' );
+  var VBox = require( 'SCENERY/nodes/VBox' );
 
   /**
    * @constructor

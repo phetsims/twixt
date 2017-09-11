@@ -9,8 +9,8 @@ define( function( require ) {
   'use strict';
 
   // modules
-  var EasingDemoView = require( 'TWIXT/demo/EasingDemoView' );
   var DampedMotionView = require( 'TWIXT/demo/DampedMotionView' );
+  var EasingDemoView = require( 'TWIXT/demo/EasingDemoView' );
   var Property = require( 'AXON/Property' );
   var Screen = require( 'JOIST/Screen' );
   var Sim = require( 'JOIST/Sim' );

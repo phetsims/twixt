@@ -12,10 +12,10 @@ define( function( require ) {
   'use strict';
 
   // modules
-  var inherit = require( 'PHET_CORE/inherit' );
-  var twixt = require( 'TWIXT/twixt' );
-  var Property = require( 'AXON/Property' );
   var DampedHarmonic = require( 'DOT/DampedHarmonic' );
+  var inherit = require( 'PHET_CORE/inherit' );
+  var Property = require( 'AXON/Property' );
+  var twixt = require( 'TWIXT/twixt' );
 
   /**
    * @constructor

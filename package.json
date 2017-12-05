@@ -13,7 +13,8 @@
     "requirejsNamespace": "TWIXT",
     "runnable": true,
     "supportedBrands": [
-      "phet"
+      "phet",
+      "adapted-from-phet"
     ]
   }
 }

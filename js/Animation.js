@@ -29,6 +29,8 @@ define( function( require ) {
    * 2. A way of determining the value to animate toward (`to` or `delta`).
    * 3. A way of determining the length of the animation (`duration` or `speed`).
    *
+   * TODO: add examples
+   *
    * @param {Object} [options] - See below in the constructor for documentation
    */
   function Animation( options ) {
@@ -422,8 +424,7 @@ define( function( require ) {
         return a.blend( b, ratio );
       }
 
-      // TODO: doc what option would have caused this failure
-      throw new Error( 'Blending not supported for: ' + a + ', ' + b );
+      throw new Error( 'Blending not supported for: ' + a + ', ' + b + ', pass in a blend option' );
     },
 
     /**
@@ -442,8 +443,7 @@ define( function( require ) {
         return a.distance( b );
       }
 
-      // TODO: doc what option would have caused this failure
-      throw new Error( 'Distance not supported for: ' + a + ', ' + b );
+      throw new Error( 'Distance (required for speed) by default not supported for: ' + a + ', ' + b + ', pass in a distance option' );
     },
 
     /**
@@ -462,8 +462,7 @@ define( function( require ) {
         return a.plus( b );
       }
 
-      // TODO: doc what option would have caused this failure
-      throw new Error( 'Addition not supported for: ' + a + ', ' + b );
+      throw new Error( 'Addition (required for delta) by default not supported for: ' + a + ', ' + b + ', pass in an add option' );
     },
 
     /**

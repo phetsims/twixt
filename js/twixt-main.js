@@ -9,6 +9,7 @@ define( function( require ) {
   'use strict';
 
   // modules
+  var AnimationView = require( 'TWIXT/demo/AnimationView' );
   var DampedMotionView = require( 'TWIXT/demo/DampedMotionView' );
   var EasingDemoView = require( 'TWIXT/demo/EasingDemoView' );
   var Property = require( 'AXON/Property' );
@@ -28,6 +29,14 @@ define( function( require ) {
   SimLauncher.launch( function() {
 
     var screens = [
+      new Screen(
+        function() { return {}; },
+        function( model ) { return new AnimationView(); },
+        {
+          name: 'Animation',
+          backgroundColorProperty: new Property( 'white' )
+        }
+      ),
       new Screen(
         function() { return {}; },
         function( model ) { return new EasingDemoView(); },

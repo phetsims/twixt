@@ -3,7 +3,20 @@
 /**
  * An easing-based controllable animation.
  *
- * TODO: timeline terminology
+ * We use some terminology to describe points and regions in time for an animation:
+ *
+ *             starts                            begins                                finishes
+ *               |             delay               |             animation                |
+ * time-->       |           (waiting)             |     (animated values changing)       |
+ * ---------------------------------------------------------------------------------------------------------------------
+ *               |------------------------------running-----------------------------------|
+ *                                                 |-------------animating----------------|
+ *
+ * TODO: pause/cancel (and stop->cancel renaming)
+ * TODO: function for blending with angular/rotational values
+ * TODO: consider keyframed animation helper?
+ * TODO: Hooks for attaching/detaching stepping via screens/nodes
+ * TODO: Add documentation examples (contingent on how screen/node hooks work)
  *
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */
@@ -11,11 +24,10 @@ define( function( require ) {
   'use strict';
 
   // modules
+  var AnimationTarget = require( 'TWIXT/AnimationTarget' );
   var BooleanProperty = require( 'AXON/BooleanProperty' );
-  var Easing = require( 'TWIXT/Easing' );
   var Emitter = require( 'AXON/Emitter' );
   var inherit = require( 'PHET_CORE/inherit' );
-  var Property = require( 'AXON/Property' );
   var Timer = require( 'PHET_CORE/Timer' );
   var twixt = require( 'TWIXT/twixt' );
   var Util = require( 'DOT/Util' );
@@ -23,199 +35,121 @@ define( function( require ) {
   /**
    * @constructor
    *
-   * NOTE: There are essentially three required "parameters" that can be specified in different ways:
+   * The constructor options will define one or more animation "targets" (specific values to be animated). The options
+   * available for targets is documented in AnimationTarget.
    *
-   * 1. A way of getting/setting the animated value (`setValue`/`getValue`, `property`, or `target`/`attribute`).
-   * 2. A way of determining the value to animate toward (`to` or `delta`).
-   * 3. A way of determining the length of the animation (`duration` or `speed`).
+   * If there is only one target, it is recommended to pass in those options in the top-level Animation options, e.g.:
+   * | var someNumberProperty = new NumberProperty( 0 );
+   * | new Animation( {
+   * |   // Options for the Animation as a whole
+   * |   duration: 2,
+   * |
+   * |   // Options for the one target to change
+   * |   property: someNumberProperty,
+   * |   to: 5
+   * | } );
+   * 
+   * However multiple different targets are supported, and should be specified in the `targets` option:
+   * | var someNumberProperty = new NumberProperty( 100 );
+   * | var someObject = { someAttribute: new Vector2( 100, 5 ) };
+   * | new Animation( {
+   * |   // Options for the Animation as a whole
+   * |   duration: 2,
+   * |
+   * |   targets: [ {
+   * |     // First target
+   * |     property: someNumberProperty,
+   * |     to: 5
+   * |   }, {
+   * |     // Second target
+   * |     object: someObject,
+   * |     attribute: 'someAttribute',
+   * |     to: new Vector2( 50, 10 )
+   * |   } ]
+   * | } );
    *
-   * TODO: add examples
+   * NOTE: The length of the animation needs to be specified in exactly one place. This can usually be done by
+   * specifying the `duration` in the options, but `speed` can also be used in any of the targets.
    *
-   * @param {Object} [options] - See below in the constructor for documentation
+   * EXAMPLE: It's possible to create continuous animation loops, where animations cycle back and forth, e.g.:
+   * | var moreOpaque = new Animation( {
+   * |   stepper: 'timer',
+   * |   object: animatedCircle,
+   * |   attribute: 'opacity',
+   * |   from: 0.5,
+   * |   to: 1,
+   * |   duration: 0.5,
+   * |   easing: Easing.QUADRATIC_IN_OUT
+   * | } );
+   * | var lessOpaque = new Animation( {
+   * |   stepper: 'timer',
+   * |   object: animatedCircle,
+   * |   attribute: 'opacity',
+   * |   from: 1,
+   * |   to: 0.5,
+   * |   duration: 0.5,
+   * |   easing: Easing.QUADRATIC_IN_OUT
+   * | } );
+   * | moreOpaque.then( lessOpaque );
+   * | lessOpaque.then( moreOpaque );
+   * | lessOpaque.start();
+   *
+   * @param {Object} options - See below in the constructor for documentation.
    */
   function Animation( options ) {
 
     options = _.extend( {
-      /*
-       * NOTE: One of `setValue`/`property`/`target` is REQUIRED.
-       *
-       * The animation needs to be able to set (and sometimes get) the value being animated. In the most general case,
-       * a getter/setter pair (getValue and setValue) can be provided.
-       *
-       * For convenience, Animation also supports passing in an axon Property (property:), or setting up for an
-       * assignment to an object with target/attribute (accesses as `target[ attribute ]`).
-       *
-       * E.g.:
-       *
-       * new Animation( {
-       *   setValue: function( value ) { window.value = value * 10; },
-       *   getValue: function() { return window.value / 10; },
-       *   // other options
-       * } )
-       *
-       * var someVectorProperty = new axon.Property( new dot.Vector2( 10, 5 ) );
-       * new Animation( {
-       *   property: someVectorProperty,
-       *   // other options
-       * } )
-       *
-       * var obj = { x: 5 };
-       * new Animation( {
-       *   target: obj,
-       *   attribute: 'x',
-       *   // other options
-       * } )
-       *
-       * NOTE: null values are not supported, as it is used as the "no value" value, and animating towards "null"
-       * usually wouldn't make sense (even if you define the proper interpolation function).
-       */
+      // IMPORTANT: See AnimationTarget's options documentation, as those options can be passed in either here, or in
+      // the targets array.
 
-      // {function|null} - If provided, it should be a `function( {*} value )` that acts as "setting" the value of
-      // the animation. NOTE: do not provide this and property/target.
-      setValue: null,
-      // {function|null} - If provided, it should be a `function(): {*}` that returns the current value that will be
-      // animated. NOTE: This can be omitted, even if setValue is provided, if the `from` option is set (as the
-      // current value would just be ignored).
-      getValue: null,
+      // {Array.<Object>|null} - Can be provided instead of setValue/property/object, and it contains an array of
+      // options-style objects that allows animating multiple different things at the same time. See AnimationTarget for
+      // details about all of the supported options.
+      // NOTE: speed, if provided, should be only specified on exactly one of the targets' options if multiple targets
+      // are specified.
+      targets: null,
 
-      // {Property.<*>|null} - If provided, it should be an axon Property with the current value. It will be modified
-      // by the animation. NOTE: do not provide this and setValue/target
-      property: null, 
-
-      // {*|null} - If provided, it should point to an object where `target[ attribute ]` is the value to be modified
-      // by the animation. NOTE: do not provide this and setValue/property
-      target: null, 
-      // {string|null} - If `target` is provided, it should be a string such that `target[ attribute ]` is the value to
-      // be modified.
-      attribute: null,
-
-      /*
-       * NOTE: one of `to`/`delta` is REQUIRED.
-       *
-       * The end value of the animation needs to be specified, but there are multiple ways to do so. If you know the
-       * exact end value, it can be provided with `to: value`. Then every time the animation is run, it will go to that
-       * value.
-       *
-       * It is also possible to provide `delta: value` which will apply a relative animation by that amount (e.g. for
-       * numbers, `delta: 5` would indicate that the animation will increase the value by 5 every time it is run).
-       */
-
-      // {*|null} - If provided, the animation will treat this as the end value (what it animates toward).
-      to: null,
-
-      // {*|null} - If provided, the animation will treat the ending value of the animation as the starting value plus
-      // this delta value. To determine the exact value, the `add` option will be used (which by default handles
-      // number/Vector2/Vector3/Vector4 as expected). The animation can be run multiple times, and each time it will use
-      // the "starting" value from last time (unless the `from` option is used).
-      delta: null, // {*|null}
-
-      // {number|null} - If provided, the animation's length will be this value (in seconds).
+      // {number|null} - If provided, the animation's length will be this value (in seconds). If omitted, one of the
+      // targets' `speed` option should be set (the length of the animation will be based on that).
       duration: null, 
-
-      // {number|null} - If provided, the animation's length will be this value (seconds/unit) times the "distance" 
-      // between the start and end value of the animation. The `distance` option can be used to specify a way to
-      // compute the distance, and works by default as expected for number/Vector2/Vector3/Vector4.
-      speed: null, 
-
-      // {*|null} - If provided, the animation will start from this value (instead of getting the current value to start
-      // from).
-      from: null,
 
       // {number} - The amount of time (in seconds) between when the animation is "started" and when the actual
       // animation of the value begins. Negative delays are not supported.
       delay: 0, 
 
-      // {Easing} - Controls the relative motion from the starting value to the ending value. See Easing.js for info.
-      easing: Easing.CUBIC_IN_OUT,
-
-      // {function} - Should be of the form `function( start: {*}, end: {*}, ratio: {number} ): {*}` where the ratio
-      // will be between 0 and 1 (inclusive). If the ratio is 0, it should return the starting value, if the ratio is 1,
-      // it should return the ending value, and otherwise it should return the best interpolation possible between the
-      // two values. The default should work for number/Vector2/Vector3/Vector4/Color, but for other types either
-      // `start.blend( end, ratio )` should be defined and work, or this function should be overridden.
-      blend: Animation.DEFAULT_BLEND,
-
-      // {function} - Should be of the form `function( start: {*}, end: {*} ): {number}`, and it should return a measure
-      // of distance (a metric) between the two values. This is only used for if the `speed` option is provided (so it
-      // can determine the length of the animation). The default should work for number/Vector2/Vector3/Vector4.
-      distance: Animation.DEFAULT_DISTANCE,
-
-      // {function} - Should be of the form `function( start: {*}, delta: {*} ): {*}` where it adds together a value
-      // and a "delta" (usually just a value of the same type) and returns the result. This is used for the `delta`
-      // option. The default should work for number/Vector2/Vector3/Vector4.
-      add: Animation.DEFAULT_ADD 
-
+      // {string} - One of the following options:
+      // 'manual' - `step( dt )` should be called manually to advance the animation
+      // 'timer' - When this animation is running, it will listen to the global phet-core Timer.
+      // TODO: {ScreenView} - animates only when the ScreenView is the active one.
+      // TODO: {Node} - animates only when the node's trail is visible on a Display
+      stepper: 'manual'
     }, options );
 
-    assert && assert( +( options.property !== null ) + +( options.target !== null ) + +( options.setValue !== null ) === 1,
-      'Should have one (and only one) way of defining how to set the animated value. Use one of property/target/setValue' );
-
-    assert && assert( options.setValue === null || typeof options.setValue === 'function',
-      'If setValue is provided, it should be a function.' );
-
-    assert && assert( options.setValue === null || options.from === null || typeof options.getValue === 'function',
-      'If setValue is provided and no "from" value is specified, then getValue needs to be a function.' );
-
-    assert && assert( options.to !== null || options.delta !== null,
-      'Need something to animate to, use to/delta' );
-
-    assert && assert( options.duration !== null || options.speed !== null,
-      'Need a duration or speed to determine the length of the animation' );
-
-    assert && assert( options.property === null || options.property instanceof Property );
-
-    assert && assert( options.target === null || ( typeof options.target === 'object' && typeof options.attribute === 'string' ),
-      'If target is provided, then target should be an object, and attribute should be a string.' );
+    assert && assert( +( options.property !== undefined ) + +( options.object !== undefined ) + +( options.setValue !== undefined ) + +( options.targets !== null ) === 1,
+      'Should have one (and only one) way of defining how to set the animated value. Use one of property/object/setValue/targets' );
 
     assert && assert( typeof options.delay === 'number' && isFinite( options.delay ) && options.delay >= 0,
       'The delay should be a non-negative number.' );
 
-    assert && assert( options.easing instanceof Easing, 'The easing should be of type Easing' );
-    assert && assert( typeof options.blend === 'function', 'The blend option should be a function' );
-    assert && assert( typeof options.distance === 'function', 'The distance option should be a function' );
-    assert && assert( typeof options.add === 'function', 'The add option should be a function' );
+    assert && assert( options.stepper === 'manual' || options.stepper === 'timer',
+      'If provided, stepper should be "manual", "timer", or (TODO)' );
 
-    // If `target` is provided, create the associated getter/setter
-    if ( options.target ) {
-      options.setValue = Animation.TARGET_SET( options.target, options.attribute );
-      options.getValue = Animation.TARGET_GET( options.target, options.attribute );
-    }
+    // @private {Array.<AnimationTarget>} - All of the different values that will be animated by this animation.
+    this.targets = _.map( options.targets === null ? [ options ] : options.targets, function( options ) {
+      return new AnimationTarget( options );
+    } );
 
-    // If `property` is provided, create the associated getter/setter
-    if ( options.property ) {
-      options.setValue = Animation.PROPERTY_SET( options.property );
-      options.getValue = Animation.PROPERTY_GET( options.property );
-    }
-
-    // @private {function} - Our functions to get and set the animated value.
-    this.getValue = options.getValue;
-    this.setValue = options.setValue;
-
-    // @private {Easing}
-    this.easing = options.easing;
-
-    // @private {*|null} - Saved options to help determine the starting/ending values
-    this.from = options.from;
-    this.to = options.to;
-    this.delta = options.delta;
+    assert && assert( +( options.duration !== null ) + _.sum( _.map( this.targets, function( target ) {
+      return target.hasPreferredDuration() ? 1 : 0;
+    } ) ) === 1, 'Exactly one duration/speed option should be used.' );
 
     // @private {number|null} - Saved options to help determine the length of the animation
     this.duration = options.duration;
-    this.speed = options.speed;
 
-    // @private {number}
+    // @private {number} - In seconds
     this.delay = options.delay;
 
-    // @private {function}
-    this.blend = options.blend;
-    this.distance = options.distance;
-    this.add = options.add;
-
-    // @private {*} - Computed start/end values for the animation (once the animation finishes the delay and begins)
-    this.startingValue = null;
-    this.endingValue = null;
-
-    // @private {number} - Computed length for the animation
+    // @private {number} - Computed length for the animation (in seconds)
     this.length = 0;
 
     // @private {number} - Length of time remaining in the "delay" portion. Computed after the animation is started,
@@ -236,24 +170,28 @@ define( function( require ) {
 
     // @public {Emitter} - Fired when the animation is "started" (i.e. when start() is called and the delay, if
     // one is there, starts).
-    this.startedEmitter = new Emitter();
+    this.startEmitter = new Emitter();
 
     // @public {Emitter} - Fired when the actual animation of the value begins (i.e. when the delay finishes and the
     // actual animation begins).
-    this.beganEmitter = new Emitter();
+    this.beginEmitter = new Emitter();
     
     // @public {Emitter} - Fired when the animation finishes naturally (was not abnormally stopped).
     // A {number} is provided as a single argument to the emit callback, and represents how much "extra" time occurred
     // after the end of the animation. For example, if you have a 1-second animation and stepped it by 3 seconds, this
     // finished emitter would be called with 2 seconds.
-    this.finishedEmitter = new Emitter();
+    this.finishEmitter = new Emitter();
 
     // @public {Emitter} - Fired when the animation is manually stopped (with stop()). Does NOT fire when it finishes
     // normally.
-    this.stoppedEmitter = new Emitter();
+    this.stopEmitter = new Emitter();
 
-    // @public {Emitter} - Fired when (just after) the animation has changed the animated value.
+    // @public {Emitter} - Fired when (just after) the animation has changed animated values/targets.
     this.updateEmitter = new Emitter();
+
+    if ( options.stepper === 'timer' ) {
+      this.attachTimer();
+    }
   }
 
   twixt.register( 'Animation', Animation );
@@ -277,7 +215,7 @@ define( function( require ) {
 
       // Notifications
       this.runningProperty.value = true;
-      this.startedEmitter.emit();
+      this.startEmitter.emit();
 
       // Set up initial state and value
       this.step( dt !== undefined ? dt : 0 );
@@ -299,7 +237,7 @@ define( function( require ) {
 
       // Notifications
       this.runningProperty.value = false;
-      this.stoppedEmitter.emit();
+      this.stopEmitter.emit();
 
       return this;
     },
@@ -312,6 +250,7 @@ define( function( require ) {
      * @returns {Animation} - Returns the this reference, to support chaining.
      */
     step: function( dt ) {
+
       // Ignore the step if our animation is not running
       if ( !this.runningProperty.value ) {
         return;
@@ -327,15 +266,23 @@ define( function( require ) {
           return;
         }
 
-        // Compute how we will animate things
-        this.startingValue = ( this.from !== null ) ? this.from : this.getValue();
-        this.endingValue = ( this.to !== null ) ? this.to : this.add( this.startingValue, this.delta );
-        this.length = ( this.duration !== null ) ? this.duration : this.speed * this.distance( this.startingValue, this.delta );
+        // Compute the start/end for each target, and determine the length of our animation
+        this.length = this.duration;
+        for ( var i = 0; i < this.targets.length; i++ ) {
+          var target = this.targets[ i ];
+          target.computeStartEnd();
+
+          // If we don't have a computed length yet, check all of our targets
+          if ( this.length === null ) {
+            this.length = target.getPreferredDuration();
+          }
+        }
+        assert && assert( this.length !== null, 'After going through the targets, we should have a length by now' );
         this.remainingAnimation = this.length;
 
         // Notify about the animation starting
         this.animatingProperty.value = true;
-        this.beganEmitter.emit();
+        this.beginEmitter.emit();
       }
 
       // Take our dt off of our remaining time
@@ -343,7 +290,9 @@ define( function( require ) {
       dt = -this.remainingAnimation; // record how far past the animation we go
 
       var ratio = Util.clamp( ( this.length - this.remainingAnimation ) / this.length, 0, 1 );
-      this.setValue( this.blend( this.startingValue, this.endingValue, this.easing.value( ratio ) ) );
+      for ( var j = 0; j < this.targets.length; j++ ) {
+        this.targets[ j ].update( ratio );
+      }
 
       // Notification
       this.updateEmitter.emit();
@@ -352,7 +301,7 @@ define( function( require ) {
       if ( ratio === 1 ) {
         this.animatingProperty.value = false;
         this.runningProperty.value = false;
-        this.finishedEmitter.emit( dt );
+        this.finishEmitter.emit( dt );
       }
 
       return this;
@@ -366,7 +315,7 @@ define( function( require ) {
      * @returns {Animation} - Returns the passed-in animation so things can be chained nicely.
      */
     then: function( animation ) {
-      this.finishedEmitter.addListener( function( dt ) {
+      this.finishEmitter.addListener( function( dt ) {
         animation.start( dt );
       } );
       return animation;
@@ -374,7 +323,7 @@ define( function( require ) {
 
     /**
      * Attaches this animation to the global phet-core Timer.
-     * @public
+     * @private
      *
      * Whenever this animation is started, it will add a listener to the Timer (and conversely, will be removed when
      * stopped). This means it will animate with the timer, but will not leak memory as long as the animation doesn't
@@ -388,6 +337,8 @@ define( function( require ) {
 
       this.runningProperty.link( function( running ) {
         if ( running !== isAttached ) {
+          isAttached = running;
+
           if ( running ) {
             Timer.addStepListener( stepListener );
           }
@@ -399,128 +350,6 @@ define( function( require ) {
 
       return this;
     }
-  }, {
-    // TODO: add a function for blending with angular/rotational values.
-
-    /**
-     * Default blending function for the `blend` function.
-     * @public
-     *
-     * @param {*} a
-     * @param {*} b
-     * @param {number} ratio
-     * @returns {*}
-     */
-    DEFAULT_BLEND: function( a, b, ratio ) {
-      assert && assert( typeof ratio === 'number' && isFinite( ratio ) && ratio >= 0 && ratio <= 1, 'Invalid ratio: ' + ratio );
-
-      if ( ratio === 0 ) { return a; }
-      if ( ratio === 1 ) { return b; }
-
-      if ( typeof a === 'number' && typeof b === 'number' ) {
-        return a + ( b - a ) * ratio;
-      }
-      if ( typeof a === 'object' && typeof b === 'object' && typeof a.blend === 'function' ) {
-        return a.blend( b, ratio );
-      }
-
-      throw new Error( 'Blending not supported for: ' + a + ', ' + b + ', pass in a blend option' );
-    },
-
-    /**
-     * Default distance function for the `distance` option (used for the `speed` option)
-     * @public
-     *
-     * @param {*} a
-     * @param {*} b
-     * @returns {*}
-     */
-    DEFAULT_DISTANCE: function( a, b ) {
-      if ( typeof a === 'number' && typeof b === 'number' ) {
-        return Math.abs( a - b );
-      }
-      if ( typeof a === 'object' && typeof b === 'object' && typeof a.distance === 'function' ) {
-        return a.distance( b );
-      }
-
-      throw new Error( 'Distance (required for speed) by default not supported for: ' + a + ', ' + b + ', pass in a distance option' );
-    },
-
-    /**
-     * Default addition function for the `add` option (used for the `delta` option)
-     * @public
-     *
-     * @param {*} a
-     * @param {*} b
-     * @returns {*}
-     */
-    DEFAULT_ADD: function( a, b ) {
-      if ( typeof a === 'number' && typeof b === 'number' ) {
-        return a + b;
-      }
-      if ( typeof a === 'object' && typeof b === 'object' && typeof a.plus === 'function' ) {
-        return a.plus( b );
-      }
-
-      throw new Error( 'Addition (required for delta) by default not supported for: ' + a + ', ' + b + ', pass in an add option' );
-    },
-
-    /**
-     * Helper function for creating a setter closure for target[ attribute ].
-     * @private
-     *
-     * @param {Object} target
-     * @param {string} attribute
-     * @returns {function}
-     */
-    TARGET_SET: function( target, attribute ) {
-      return function( value ) {
-        target[ attribute ] = value;
-      };
-    },
-
-    /**
-     * Helper function for creating a getter closure for target[ attribute ].
-     * @private
-     *
-     * @param {Object} target
-     * @param {string} attribute
-     * @returns {function}
-     */
-    TARGET_GET: function( target, attribute ) {
-      return function() {
-        return target[ attribute ];
-      };
-    },
-
-    /**
-     * Helper function for creating a setter closure for Properties
-     * @private
-     *
-     * @param {Property} property
-     * @returns {function}
-     */
-    PROPERTY_SET: function( property ) {
-      return function( value ) {
-        property.value = value;
-      };
-    },
-
-    /**
-     * Helper function for creating a getter closure for Properties
-     * @private
-     *
-     * @param {Property} property
-     * @returns {function}
-     */
-    PROPERTY_GET: function( property ) {
-      return function() {
-        return property.value;
-      };
-    }
-
-    // TODO: keyframed animation helper?
-    // TODO: Hooks for attaching/detaching stepping via screens/Timer/manual/etc.
   } );
 
   return Animation;

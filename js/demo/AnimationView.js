@@ -38,7 +38,7 @@ define( function( require ) {
 
     var positionProperty = new Property( this.layoutBounds.center );
     var colorProperty = new Property( new Color( 0, 128, 255, 0.5 ) );
-    var durationProperty = new Property( 1 );
+    var durationProperty = new Property( 0.5 );
     var easingProperty = new Property( Easing.QUADRATIC_IN_OUT );
 
     // to get the input events :(
@@ -60,8 +60,27 @@ define( function( require ) {
     } );
     this.addChild( targetCircle );
 
-    var positionAnimation = null;
-    var colorAnimation = null;
+    var larger = new Animation( {
+      stepper: 'timer',
+      setValue: function( value ) { animatedCircle.setScaleMagnitude( value ); },
+      from: 0.7,
+      to: 1,
+      duration: 0.4,
+      easing: Easing.QUADRATIC_IN_OUT
+    } );
+    var smaller = new Animation( {
+      stepper: 'timer',
+      setValue: function( value ) { animatedCircle.setScaleMagnitude( value ); },
+      from: 1,
+      to: 0.7,
+      duration: 0.4,
+      easing: Easing.QUADRATIC_IN_OUT
+    } );
+    larger.then( smaller );
+    smaller.then( larger );
+    smaller.start();
+
+    var animation = null;
     this.addInputListener( {
       down: function( event ) {
         if ( !event.canStartPress() ) { return; }
@@ -70,21 +89,20 @@ define( function( require ) {
         var localPoint = self.globalToLocalPoint( event.pointer.point );
         targetCircle.translation = localPoint;
 
-        positionAnimation && positionAnimation.stop();
-        positionAnimation = new Animation( {
-          property: positionProperty,
-          easing: easingProperty.value,
+        animation && animation.stop();
+        animation = new Animation( {
+          stepper: 'timer',
+          targets: [ {
+            property: positionProperty,
+            easing: easingProperty.value,
+            to: localPoint
+          }, {
+            property: colorProperty,
+            easing: easingProperty.value,
+            to: new Color( phet.joist.random.nextInt( 256 ), phet.joist.random.nextInt( 256 ), phet.joist.random.nextInt( 256 ), 0.5 )
+          } ],
           duration: durationProperty.value,
-          to: localPoint
-        } ).attachTimer().start();
-
-        colorAnimation && colorAnimation.stop();
-        colorAnimation = new Animation( {
-          property: colorProperty,
-          easing: easingProperty.value,
-          duration: durationProperty.value,
-          to: new Color( phet.joist.random.nextInt( 256 ), phet.joist.random.nextInt( 256 ), phet.joist.random.nextInt( 256 ), 0.5 )
-        } ).attachTimer().start();
+        } ).start();
       }
     } );
 

@@ -1,0 +1,359 @@
+// Copyright 2017, University of Colorado Boulder
+
+/**
+ * Controls a specific animated value for an Animation.
+ *
+ * @author Jonathan Olson <jonathan.olson@colorado.edu>
+ */
+define( function( require ) {
+  'use strict';
+
+  // modules
+  var Easing = require( 'TWIXT/Easing' );
+  var inherit = require( 'PHET_CORE/inherit' );
+  var Property = require( 'AXON/Property' );
+  var twixt = require( 'TWIXT/twixt' );
+
+  /**
+   * @constructor
+   *
+   * NOTE: Generally don't use this directly. Instead use Animation, providing options for one or more targets.
+   *
+   * Every animation target needs two things:
+   *
+   * 1. A way of getting/setting the animated value (`setValue`/`getValue`, `property`, or `object`/`attribute`).
+   * 2. A way of determining the value to animate toward (`to` or `delta`).
+   *
+   * @param {Object} [options] - See below in the constructor for documentation
+   */
+  function AnimationTarget( options ) {
+
+    options = _.extend( {
+      /*
+       * NOTE: One of `setValue`/`property`/`object` is REQUIRED.
+       *
+       * The animation needs to be able to set (and sometimes get) the value being animated. In the most general case,
+       * a getter/setter pair (getValue and setValue) can be provided.
+       *
+       * For convenience, AnimationTarget also supports passing in an axon Property (property:), or setting up for an
+       * assignment to an object with object/attribute (accesses as `object[ attribute ]`).
+       *
+       * E.g.:
+       *
+       * new Animation( {
+       *   setValue: function( value ) { window.value = value * 10; },
+       *   getValue: function() { return window.value / 10; },
+       *   // other options
+       * } )
+       *
+       * var someVectorProperty = new axon.Property( new dot.Vector2( 10, 5 ) );
+       * new Animation( {
+       *   property: someVectorProperty,
+       *   // other options
+       * } )
+       *
+       * var obj = { x: 5 };
+       * new Animation( {
+       *   object: obj,
+       *   attribute: 'x',
+       *   // other options
+       * } )
+       *
+       * NOTE: null values are not supported, as it is used as the "no value" value, and animating towards "null"
+       * usually wouldn't make sense (even if you define the proper interpolation function).
+       */
+
+      // {function|null} - If provided, it should be a `function( {*} value )` that acts as "setting" the value of
+      // the animation. NOTE: do not provide this and property/object.
+      setValue: null,
+      // {function|null} - If provided, it should be a `function(): {*}` that returns the current value that will be
+      // animated. NOTE: This can be omitted, even if setValue is provided, if the `from` option is set (as the
+      // current value would just be ignored).
+      getValue: null,
+
+      // {Property.<*>|null} - If provided, it should be an axon Property with the current value. It will be modified
+      // by the animation. NOTE: do not provide this and setValue/object
+      property: null, 
+
+      // {*|null} - If provided, it should point to an object where `object[ attribute ]` is the value to be modified
+      // by the animation. NOTE: do not provide this and setValue/property
+      object: null, 
+      // {string|null} - If `object` is provided, it should be a string such that `object[ attribute ]` is the value to
+      // be modified.
+      attribute: null,
+
+      /*
+       * NOTE: one of `to`/`delta` is REQUIRED.
+       *
+       * The end value of the animation needs to be specified, but there are multiple ways to do so. If you know the
+       * exact end value, it can be provided with `to: value`. Then every time the animation is run, it will go to that
+       * value.
+       *
+       * It is also possible to provide `delta: value` which will apply a relative animation by that amount (e.g. for
+       * numbers, `delta: 5` would indicate that the animation will increase the value by 5 every time it is run).
+       */
+
+      // {*|null} - If provided, the animation will treat this as the end value (what it animates toward).
+      to: null,
+
+      // {*|null} - If provided, the animation will treat the ending value of the animation as the starting value plus
+      // this delta value. To determine the exact value, the `add` option will be used (which by default handles
+      // number/Vector2/Vector3/Vector4 as expected). The animation can be run multiple times, and each time it will use
+      // the "starting" value from last time (unless the `from` option is used).
+      delta: null, // {*|null}
+
+      // {number|null} - If provided, the animation's length will be this value (seconds/unit) times the "distance" 
+      // between the start and end value of the animation. The `distance` option can be used to specify a way to
+      // compute the distance, and works by default as expected for number/Vector2/Vector3/Vector4.
+      speed: null, 
+
+      // {*|null} - If provided, the animation will start from this value (instead of getting the current value to start
+      // from).
+      from: null,
+
+      // {Easing} - Controls the relative motion from the starting value to the ending value. See Easing.js for info.
+      easing: Easing.CUBIC_IN_OUT,
+
+      // {function} - Should be of the form `function( start: {*}, end: {*}, ratio: {number} ): {*}` where the ratio
+      // will be between 0 and 1 (inclusive). If the ratio is 0, it should return the starting value, if the ratio is 1,
+      // it should return the ending value, and otherwise it should return the best interpolation possible between the
+      // two values. The default should work for number/Vector2/Vector3/Vector4/Color, but for other types either
+      // `start.blend( end, ratio )` should be defined and work, or this function should be overridden.
+      blend: AnimationTarget.DEFAULT_BLEND,
+
+      // {function} - Should be of the form `function( start: {*}, end: {*} ): {number}`, and it should return a measure
+      // of distance (a metric) between the two values. This is only used for if the `speed` option is provided (so it
+      // can determine the length of the animation). The default should work for number/Vector2/Vector3/Vector4.
+      distance: AnimationTarget.DEFAULT_DISTANCE,
+
+      // {function} - Should be of the form `function( start: {*}, delta: {*} ): {*}` where it adds together a value
+      // and a "delta" (usually just a value of the same type) and returns the result. This is used for the `delta`
+      // option. The default should work for number/Vector2/Vector3/Vector4.
+      add: AnimationTarget.DEFAULT_ADD 
+
+    }, options );
+
+    assert && assert( +( options.property !== null ) + +( options.object !== null ) + +( options.setValue !== null ) === 1,
+      'Should have one (and only one) way of defining how to set the animated value. Use one of property/object/setValue' );
+
+    assert && assert( options.setValue === null || typeof options.setValue === 'function',
+      'If setValue is provided, it should be a function.' );
+
+    assert && assert( options.setValue === null || options.from !== null || typeof options.getValue === 'function',
+      'If setValue is provided and no "from" value is specified, then getValue needs to be a function.' );
+
+    assert && assert( options.to !== null || options.delta !== null,
+      'Need something to animate to, use to/delta' );
+
+    assert && assert( options.property === null || options.property instanceof Property );
+
+    assert && assert( options.object === null || ( typeof options.object === 'object' && typeof options.attribute === 'string' ),
+      'If object is provided, then object should be an object, and attribute should be a string.' );
+
+    assert && assert( options.easing instanceof Easing, 'The easing should be of type Easing' );
+    assert && assert( typeof options.blend === 'function', 'The blend option should be a function' );
+    assert && assert( typeof options.distance === 'function', 'The distance option should be a function' );
+    assert && assert( typeof options.add === 'function', 'The add option should be a function' );
+
+    // If `object` is provided, create the associated getter/setter
+    if ( options.object ) {
+      options.setValue = AnimationTarget.OBJECT_SET( options.object, options.attribute );
+      options.getValue = AnimationTarget.OBJECT_GET( options.object, options.attribute );
+    }
+
+    // If `property` is provided, create the associated getter/setter
+    if ( options.property ) {
+      options.setValue = AnimationTarget.PROPERTY_SET( options.property );
+      options.getValue = AnimationTarget.PROPERTY_GET( options.property );
+    }
+
+    // @private {function} - Our functions to get and set the animated value.
+    this.getValue = options.getValue;
+    this.setValue = options.setValue;
+
+    // @private {Easing}
+    this.easing = options.easing;
+
+    // @private {*|null} - Saved options to help determine the starting/ending values
+    this.from = options.from;
+    this.to = options.to;
+    this.delta = options.delta;
+
+    // @private {number|null} - Saved options to help determine the length of the animation
+    this.speed = options.speed;
+
+    // @private {function}
+    this.blend = options.blend;
+    this.distance = options.distance;
+    this.add = options.add;
+
+    // @private {*} - Computed start/end values for the animation (once the animation finishes the delay and begins)
+    this.startingValue = null;
+    this.endingValue = null;
+  }
+
+  twixt.register( 'AnimationTarget', AnimationTarget );
+
+  inherit( Object, AnimationTarget, {
+    /**
+     * Computes the starting and ending values of this target.
+     * @public
+     *
+     * Generally called when the animation is just about to begin, so that it can use the value lookup of the current
+     * value if necessary.
+     */
+    computeStartEnd: function() {
+      this.startingValue = ( this.from !== null ) ? this.from : this.getValue();
+      this.endingValue = ( this.to !== null ) ? this.to : this.add( this.startingValue, this.delta );
+    },
+
+    /**
+     * Updates the value of this target.
+     * @public
+     *
+     * @param {number} ratio - How far along (from 0 to 1) in the animation.
+     */
+    update: function( ratio ) {
+      this.setValue( this.blend( this.startingValue, this.endingValue, this.easing.value( ratio ) ) );
+    },
+
+    /**
+     * Whether this target can define the duration of an animation.
+     * @public
+     *
+     * @returns {boolean}
+     */
+    hasPreferredDuration: function() {
+      return this.speed !== null;
+    },
+
+    /**
+     * Returns the preferred duration of this target (or null if not defined).
+     * @public
+     *
+     * @returns {number|null}
+     */
+    getPreferredDuration: function() {
+      return this.speed === null ? null : this.speed * this.distance( this.startingValue, this.delta );
+    }
+  }, {
+    /**
+     * Default blending function for the `blend` function.
+     * @public
+     *
+     * @param {*} a
+     * @param {*} b
+     * @param {number} ratio
+     * @returns {*}
+     */
+    DEFAULT_BLEND: function( a, b, ratio ) {
+      assert && assert( typeof ratio === 'number' && isFinite( ratio ) && ratio >= 0 && ratio <= 1, 'Invalid ratio: ' + ratio );
+
+      if ( ratio === 0 ) { return a; }
+      if ( ratio === 1 ) { return b; }
+
+      if ( typeof a === 'number' && typeof b === 'number' ) {
+        return a + ( b - a ) * ratio;
+      }
+      if ( typeof a === 'object' && typeof b === 'object' && typeof a.blend === 'function' ) {
+        return a.blend( b, ratio );
+      }
+
+      throw new Error( 'Blending not supported for: ' + a + ', ' + b + ', pass in a blend option' );
+    },
+
+    /**
+     * Default distance function for the `distance` option (used for the `speed` option)
+     * @public
+     *
+     * @param {*} a
+     * @param {*} b
+     * @returns {*}
+     */
+    DEFAULT_DISTANCE: function( a, b ) {
+      if ( typeof a === 'number' && typeof b === 'number' ) {
+        return Math.abs( a - b );
+      }
+      if ( typeof a === 'object' && typeof b === 'object' && typeof a.distance === 'function' ) {
+        return a.distance( b );
+      }
+
+      throw new Error( 'Distance (required for speed) by default not supported for: ' + a + ', ' + b + ', pass in a distance option' );
+    },
+
+    /**
+     * Default addition function for the `add` option (used for the `delta` option)
+     * @public
+     *
+     * @param {*} a
+     * @param {*} b
+     * @returns {*}
+     */
+    DEFAULT_ADD: function( a, b ) {
+      if ( typeof a === 'number' && typeof b === 'number' ) {
+        return a + b;
+      }
+      if ( typeof a === 'object' && typeof b === 'object' && typeof a.plus === 'function' ) {
+        return a.plus( b );
+      }
+
+      throw new Error( 'Addition (required for delta) by default not supported for: ' + a + ', ' + b + ', pass in an add option' );
+    },
+
+    /**
+     * Helper function for creating a setter closure for object[ attribute ].
+     * @private
+     *
+     * @param {Object} object
+     * @param {string} attribute
+     * @returns {function}
+     */
+    OBJECT_SET: function( object, attribute ) {
+      return function( value ) {
+        object[ attribute ] = value;
+      };
+    },
+
+    /**
+     * Helper function for creating a getter closure for object[ attribute ].
+     * @private
+     *
+     * @param {Object} object
+     * @param {string} attribute
+     * @returns {function}
+     */
+    OBJECT_GET: function( object, attribute ) {
+      return function() {
+        return object[ attribute ];
+      };
+    },
+
+    /**
+     * Helper function for creating a setter closure for Properties
+     * @private
+     *
+     * @param {Property} property
+     * @returns {function}
+     */
+    PROPERTY_SET: function( property ) {
+      return function( value ) {
+        property.value = value;
+      };
+    },
+
+    /**
+     * Helper function for creating a getter closure for Properties
+     * @private
+     *
+     * @param {Property} property
+     * @returns {function}
+     */
+    PROPERTY_GET: function( property ) {
+      return function() {
+        return property.value;
+      };
+    }
+  } );
+
+  return AnimationTarget;
+} );

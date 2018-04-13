@@ -1,4 +1,4 @@
-// Copyright 2015, University of Colorado Boulder
+// Copyright 2018, University of Colorado Boulder
 
 /**
  * Behavior that allows sliding between two full-screenview sized panels based on a Property.
@@ -14,7 +14,7 @@ define( function( require ) {
   var Easing = require( 'TWIXT/Easing' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Node = require( 'SCENERY/nodes/Node' );
-  var sun = require( 'SUN/sun' );
+  var twixt = require( 'TWIXT/twixt' );
 
   /**
    * @constructor
@@ -59,7 +59,7 @@ define( function( require ) {
     this.ratio = 0;
   }
 
-  sun.register( 'SlidingScreen', SlidingScreen );
+  twixt.register( 'SlidingScreen', SlidingScreen );
 
   return inherit( Node, SlidingScreen, {
     /**

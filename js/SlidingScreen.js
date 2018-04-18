@@ -85,8 +85,8 @@ define( function( require ) {
      * @public
      */
     setMoving: function( isMoving ) {
-      this.leftNode.pickable = !isMoving;
-      this.rightNode.pickable = !isMoving;
+      this.leftNode.pickable = isMoving ? false : null;
+      this.rightNode.pickable = isMoving ? false : null;
 
       this.leftNode.visible = isMoving ? true : this.showingLeftProperty.value;
       this.rightNode.visible = isMoving ? true : !this.showingLeftProperty.value;

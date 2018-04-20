@@ -191,13 +191,13 @@ define( function( require ) {
     },
 
     /**
-     * Start a transition to replace our content with the new content, using Transition.dissol.
+     * Start a transition to replace our content with the new content, using Transition.dissolve.
      * @public
      *
      * @param {Node|null} content - If null, the current content will still animate out (with nothing replacing it).
      * @param {Object} options - Passed as options to the Animation. Usually a duration should be included.
      */
-    dissolve: function( content, options ) {
+    dissolveTo: function( content, options ) {
       this.startTransition( content, Transition.dissolve( this.fromContent, content, options ) );
     },
 

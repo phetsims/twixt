@@ -117,7 +117,7 @@ define( function( require ) {
       'wipeRightTo',
       'wipeUpTo',
       'wipeDownTo',
-      'dissolve'
+      'dissolveTo'
     ].map( function( name ) {
       return new RectangularPushButton( {
         content: new Text( name, { font: new PhetFont( 20 ) } ),

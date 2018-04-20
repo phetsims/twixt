@@ -48,7 +48,7 @@ define( function( require ) {
    * |   property: someNumberProperty,
    * |   to: 5
    * | } );
-   * 
+   *
    * However multiple different targets are supported, and should be specified in the `targets` option:
    * | var someNumberProperty = new NumberProperty( 100 );
    * | var someObject = { someAttribute: new Vector2( 100, 5 ) };
@@ -111,11 +111,11 @@ define( function( require ) {
 
       // {number|null} - If provided, the animation's length will be this value (in seconds). If omitted, one of the
       // targets' `speed` option should be set (the length of the animation will be based on that).
-      duration: null, 
+      duration: null,
 
       // {number} - The amount of time (in seconds) between when the animation is "started" and when the actual
       // animation of the value begins. Negative delays are not supported.
-      delay: 0, 
+      delay: 0,
 
       // {string} - One of the following options:
       // 'manual' - `step( dt )` should be called manually to advance the animation
@@ -175,7 +175,7 @@ define( function( require ) {
     // @public {Emitter} - Fired when the actual animation of the value begins (i.e. when the delay finishes and the
     // actual animation begins).
     this.beginEmitter = new Emitter();
-    
+
     // @public {Emitter} - Fired when the animation finishes naturally (was not abnormally stopped).
     // A {number} is provided as a single argument to the emit callback, and represents how much "extra" time occurred
     // after the end of the animation. For example, if you have a 1-second animation and stepped it by 3 seconds, this
@@ -185,6 +185,10 @@ define( function( require ) {
     // @public {Emitter} - Fired when the animation is manually stopped (with stop()). Does NOT fire when it finishes
     // normally.
     this.stopEmitter = new Emitter();
+
+    // @public {Emitter} - Fired when the animation ends, regardless of whether it fully finished, or was stopped
+    // prematurely.
+    this.endedEmitter = new Emitter();
 
     // @public {Emitter} - Fired when (just after) the animation has changed animated values/targets.
     this.updateEmitter = new Emitter();
@@ -238,6 +242,7 @@ define( function( require ) {
       // Notifications
       this.runningProperty.value = false;
       this.stopEmitter.emit();
+      this.endedEmitter.emit();
 
       return this;
     },
@@ -302,6 +307,7 @@ define( function( require ) {
         this.animatingProperty.value = false;
         this.runningProperty.value = false;
         this.finishEmitter.emit( dt );
+        this.endedEmitter.emit();
       }
 
       return this;

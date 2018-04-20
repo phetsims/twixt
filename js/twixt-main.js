@@ -16,6 +16,7 @@ define( function( require ) {
   var Screen = require( 'JOIST/Screen' );
   var Sim = require( 'JOIST/Sim' );
   var SimLauncher = require( 'JOIST/SimLauncher' );
+  var TransitionDemoView = require( 'TWIXT/demo/TransitionDemoView' );
 
   // strings
   var twixtTitleString = require( 'string!TWIXT/twixt.title' );
@@ -50,6 +51,14 @@ define( function( require ) {
         function( model ) { return new DampedMotionView(); },
         {
           name: 'Damped Motion',
+          backgroundColorProperty: new Property( 'white' )
+        }
+      ),
+      new Screen(
+        function() { return {}; },
+        function( model ) { return new TransitionDemoView(); },
+        {
+          name: 'Transitions',
           backgroundColorProperty: new Property( 'white' )
         }
       )

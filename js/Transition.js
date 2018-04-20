@@ -199,16 +199,27 @@ define( function( require ) {
      * @returns {Transition}
      */
     dissolve: function( fromNode, toNode, options ) {
+      options = _.extend( {
+        // {number} - Handles gamma correction for the opacity when required
+        gamma: 1
+      }, options );
+
+      function gammaBlend( a, b, ratio ) {
+        return Math.pow( ( 1 - ratio ) * a + ratio * b, options.gamma );
+      }
+
       return new Transition( fromNode, toNode, _.extend( {
         fromTargets: [ {
           attribute: 'opacity',
           from: 1,
-          to: 0
+          to: 0,
+          blend: gammaBlend
         } ],
         toTargets: [ {
           attribute: 'opacity',
           from: 0,
-          to: 1
+          to: 1,
+          blend: gammaBlend
         } ],
         resetNode: function( node ) {
           node.opacity = 1;

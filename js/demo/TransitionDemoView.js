@@ -65,7 +65,7 @@ define( function( require ) {
 
     // @private {TransitionNode}
     this.transitionNode = new TransitionNode( new Property( bounds ), {
-      initialContent: createSomething()
+      content: createSomething()
     } );
 
     var listParent = new Node();

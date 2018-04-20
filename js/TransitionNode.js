@@ -30,7 +30,11 @@ define( function( require ) {
    */
   function TransitionNode( boundsProperty, options ) {
     options = _.extend( {
-      initialContent: null,
+      // {Node|null} - Optionally may have initial content
+      content: null,
+
+      // {boolean} - If true, a clip area will set to the value of the boundsProperty so that outside content won't
+      // be shown.
       useBoundsClip: true
     }, options );
 
@@ -44,7 +48,7 @@ define( function( require ) {
 
     // @private {Node|null} - When animating, it is the content that we are animating away from. Otherwise, it holds the
     // main content node.
-    this.fromContent = options.initialContent;
+    this.fromContent = options.content;
 
     // @private {Node|null} - Holds the content that we are animating towards.
     this.toContent = null;
@@ -67,7 +71,7 @@ define( function( require ) {
 
   inherit( Node, TransitionNode, {
     /**
-     * TODO doc
+     * Steps forward in time, animating the transition.
      * @public
      *
      * @param {number} dt
@@ -77,13 +81,19 @@ define( function( require ) {
     },
 
     /**
-     * TODO doc
+     * Interrupts the transition, ending it and resetting the animated values.
      * @public
      */
     interrupt: function() {
       this.transition && this.transition.stop();
     },
 
+    /**
+     * Called on bounds changes.
+     * @private
+     *
+     * @param {Bounds2} bounds
+     */
     onBoundsChange: function( bounds ) {
       this.interrupt();
 
@@ -92,34 +102,112 @@ define( function( require ) {
       }
     },
 
+    /**
+     * Start a transition to replace our content with the new content, using Transition.slideLeft.
+     * @public
+     *
+     * @param {Node|null} content - If null, the current content will still animate out (with nothing replacing it).
+     * @param {Object} options - Passed as options to the Animation. Usually a duration should be included.
+     */
     slideLeftTo: function( content, options ) {
       this.startTransition( content, Transition.slideLeft( this.boundsProperty.value, this.fromContent, content, options ) );
     },
+
+    /**
+     * Start a transition to replace our content with the new content, using Transition.slideRight.
+     * @public
+     *
+     * @param {Node|null} content - If null, the current content will still animate out (with nothing replacing it).
+     * @param {Object} options - Passed as options to the Animation. Usually a duration should be included.
+     */
     slideRightTo: function( content, options ) {
       this.startTransition( content, Transition.slideRight( this.boundsProperty.value, this.fromContent, content, options ) );
     },
+
+    /**
+     * Start a transition to replace our content with the new content, using Transition.slideUp.
+     * @public
+     *
+     * @param {Node|null} content - If null, the current content will still animate out (with nothing replacing it).
+     * @param {Object} options - Passed as options to the Animation. Usually a duration should be included.
+     */
     slideUpTo: function( content, options ) {
       this.startTransition( content, Transition.slideUp( this.boundsProperty.value, this.fromContent, content, options ) );
     },
+
+    /**
+     * Start a transition to replace our content with the new content, using Transition.slideDown.
+     * @public
+     *
+     * @param {Node|null} content - If null, the current content will still animate out (with nothing replacing it).
+     * @param {Object} options - Passed as options to the Animation. Usually a duration should be included.
+     */
     slideDownTo: function( content, options ) {
       this.startTransition( content, Transition.slideDown( this.boundsProperty.value, this.fromContent, content, options ) );
     },
+
+    /**
+     * Start a transition to replace our content with the new content, using Transition.wipeLeft.
+     * @public
+     *
+     * @param {Node|null} content - If null, the current content will still animate out (with nothing replacing it).
+     * @param {Object} options - Passed as options to the Animation. Usually a duration should be included.
+     */
     wipeLeftTo: function( content, options ) {
       this.startTransition( content, Transition.wipeLeft( this.boundsProperty.value, this.fromContent, content, options ) );
     },
+
+    /**
+     * Start a transition to replace our content with the new content, using Transition.wipeRight.
+     * @public
+     *
+     * @param {Node|null} content - If null, the current content will still animate out (with nothing replacing it).
+     * @param {Object} options - Passed as options to the Animation. Usually a duration should be included.
+     */
     wipeRightTo: function( content, options ) {
       this.startTransition( content, Transition.wipeRight( this.boundsProperty.value, this.fromContent, content, options ) );
     },
+
+    /**
+     * Start a transition to replace our content with the new content, using Transition.wipeUp.
+     * @public
+     *
+     * @param {Node|null} content - If null, the current content will still animate out (with nothing replacing it).
+     * @param {Object} options - Passed as options to the Animation. Usually a duration should be included.
+     */
     wipeUpTo: function( content, options ) {
       this.startTransition( content, Transition.wipeUp( this.boundsProperty.value, this.fromContent, content, options ) );
     },
+
+    /**
+     * Start a transition to replace our content with the new content, using Transition.wipeDown.
+     * @public
+     *
+     * @param {Node|null} content - If null, the current content will still animate out (with nothing replacing it).
+     * @param {Object} options - Passed as options to the Animation. Usually a duration should be included.
+     */
     wipeDownTo: function( content, options ) {
       this.startTransition( content, Transition.wipeDown( this.boundsProperty.value, this.fromContent, content, options ) );
     },
+
+    /**
+     * Start a transition to replace our content with the new content, using Transition.dissol.
+     * @public
+     *
+     * @param {Node|null} content - If null, the current content will still animate out (with nothing replacing it).
+     * @param {Object} options - Passed as options to the Animation. Usually a duration should be included.
+     */
     dissolve: function( content, options ) {
       this.startTransition( content, Transition.dissolve( this.fromContent, content, options ) );
     },
 
+    /**
+     * Starts a transition, and hooks up a listener to handle state changes when it ends.
+     * @private
+     *
+     * @param {Node|null} content
+     * @param {Transition} transition
+     */
     startTransition: function( content, transition ) {
       var self = this;
 
@@ -133,6 +221,7 @@ define( function( require ) {
 
       this.transition = transition;
 
+      // Simplifies many things if the user can't mess with things while animating.
       this.fromContent.pickable = false;
       this.toContent.pickable = false;
 

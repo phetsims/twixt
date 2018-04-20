@@ -124,7 +124,9 @@ define( function( require ) {
         listener: function() {
           self.transitionNode[ name ]( createSomething(), {
             duration: durationProperty.value,
-            easing: easingProperty.value
+            targetOptions: {
+              easing: easingProperty.value
+            }
           } );
         }
       } );

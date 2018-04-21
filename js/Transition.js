@@ -21,13 +21,14 @@ define( function( require ) {
    * NOTE: The nodes' transform/pickability/visibility/opacity/clipArea/etc. can be modified, and will be reset to
    * the default value when the transition finishes.
    *
-   * @param {Node|null} fromNode
+   * @param {Node|null} fromNode // REVIEW: Technically these do not need to be nodes, right?
    * @param {Node|null} toNode
    * @param {Object} config
    */
   function Transition( fromNode, toNode, config ) {
     config = _.extend( {
       // Required {Array.<Object>} TODO doc
+      // REVIEW: Doc
       fromTargets: null,
       toTargets: null,
 
@@ -65,6 +66,8 @@ define( function( require ) {
 
     Animation.call( this, _.extend( {
       targets: targets
+
+      // REVIEW: In general, if we are omitting from the config, use the keys from the extend defaults.
     }, _.omit( config, [ 'targetOptions', 'fromTargets', 'toTargets', 'resetNode' ] ) ) );
 
     // When this animation ends, reset the values for both nodes

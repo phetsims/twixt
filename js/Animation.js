@@ -123,6 +123,9 @@ define( function( require ) {
       // TODO: {ScreenView} - animates only when the ScreenView is the active one.
       // TODO: {Node} - animates only when the node's trail is visible on a Display
       stepper: 'manual'
+
+      // REVIEW: Can we mention property, setValue and object as keys with null values here, and change the corresponding
+      // REVIEW: assertion statement?  It seems it would be a clearer API.
     }, options );
 
     assert && assert( +( options.property !== undefined ) + +( options.object !== undefined ) + +( options.setValue !== undefined ) + +( options.targets !== null ) === 1,
@@ -205,7 +208,7 @@ define( function( require ) {
      * Starts the animation (or if it has a delay, sets the animation to start after that delay).
      * @public
      *
-     * @param {number} [dt] - If provided, step this far into the animation initially.
+     * @param {number} [dt] - If provided, step this far into the animation initially. REVIEW: Why would someone want to do this?  It sounds unnecessary.
      * @returns {Animation} - Returns the this reference, to support chaining.
      */
     start: function( dt ) {

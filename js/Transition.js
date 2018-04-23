@@ -282,6 +282,8 @@ define( function( require ) {
 
       // We need to apply custom clip area interpolation
       function clipBlend( boundsA, boundsB, ratio ) {
+
+        // REVIEW: Shape.bounds purportedly returns a Bounds2, and so does Bounds2.blend.  So can we remove the Shape.bounds() part?
         return Shape.bounds( boundsA.blend( boundsB, ratio ) );
       }
 

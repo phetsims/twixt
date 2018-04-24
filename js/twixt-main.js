@@ -11,7 +11,6 @@ define( function( require ) {
   // modules
   var AnimationView = require( 'TWIXT/demo/AnimationView' );
   var DampedMotionView = require( 'TWIXT/demo/DampedMotionView' );
-  var EasingDemoView = require( 'TWIXT/demo/EasingDemoView' );
   var Property = require( 'AXON/Property' );
   var Screen = require( 'JOIST/Screen' );
   var Sim = require( 'JOIST/Sim' );
@@ -35,14 +34,6 @@ define( function( require ) {
         function( model ) { return new AnimationView(); },
         {
           name: 'Animation',
-          backgroundColorProperty: new Property( 'white' )
-        }
-      ),
-      new Screen(
-        function() { return {}; },
-        function( model ) { return new EasingDemoView(); },
-        {
-          name: 'Easing',
           backgroundColorProperty: new Property( 'white' )
         }
       ),

@@ -101,7 +101,7 @@ define( function( require ) {
             easing: easingProperty.value,
             to: new Color( phet.joist.random.nextInt( 256 ), phet.joist.random.nextInt( 256 ), phet.joist.random.nextInt( 256 ), 0.5 )
           } ],
-          duration: durationProperty.value,
+          duration: durationProperty.value
         } ).start();
       }
     } );

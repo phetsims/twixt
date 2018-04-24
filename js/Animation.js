@@ -208,7 +208,7 @@ define( function( require ) {
      * Starts the animation (or if it has a delay, sets the animation to start after that delay).
      * @public
      *
-     * @param {number} [dt] - If provided, step this far into the animation initially. REVIEW: Why would someone want to do this?  It sounds unnecessary.
+     * @param {number} [dt] - If provided, step this far into the animation initially.  Used for chaining animations.
      * @returns {Animation} - Returns the this reference, to support chaining.
      */
     start: function( dt ) {
@@ -309,6 +309,8 @@ define( function( require ) {
       if ( ratio === 1 ) {
         this.animatingProperty.value = false;
         this.runningProperty.value = false;
+
+        // Step into the next animation by the overflow time
         this.finishEmitter.emit( dt );
         this.endedEmitter.emit();
       }

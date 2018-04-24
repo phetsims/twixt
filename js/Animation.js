@@ -214,7 +214,7 @@ define( function( require ) {
     start: function( dt ) {
       // If we are already animating, do nothing
       if ( this.runningProperty.value ) {
-        return; // REVIEW: return this for chaining
+        return this;
       }
 
       // The remaining delay needs to be valid immediately after start is called.
@@ -239,7 +239,7 @@ define( function( require ) {
     stop: function() {
       // If we are not already animating, do nothing
       if ( !this.runningProperty.value ) {
-        return; // REVIEW: return this for chaining
+        return this;
       }
 
       // Notifications
@@ -261,7 +261,7 @@ define( function( require ) {
 
       // Ignore the step if our animation is not running
       if ( !this.runningProperty.value ) {
-        return; // REVIEW: return this for chaining
+        return this;
       }
 
       // First, burn through the delay if animation hasn't started yet.
@@ -271,7 +271,7 @@ define( function( require ) {
 
         // Bail if we are not ready to start the animation
         if ( this.remainingDelay > 0 ) {
-          return; // REVIEW: return this for chaining
+          return this;
         }
 
         // Compute the start/end for each target, and determine the length of our animation

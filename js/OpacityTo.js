@@ -49,7 +49,6 @@ define( function( require ) {
       .delay( options.delay )
       .onStart( function() {
         node.opacity = parameters.opacity;
-        node.visible = true;
         options.onStart && options.onStart();
       } )
       .onUpdate( function() {

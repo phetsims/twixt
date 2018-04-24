@@ -73,11 +73,11 @@ define( function( require ) {
 
       // {Property.<*>|null} - If provided, it should be an axon Property with the current value. It will be modified
       // by the animation. NOTE: do not provide this and setValue/object
-      property: null, 
+      property: null,
 
       // {*|null} - If provided, it should point to an object where `object[ attribute ]` is the value to be modified
       // by the animation. NOTE: do not provide this and setValue/property
-      object: null, 
+      object: null,
       // {string|null} - If `object` is provided, it should be a string such that `object[ attribute ]` is the value to
       // be modified.
       attribute: null,
@@ -105,7 +105,7 @@ define( function( require ) {
       // {number|null} - If provided, the animation's length will be this value (seconds/unit) times the "distance" 
       // between the start and end value of the animation. The `distance` option can be used to specify a way to
       // compute the distance, and works by default as expected for number/Vector2/Vector3/Vector4.
-      speed: null, 
+      speed: null,
 
       // {*|null} - If provided, the animation will start from this value (instead of getting the current value to start
       // from).
@@ -129,7 +129,7 @@ define( function( require ) {
       // {function} - Should be of the form `function( start: {*}, delta: {*} ): {*}` where it adds together a value
       // and a "delta" (usually just a value of the same type) and returns the result. This is used for the `delta`
       // option. The default should work for number/Vector2/Vector3/Vector4.
-      add: AnimationTarget.DEFAULT_ADD 
+      add: AnimationTarget.DEFAULT_ADD
 
     }, options );
 
@@ -199,8 +199,7 @@ define( function( require ) {
      * Computes the starting and ending values of this target.
      * @public
      *
-     * Generally called when the animation is just about to begin, so that it can use the value lookup of the current
-     * value if necessary.
+     * Generally called when the animation is just about to begin, so it can look up the current value if necessary.
      */
     computeStartEnd: function() {
       this.startingValue = ( this.from !== null ) ? this.from : this.getValue();

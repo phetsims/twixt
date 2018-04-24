@@ -1,7 +1,7 @@
 // Copyright 2018, University of Colorado Boulder
 
 /**
- * An animation that will animate one node out, and another in.
+ * An animation that will animate one object (usually a Node) out, and another in.
  *
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */
@@ -27,15 +27,16 @@ define( function( require ) {
    */
   function Transition( fromNode, toNode, config ) {
     config = _.extend( {
-      // Required {Array.<Object>} TODO doc
-      // REVIEW: Doc
+      // {Array.<Object>} - A list of partial configurations that will individually be passed to
+      // the targets for an Animation (and thus to AnimationTarget). They will be combined with `object: node` and
+      // options.targetOptions to create the Animation. See Animation's targets parameter for more information
       fromTargets: null,
       toTargets: null,
 
-      // Required {function}
+      // {function} - function( {Node} ), resets the animated parameter(s) to their default values.
       resetNode: null,
 
-      // Optional
+      // {Object|null} (optional) - Passed as additional objects to every target
       targetOptions: null
     }, config );
 

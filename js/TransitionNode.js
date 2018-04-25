@@ -33,7 +33,7 @@ define( function( require ) {
       // {Node|null} - Optionally may have initial content
       content: null,
 
-      // {boolean} - If true, a clip area will set to the value of the boundsProperty so that outside content won't
+      // {boolean} - If true, a clip area will be set to the value of the boundsProperty so that outside content won't
       // be shown.
       useBoundsClip: true
     }, options );

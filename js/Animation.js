@@ -135,8 +135,10 @@ define( function( require ) {
       'If provided, stepper should be "manual", "timer", or (TODO)' );
 
     // @private {Array.<AnimationTarget>} - All of the different values that will be animated by this animation.
+    // If options.targets was supplied, those targets will be wrapped into AnimationTargets
+    // If options.targets was not supplied, the options from this object will be wrapped into one AnimationTarget
     this.targets = _.map( options.targets === null ? [ options ] : options.targets, function( options ) {
-      return new AnimationTarget( options );
+      return new AnimationTarget( options ); // TODO: strip out the irrelevant options when using options arg
     } );
 
     assert && assert( +( options.duration !== null ) + _.sum( _.map( this.targets, function( target ) {

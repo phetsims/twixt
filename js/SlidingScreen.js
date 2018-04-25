@@ -6,6 +6,7 @@
  * NOTE: Needs twixt as a dependency (modify package.json and regenerate dev files)
  *
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
+ * @deprecated - Please use TransitionNode.js
  */
 define( function( require ) {
   'use strict';
@@ -19,6 +20,7 @@ define( function( require ) {
   /**
    * @constructor
    * @extends {Node}
+   * @deprecated - Please use TransitionNode.js
    *
    * @param {Node} leftNode - The node shown as the "left" screen.
    * @param {Node} rightNode - The node shown as the "right" screen.

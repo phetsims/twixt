@@ -4,6 +4,7 @@
  * Animates a node's location.
  *
  * @author Chris Malley (PixelZoom, Inc)
+ * @deprecated - Please use Animation.js
  */
 define( function( require ) {
   'use strict';
@@ -17,6 +18,7 @@ define( function( require ) {
    * @param {Vector2} destination
    * @param {Object} options
    * @constructor
+   * @deprecated - Please use Animation.js
    */
   function MoveTo( node, destination, options ) {
 

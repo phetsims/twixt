@@ -4,6 +4,7 @@
  * Animates a node's opacity.
  *
  * @author Chris Malley (PixelZoom, Inc)
+ * @deprecated - Please use Animation.js
  */
 define( function( require ) {
   'use strict';
@@ -16,6 +17,7 @@ define( function( require ) {
    * @param {Node} node
    * @param {Object} options
    * @constructor
+   * @deprecated - Please use Animation.js
    */
   function OpacityTo( node, options ) {
 

@@ -87,7 +87,7 @@ define( function( require ) {
      * @param {Bounds2} bounds
      * @param {Node|null} fromNode
      * @param {Node|null} toNode
-     * @param {Object} [options] - Usually specify duration, easing, or other animation attributes.
+     * @param {Object} [options] - Usually specify duration, easing, or other Animation options.
      * @returns {Transition}
      */
     slideLeft: function( bounds, fromNode, toNode, options ) {
@@ -101,7 +101,7 @@ define( function( require ) {
      * @param {Bounds2} bounds
      * @param {Node|null} fromNode
      * @param {Node|null} toNode
-     * @param {Object} [options] - Usually specify duration, easing, or other animation attributes.
+     * @param {Object} [options] - Usually specify duration, easing, or other Animation options.
      * @returns {Transition}
      */
     slideRight: function( bounds, fromNode, toNode, options ) {
@@ -115,7 +115,7 @@ define( function( require ) {
      * @param {Bounds2} bounds
      * @param {Node|null} fromNode
      * @param {Node|null} toNode
-     * @param {Object} [options] - Usually specify duration, easing, or other animation attributes.
+     * @param {Object} [options] - Usually specify duration, easing, or other Animation options.
      * @returns {Transition}
      */
     slideUp: function( bounds, fromNode, toNode, options ) {
@@ -129,7 +129,7 @@ define( function( require ) {
      * @param {Bounds2} bounds
      * @param {Node|null} fromNode
      * @param {Node|null} toNode
-     * @param {Object} [options] - Usually specify duration, easing, or other animation attributes.
+     * @param {Object} [options] - Usually specify duration, easing, or other Animation options.
      * @returns {Transition}
      */
     slideDown: function( bounds, fromNode, toNode, options ) {
@@ -143,7 +143,7 @@ define( function( require ) {
      * @param {Bounds2} bounds
      * @param {Node|null} fromNode
      * @param {Node|null} toNode
-     * @param {Object} [options] - Usually specify duration, easing, or other animation attributes.
+     * @param {Object} [options] - Usually specify duration, easing, or other Animation options.
      * @returns {Transition}
      */
     wipeLeft: function( bounds, fromNode, toNode, options ) {
@@ -157,7 +157,7 @@ define( function( require ) {
      * @param {Bounds2} bounds
      * @param {Node|null} fromNode
      * @param {Node|null} toNode
-     * @param {Object} [options] - Usually specify duration, easing, or other animation attributes.
+     * @param {Object} [options] - Usually specify duration, easing, or other Animation options.
      * @returns {Transition}
      */
     wipeRight: function( bounds, fromNode, toNode, options ) {
@@ -171,7 +171,7 @@ define( function( require ) {
      * @param {Bounds2} bounds
      * @param {Node|null} fromNode
      * @param {Node|null} toNode
-     * @param {Object} [options] - Usually specify duration, easing, or other animation attributes.
+     * @param {Object} [options] - Usually specify duration, easing, or other Animation options.
      * @returns {Transition}
      */
     wipeUp: function( bounds, fromNode, toNode, options ) {
@@ -185,7 +185,7 @@ define( function( require ) {
      * @param {Bounds2} bounds
      * @param {Node|null} fromNode
      * @param {Node|null} toNode
-     * @param {Object} [options] - Usually specify duration, easing, or other animation attributes.
+     * @param {Object} [options] - Usually specify duration, easing, or other Animation options.
      * @returns {Transition}
      */
     wipeDown: function( bounds, fromNode, toNode, options ) {
@@ -198,7 +198,7 @@ define( function( require ) {
      *
      * @param {Node|null} fromNode
      * @param {Node|null} toNode
-     * @param {Object} [options] - Usually specify duration, easing, or other animation attributes.
+     * @param {Object} [options] - Usually specify duration, easing, or other Animation options.
      * @returns {Transition}
      */
     dissolve: function( fromNode, toNode, options ) {

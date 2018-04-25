@@ -26,7 +26,7 @@ define( function( require ) {
    * @param {Object} config
    */
   function Transition( fromNode, toNode, config ) {
-    config = _.extend( {
+    var defaults = {
       // {Array.<Object>} - A list of partial configurations that will individually be passed to
       // the targets for an Animation (and thus to AnimationTarget). They will be combined with `object: node` and
       // options.targetOptions to create the Animation. See Animation's targets parameter for more information
@@ -38,7 +38,8 @@ define( function( require ) {
 
       // {Object|null} (optional) - Passed as additional objects to every target
       targetOptions: null
-    }, config );
+    };
+    config = _.extend( {}, defaults, config );
 
     assert && assert( config.fromTargets );
     assert && assert( config.toTargets );
@@ -67,9 +68,7 @@ define( function( require ) {
 
     Animation.call( this, _.extend( {
       targets: targets
-
-      // REVIEW: In general, if we are omitting from the config, use the keys from the extend defaults.
-    }, _.omit( config, [ 'targetOptions', 'fromTargets', 'toTargets', 'resetNode' ] ) ) );
+    }, _.omit( config, _.keys( defaults ) ) ) );
 
     // When this animation ends, reset the values for both nodes
     this.endedEmitter.addListener( function() {

@@ -21,7 +21,7 @@ define( function( require ) {
    * NOTE: The nodes' transform/pickability/visibility/opacity/clipArea/etc. can be modified, and will be reset to
    * the default value when the transition finishes.
    *
-   * @param {Node|null} fromNode // REVIEW: Technically these do not need to be nodes, right?
+   * @param {Node|null} fromNode
    * @param {Node|null} toNode
    * @param {Object} config
    */

@@ -12,11 +12,11 @@
  *               |------------------------------running-----------------------------------|
  *                                                 |-------------animating----------------|
  *
- * TODO: pause/cancel (and stop->cancel renaming)
- * TODO: function for blending with angular/rotational values
- * TODO: consider keyframed animation helper?
- * TODO: Hooks for attaching/detaching stepping via screens/nodes
- * TODO: Add documentation examples (contingent on how screen/node hooks work)
+ * TODO #3: pause/cancel (and stop->cancel renaming)
+ * TODO #3: function for blending with angular/rotational values
+ * TODO #3: consider keyframed animation helper?
+ * TODO #3: Hooks for attaching/detaching stepping via screens/nodes
+ * TODO #3: Add documentation examples (contingent on how screen/node hooks work)
  *
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */
@@ -138,7 +138,7 @@ define( function( require ) {
     // If options.targets was supplied, those targets will be wrapped into AnimationTargets
     // If options.targets was not supplied, the options from this object will be wrapped into one AnimationTarget
     this.targets = _.map( options.targets === null ? [ options ] : options.targets, function( options ) {
-      return new AnimationTarget( options ); // TODO: strip out the irrelevant options when using options arg
+      return new AnimationTarget( options ); // TODO #3: strip out the irrelevant options when using options arg
     } );
 
     assert && assert( +( options.duration !== null ) + _.sum( _.map( this.targets, function( target ) {

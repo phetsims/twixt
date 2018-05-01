@@ -1,7 +1,7 @@
 // Copyright 2017, University of Colorado Boulder
 
 /**
- * TODO
+ * TODO #3
  *
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */

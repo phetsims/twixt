@@ -120,8 +120,8 @@ define( function( require ) {
       // {string} - One of the following options:
       // 'manual' - `step( dt )` should be called manually to advance the animation
       // 'timer' - When this animation is running, it will listen to the global phet-core Timer.
-      // TODO: {ScreenView} - animates only when the ScreenView is the active one.
-      // TODO: {Node} - animates only when the node's trail is visible on a Display
+      // TODO #3: {ScreenView} - animates only when the ScreenView is the active one.
+      // TODO #3: {Node} - animates only when the node's trail is visible on a Display
       stepper: 'manual'
     }, options );
 

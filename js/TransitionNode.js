@@ -35,8 +35,17 @@ define( function( require ) {
 
       // {boolean} - If true, a clip area will be set to the value of the boundsProperty so that outside content won't
       // be shown.
-      useBoundsClip: true
+      useBoundsClip: true,
+
+      // {Array.<Node>} - Any node specified in this array will be added as a permanent child internally, so that
+      // transitions to/from it don't incur higher performance penalties. It will instead just be invisible when not
+      // involved in a transition. Performance issues were initially noted in
+      // https://github.com/phetsims/equality-explorer/issues/75. Additional notes in
+      // https://github.com/phetsims/twixt/issues/17.
+      cachedNodes: []
     }, options );
+
+    assert && assert( !options.children, 'Children should not be specified, since cachedNodes will be applied' );
 
     Node.call( this );
 
@@ -46,6 +55,9 @@ define( function( require ) {
     // @private {boolean}
     this.useBoundsClip = options.useBoundsClip;
 
+    // @private {Array.<Node>}
+    this.cachedNodes = options.cachedNodes;
+
     // @private {Node|null} - When animating, it is the content that we are animating away from. Otherwise, it holds the
     // main content node.
     this.fromContent = options.content;
@@ -53,7 +65,13 @@ define( function( require ) {
     // @private {Node|null} - Holds the content that we are animating towards.
     this.toContent = null;
 
-    if ( this.fromContent ) {
+    this.children = this.cachedNodes;
+    for ( var i = 0; i < this.cachedNodes.length; i++ ) {
+      var cachedNode = this.cachedNodes[ i ];
+      cachedNode.visible = cachedNode === this.fromContent;
+    }
+
+    if ( this.fromContent && !_.includes( this.cachedNodes, this.fromContent ) ) {
       this.addChild( this.fromContent );
     }
 
@@ -107,10 +125,10 @@ define( function( require ) {
      * @public
      *
      * @param {Node|null} content - If null, the current content will still animate out (with nothing replacing it).
-     * @param {Object} options - Passed as options to the Animation. Usually a duration should be included.
+     * @param {Object} config - Passed as config to the Animation. Usually a duration should be included.
      */
-    slideLeftTo: function( content, options ) {
-      this.startTransition( content, Transition.slideLeft( this.boundsProperty.value, this.fromContent, content, options ) );
+    slideLeftTo: function( content, config ) {
+      this.startTransition( content, Transition.slideLeft( this.boundsProperty.value, this.fromContent, content, config ) );
     },
 
     /**
@@ -118,10 +136,10 @@ define( function( require ) {
      * @public
      *
      * @param {Node|null} content - If null, the current content will still animate out (with nothing replacing it).
-     * @param {Object} options - Passed as options to the Animation. Usually a duration should be included.
+     * @param {Object} config - Passed as config to the Animation. Usually a duration should be included.
      */
-    slideRightTo: function( content, options ) {
-      this.startTransition( content, Transition.slideRight( this.boundsProperty.value, this.fromContent, content, options ) );
+    slideRightTo: function( content, config ) {
+      this.startTransition( content, Transition.slideRight( this.boundsProperty.value, this.fromContent, content, config ) );
     },
 
     /**
@@ -129,10 +147,10 @@ define( function( require ) {
      * @public
      *
      * @param {Node|null} content - If null, the current content will still animate out (with nothing replacing it).
-     * @param {Object} options - Passed as options to the Animation. Usually a duration should be included.
+     * @param {Object} config - Passed as config to the Animation. Usually a duration should be included.
      */
-    slideUpTo: function( content, options ) {
-      this.startTransition( content, Transition.slideUp( this.boundsProperty.value, this.fromContent, content, options ) );
+    slideUpTo: function( content, config ) {
+      this.startTransition( content, Transition.slideUp( this.boundsProperty.value, this.fromContent, content, config ) );
     },
 
     /**
@@ -140,10 +158,10 @@ define( function( require ) {
      * @public
      *
      * @param {Node|null} content - If null, the current content will still animate out (with nothing replacing it).
-     * @param {Object} options - Passed as options to the Animation. Usually a duration should be included.
+     * @param {Object} config - Passed as config to the Animation. Usually a duration should be included.
      */
-    slideDownTo: function( content, options ) {
-      this.startTransition( content, Transition.slideDown( this.boundsProperty.value, this.fromContent, content, options ) );
+    slideDownTo: function( content, config ) {
+      this.startTransition( content, Transition.slideDown( this.boundsProperty.value, this.fromContent, content, config ) );
     },
 
     /**
@@ -151,10 +169,10 @@ define( function( require ) {
      * @public
      *
      * @param {Node|null} content - If null, the current content will still animate out (with nothing replacing it).
-     * @param {Object} options - Passed as options to the Animation. Usually a duration should be included.
+     * @param {Object} config - Passed as config to the Animation. Usually a duration should be included.
      */
-    wipeLeftTo: function( content, options ) {
-      this.startTransition( content, Transition.wipeLeft( this.boundsProperty.value, this.fromContent, content, options ) );
+    wipeLeftTo: function( content, config ) {
+      this.startTransition( content, Transition.wipeLeft( this.boundsProperty.value, this.fromContent, content, config ) );
     },
 
     /**
@@ -162,10 +180,10 @@ define( function( require ) {
      * @public
      *
      * @param {Node|null} content - If null, the current content will still animate out (with nothing replacing it).
-     * @param {Object} options - Passed as options to the Animation. Usually a duration should be included.
+     * @param {Object} config - Passed as config to the Animation. Usually a duration should be included.
      */
-    wipeRightTo: function( content, options ) {
-      this.startTransition( content, Transition.wipeRight( this.boundsProperty.value, this.fromContent, content, options ) );
+    wipeRightTo: function( content, config ) {
+      this.startTransition( content, Transition.wipeRight( this.boundsProperty.value, this.fromContent, content, config ) );
     },
 
     /**
@@ -173,10 +191,10 @@ define( function( require ) {
      * @public
      *
      * @param {Node|null} content - If null, the current content will still animate out (with nothing replacing it).
-     * @param {Object} options - Passed as options to the Animation. Usually a duration should be included.
+     * @param {Object} config - Passed as config to the Animation. Usually a duration should be included.
      */
-    wipeUpTo: function( content, options ) {
-      this.startTransition( content, Transition.wipeUp( this.boundsProperty.value, this.fromContent, content, options ) );
+    wipeUpTo: function( content, config ) {
+      this.startTransition( content, Transition.wipeUp( this.boundsProperty.value, this.fromContent, content, config ) );
     },
 
     /**
@@ -184,10 +202,10 @@ define( function( require ) {
      * @public
      *
      * @param {Node|null} content - If null, the current content will still animate out (with nothing replacing it).
-     * @param {Object} options - Passed as options to the Animation. Usually a duration should be included.
+     * @param {Object} config - Passed as config to the Animation. Usually a duration should be included.
      */
-    wipeDownTo: function( content, options ) {
-      this.startTransition( content, Transition.wipeDown( this.boundsProperty.value, this.fromContent, content, options ) );
+    wipeDownTo: function( content, config ) {
+      this.startTransition( content, Transition.wipeDown( this.boundsProperty.value, this.fromContent, content, config ) );
     },
 
     /**
@@ -195,10 +213,10 @@ define( function( require ) {
      * @public
      *
      * @param {Node|null} content - If null, the current content will still animate out (with nothing replacing it).
-     * @param {Object} options - Passed as options to the Animation. Usually a duration should be included.
+     * @param {Object} config - Passed as config to the Animation. Usually a duration should be included.
      */
-    dissolveTo: function( content, options ) {
-      this.startTransition( content, Transition.dissolve( this.fromContent, content, options ) );
+    dissolveTo: function( content, config ) {
+      this.startTransition( content, Transition.dissolve( this.fromContent, content, config ) );
     },
 
     /**
@@ -215,23 +233,49 @@ define( function( require ) {
       this.interrupt();
 
       this.toContent = content;
+
       if ( content ) {
-        this.addChild( content );
+        if ( _.includes( this.cachedNodes, content ) ) {
+          content.visible = true;
+        }
+        else {
+          this.addChild( content );
+        }
+        assert && assert( this.hasChild( content ),
+          'Should always have the content as a child at the start of a transition' );
       }
 
       this.transition = transition;
 
       // Simplifies many things if the user can't mess with things while animating.
-      this.fromContent.pickable = false;
-      this.toContent.pickable = false;
+      if ( this.fromContent ) {
+        this.fromContent.pickable = false;
+      }
+      if ( this.toContent ) {
+        this.toContent.pickable = false;
+      }
 
       transition.endedEmitter.addListener( function() {
-        self.fromContent.pickable = null;
-        self.toContent.pickable = null;
+        if ( self.fromContent ) {
+          self.fromContent.pickable = null;
+        }
+        if ( self.toContent ) {
+          self.toContent.pickable = null;
+        }
 
         self.transition = null;
 
-        self.removeChild( self.fromContent );
+        if ( self.fromContent ) {
+          if ( _.includes( self.cachedNodes, self.fromContent ) ) {
+            self.fromContent.visible = false;
+          }
+          else {
+            self.removeChild( self.fromContent );
+          }
+          assert && assert( self.hasChild( self.fromContent ) === _.includes( self.cachedNodes, self.fromContent ),
+            'Should have removed the child if it is not included in our cachedNodes' );
+        }
+
         self.fromContent = self.toContent;
         self.toContent = null;
       } );

@@ -17,18 +17,18 @@ define( function( require ) {
   /**
    * @constructor
    *
-   * NOTE: Generally don't use this directly. Instead use Animation, providing options for one or more targets.
+   * NOTE: Generally don't use this directly. Instead use Animation, providing config for one or more targets.
    *
    * Every animation target needs two things:
    *
    * 1. A way of getting/setting the animated value (`setValue`/`getValue`, `property`, or `object`/`attribute`).
    * 2. A way of determining the value to animate toward (`to` or `delta`).
    *
-   * @param {Object} [options] - See below in the constructor for documentation
+   * @param {Object} config - See below in the constructor for documentation
    */
-  function AnimationTarget( options ) {
+  function AnimationTarget( config ) {
 
-    options = _.extend( {
+    config = _.extend( {
       /*
        * NOTE: One of `setValue`/`property`/`object` is REQUIRED.
        *
@@ -43,20 +43,20 @@ define( function( require ) {
        * new Animation( {
        *   setValue: function( value ) { window.value = value * 10; },
        *   getValue: function() { return window.value / 10; },
-       *   // other options
+       *   // other config
        * } )
        *
        * var someVectorProperty = new axon.Property( new dot.Vector2( 10, 5 ) );
        * new Animation( {
        *   property: someVectorProperty,
-       *   // other options
+       *   // other config
        * } )
        *
        * var obj = { x: 5 };
        * new Animation( {
        *   object: obj,
        *   attribute: 'x',
-       *   // other options
+       *   // other config
        * } )
        *
        * NOTE: null values are not supported, as it is used as the "no value" value, and animating towards "null"
@@ -102,7 +102,7 @@ define( function( require ) {
       // the "starting" value from last time (unless the `from` option is used).
       delta: null, // {*|null}
 
-      // {number|null} - If provided, the animation's length will be this value (seconds/unit) times the "distance" 
+      // {number|null} - If provided, the animation's length will be this value (seconds/unit) times the "distance"
       // between the start and end value of the animation. The `distance` option can be used to specify a way to
       // compute the distance, and works by default as expected for number/Vector2/Vector3/Vector4.
       speed: null,
@@ -131,61 +131,61 @@ define( function( require ) {
       // option. The default should work for number/Vector2/Vector3/Vector4.
       add: AnimationTarget.DEFAULT_ADD
 
-    }, options );
+    }, config );
 
-    assert && assert( +( options.property !== null ) + +( options.object !== null ) + +( options.setValue !== null ) === 1,
+    assert && assert( +( config.property !== null ) + +( config.object !== null ) + +( config.setValue !== null ) === 1,
       'Should have one (and only one) way of defining how to set the animated value. Use one of property/object/setValue' );
 
-    assert && assert( options.setValue === null || typeof options.setValue === 'function',
+    assert && assert( config.setValue === null || typeof config.setValue === 'function',
       'If setValue is provided, it should be a function.' );
 
-    assert && assert( options.setValue === null || options.from !== null || typeof options.getValue === 'function',
+    assert && assert( config.setValue === null || config.from !== null || typeof config.getValue === 'function',
       'If setValue is provided and no "from" value is specified, then getValue needs to be a function.' );
 
-    assert && assert( options.to !== null || options.delta !== null,
+    assert && assert( config.to !== null || config.delta !== null,
       'Need something to animate to, use to/delta' );
 
-    assert && assert( options.property === null || options.property instanceof Property );
+    assert && assert( config.property === null || config.property instanceof Property );
 
-    assert && assert( options.object === null || ( typeof options.object === 'object' && typeof options.attribute === 'string' ),
+    assert && assert( config.object === null || ( typeof config.object === 'object' && typeof config.attribute === 'string' ),
       'If object is provided, then object should be an object, and attribute should be a string.' );
 
-    assert && assert( options.easing instanceof Easing, 'The easing should be of type Easing' );
-    assert && assert( typeof options.blend === 'function', 'The blend option should be a function' );
-    assert && assert( typeof options.distance === 'function', 'The distance option should be a function' );
-    assert && assert( typeof options.add === 'function', 'The add option should be a function' );
+    assert && assert( config.easing instanceof Easing, 'The easing should be of type Easing' );
+    assert && assert( typeof config.blend === 'function', 'The blend option should be a function' );
+    assert && assert( typeof config.distance === 'function', 'The distance option should be a function' );
+    assert && assert( typeof config.add === 'function', 'The add option should be a function' );
 
     // If `object` is provided, create the associated getter/setter
-    if ( options.object ) {
-      options.setValue = AnimationTarget.OBJECT_SET( options.object, options.attribute );
-      options.getValue = AnimationTarget.OBJECT_GET( options.object, options.attribute );
+    if ( config.object ) {
+      config.setValue = AnimationTarget.OBJECT_SET( config.object, config.attribute );
+      config.getValue = AnimationTarget.OBJECT_GET( config.object, config.attribute );
     }
 
     // If `property` is provided, create the associated getter/setter
-    if ( options.property ) {
-      options.setValue = AnimationTarget.PROPERTY_SET( options.property );
-      options.getValue = AnimationTarget.PROPERTY_GET( options.property );
+    if ( config.property ) {
+      config.setValue = AnimationTarget.PROPERTY_SET( config.property );
+      config.getValue = AnimationTarget.PROPERTY_GET( config.property );
     }
 
     // @private {function} - Our functions to get and set the animated value.
-    this.getValue = options.getValue;
-    this.setValue = options.setValue;
+    this.getValue = config.getValue;
+    this.setValue = config.setValue;
 
     // @private {Easing}
-    this.easing = options.easing;
+    this.easing = config.easing;
 
-    // @private {*|null} - Saved options to help determine the starting/ending values
-    this.from = options.from;
-    this.to = options.to;
-    this.delta = options.delta;
+    // @private {*|null} - Saved config to help determine the starting/ending values
+    this.from = config.from;
+    this.to = config.to;
+    this.delta = config.delta;
 
-    // @private {number|null} - Saved options to help determine the length of the animation
-    this.speed = options.speed;
+    // @private {number|null} - Saved config to help determine the length of the animation
+    this.speed = config.speed;
 
     // @private {function}
-    this.blend = options.blend;
-    this.distance = options.distance;
-    this.add = options.add;
+    this.blend = config.blend;
+    this.distance = config.distance;
+    this.add = config.add;
 
     // @private {*} - Computed start/end values for the animation (once the animation finishes the delay and begins)
     this.startingValue = null;

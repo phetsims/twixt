@@ -35,10 +35,10 @@ define( function( require ) {
   /**
    * @constructor
    *
-   * The constructor options will define one or more animation "targets" (specific values to be animated). The options
+   * The constructor config will define one or more animation "targets" (specific values to be animated). The config
    * available for targets is documented in AnimationTarget.
    *
-   * If there is only one target, it is recommended to pass in those options in the top-level Animation options, e.g.:
+   * If there is only one target, it is recommended to pass in those config in the top-level Animation config, e.g.:
    * | var someNumberProperty = new NumberProperty( 0 );
    * | new Animation( {
    * |   // Options for the Animation as a whole
@@ -69,7 +69,7 @@ define( function( require ) {
    * | } );
    *
    * NOTE: The length of the animation needs to be specified in exactly one place. This can usually be done by
-   * specifying the `duration` in the options, but `speed` can also be used in any of the targets.
+   * specifying the `duration` in the config, but `speed` can also be used in any of the targets.
    *
    * EXAMPLE: It's possible to create continuous animation loops, where animations cycle back and forth, e.g.:
    * | var moreOpaque = new Animation( {
@@ -94,18 +94,18 @@ define( function( require ) {
    * | lessOpaque.then( moreOpaque );
    * | lessOpaque.start();
    *
-   * @param {Object} options - See below in the constructor for documentation.
+   * @param {Object} config - See below in the constructor for documentation.
    */
-  function Animation( options ) {
+  function Animation( config ) {
 
-    options = _.extend( {
-      // IMPORTANT: See AnimationTarget's options documentation, as those options can be passed in either here, or in
+    config = _.extend( {
+      // IMPORTANT: See AnimationTarget's config documentation, as those config can be passed in either here, or in
       // the targets array.
 
       // {Array.<Object>|null} - Can be provided instead of setValue/property/object, and it contains an array of
-      // options-style objects that allows animating multiple different things at the same time. See AnimationTarget for
-      // details about all of the supported options.
-      // NOTE: speed, if provided, should be only specified on exactly one of the targets' options if multiple targets
+      // config-style objects that allows animating multiple different things at the same time. See AnimationTarget for
+      // details about all of the supported config.
+      // NOTE: speed, if provided, should be only specified on exactly one of the targets' config if multiple targets
       // are specified.
       targets: null,
 
@@ -117,39 +117,39 @@ define( function( require ) {
       // animation of the value begins. Negative delays are not supported.
       delay: 0,
 
-      // {string} - One of the following options:
+      // {string} - One of the following config:
       // 'manual' - `step( dt )` should be called manually to advance the animation
       // 'timer' - When this animation is running, it will listen to the global phet-core Timer.
       // TODO #3: {ScreenView} - animates only when the ScreenView is the active one.
       // TODO #3: {Node} - animates only when the node's trail is visible on a Display
       stepper: 'manual'
-    }, options );
+    }, config );
 
-    assert && assert( +( options.property !== undefined ) + +( options.object !== undefined ) + +( options.setValue !== undefined ) + +( options.targets !== null ) === 1,
+    assert && assert( +( config.property !== undefined ) + +( config.object !== undefined ) + +( config.setValue !== undefined ) + +( config.targets !== null ) === 1,
       'Should have one (and only one) way of defining how to set the animated value. Use one of property/object/setValue/targets' );
 
-    assert && assert( typeof options.delay === 'number' && isFinite( options.delay ) && options.delay >= 0,
+    assert && assert( typeof config.delay === 'number' && isFinite( config.delay ) && config.delay >= 0,
       'The delay should be a non-negative number.' );
 
-    assert && assert( options.stepper === 'manual' || options.stepper === 'timer',
+    assert && assert( config.stepper === 'manual' || config.stepper === 'timer',
       'If provided, stepper should be "manual", "timer", or (TODO)' );
 
     // @private {Array.<AnimationTarget>} - All of the different values that will be animated by this animation.
-    // If options.targets was supplied, those targets will be wrapped into AnimationTargets
-    // If options.targets was not supplied, the options from this object will be wrapped into one AnimationTarget
-    this.targets = _.map( options.targets === null ? [ options ] : options.targets, function( options ) {
-      return new AnimationTarget( options ); // TODO #3: strip out the irrelevant options when using options arg
+    // If config.targets was supplied, those targets will be wrapped into AnimationTargets
+    // If config.targets was not supplied, the config from this object will be wrapped into one AnimationTarget
+    this.targets = _.map( config.targets === null ? [ config ] : config.targets, function( config ) {
+      return new AnimationTarget( config ); // TODO #3: strip out the irrelevant config when using config arg
     } );
 
-    assert && assert( +( options.duration !== null ) + _.sum( _.map( this.targets, function( target ) {
+    assert && assert( +( config.duration !== null ) + _.sum( _.map( this.targets, function( target ) {
       return target.hasPreferredDuration() ? 1 : 0;
     } ) ) === 1, 'Exactly one duration/speed option should be used.' );
 
-    // @private {number|null} - Saved options to help determine the length of the animation
-    this.duration = options.duration;
+    // @private {number|null} - Saved config to help determine the length of the animation
+    this.duration = config.duration;
 
     // @private {number} - In seconds
-    this.delay = options.delay;
+    this.delay = config.delay;
 
     // @private {number} - Computed length for the animation (in seconds)
     this.length = 0;
@@ -195,7 +195,7 @@ define( function( require ) {
     // @public {Emitter} - Fired when (just after) the animation has changed animated values/targets.
     this.updateEmitter = new Emitter();
 
-    if ( options.stepper === 'timer' ) {
+    if ( config.stepper === 'timer' ) {
       this.attachTimer();
     }
   }

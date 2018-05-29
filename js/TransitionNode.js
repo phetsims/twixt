@@ -78,6 +78,10 @@ define( function( require ) {
     // @private {Transition|null} - If we are animating, this will be non-null
     this.transition = null;
 
+    // @private {Node}
+    this.paddingNode = new Node();
+    this.addChild( this.paddingNode );
+
     // @private {function}
     this.boundsListener = this.onBoundsChange.bind( this );
     this.boundsProperty.link( this.boundsListener );
@@ -118,6 +122,11 @@ define( function( require ) {
       if ( this.useBoundsClip ) {
         this.clipArea = Shape.bounds( bounds );
       }
+
+      // Provide a localBounds override so that we take up at least the provided bounds. This makes layout easier so
+      // that the TransitionNode always provides consistent bounds with clipping. See
+      // https://github.com/phetsims/twixt/issues/15.
+      this.paddingNode.localBounds = bounds;
     },
 
     /**

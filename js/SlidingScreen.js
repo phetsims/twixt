@@ -132,6 +132,6 @@ define( function( require ) {
         this.animating = true;
         this.setMoving( true );
       }
-    },
+    }
   } );
 } );

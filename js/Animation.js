@@ -73,7 +73,6 @@ define( function( require ) {
    *
    * EXAMPLE: It's possible to create continuous animation loops, where animations cycle back and forth, e.g.:
    * | var moreOpaque = new Animation( {
-   * |   stepper: 'timer',
    * |   object: animatedCircle,
    * |   attribute: 'opacity',
    * |   from: 0.5,
@@ -82,7 +81,6 @@ define( function( require ) {
    * |   easing: Easing.QUADRATIC_IN_OUT
    * | } );
    * | var lessOpaque = new Animation( {
-   * |   stepper: 'timer',
    * |   object: animatedCircle,
    * |   attribute: 'opacity',
    * |   from: 1,
@@ -117,12 +115,13 @@ define( function( require ) {
       // animation of the value begins. Negative delays are not supported.
       delay: 0,
 
-      // {string} - One of the following config:
-      // 'manual' - `step( dt )` should be called manually to advance the animation
-      // 'timer' - When this animation is running, it will listen to the global phet-core Timer.
+      // {Emitter|null} - One of the following config:
+      // The Emitter (which provides a dt {number} value on emit) which drives the animation, or null if the client
+      // will drive the animation by calling `step(dt)` manually.  Defaults to the joist Timer which runs automatically
+      // as part of the Sim time step.
       // TODO #3: {ScreenView} - animates only when the ScreenView is the active one.
       // TODO #3: {Node} - animates only when the node's trail is visible on a Display
-      stepper: 'manual'
+      steppedEmitter: Timer
     }, config );
 
     assert && assert( +( config.property !== undefined ) + +( config.object !== undefined ) + +( config.setValue !== undefined ) + +( config.targets !== null ) === 1,
@@ -131,8 +130,8 @@ define( function( require ) {
     assert && assert( typeof config.delay === 'number' && isFinite( config.delay ) && config.delay >= 0,
       'The delay should be a non-negative number.' );
 
-    assert && assert( config.stepper === 'manual' || config.stepper === 'timer',
-      'If provided, stepper should be "manual", "timer", or (TODO)' );
+    assert && assert( config.steppedEmitter === null || config.steppedEmitter instanceof Emitter,
+      'steppedEmitter must be null or an Emitter, or (TODO)' );
 
     // @private {Array.<AnimationTarget>} - All of the different values that will be animated by this animation.
     // If config.targets was supplied, those targets will be wrapped into AnimationTargets
@@ -195,8 +194,21 @@ define( function( require ) {
     // @public {Emitter} - Fired when (just after) the animation has changed animated values/targets.
     this.updateEmitter = new Emitter();
 
-    if ( config.stepper === 'timer' ) {
-      this.attachTimer();
+
+    // Wire up to the provided Emitter, if any. Whenever this animation is started, it will add a listener to the Timer
+    // (and conversely, will be removed when stopped). This means it will animate with the timer, but will not leak
+    // memory as long as the animation doesn't last forever.
+    if ( config.steppedEmitter ) {
+      var stepListener = this.step.bind( this );
+
+      this.runningProperty.link( function( running ) {
+        if ( running && !config.steppedEmitter.hasListener( stepListener ) ) {
+          config.steppedEmitter.addListener( stepListener );
+        }
+        else if ( !running && config.steppedEmitter.hasListener( stepListener ) ) {
+          config.steppedEmitter.removeListener( stepListener );
+        }
+      } );
     }
   }
 
@@ -329,36 +341,6 @@ define( function( require ) {
         animation.start( dt );
       } );
       return animation;
-    },
-
-    /**
-     * Attaches this animation to the global phet-core Timer.
-     * @private
-     *
-     * Whenever this animation is started, it will add a listener to the Timer (and conversely, will be removed when
-     * stopped). This means it will animate with the timer, but will not leak memory as long as the animation doesn't
-     * last forever.
-     *
-     * @returns {Animation} - Returns the this reference, to support chaining.
-     */
-    attachTimer: function() {
-      var isAttached = false;
-      var stepListener = this.step.bind( this );
-
-      this.runningProperty.link( function( running ) {
-        if ( running !== isAttached ) {
-          isAttached = running;
-
-          if ( running ) {
-            Timer.addListener( stepListener );
-          }
-          else {
-            Timer.removeListener( stepListener );
-          }
-        }
-      } );
-
-      return this;
     }
   } );
 

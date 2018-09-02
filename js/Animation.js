@@ -350,10 +350,10 @@ define( function( require ) {
           isAttached = running;
 
           if ( running ) {
-            Timer.addStepListener( stepListener );
+            Timer.addListener( stepListener );
           }
           else {
-            Timer.removeStepListener( stepListener );
+            Timer.removeListener( stepListener );
           }
         }
       } );

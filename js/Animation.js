@@ -28,7 +28,7 @@ define( function( require ) {
   var BooleanProperty = require( 'AXON/BooleanProperty' );
   var Emitter = require( 'AXON/Emitter' );
   var inherit = require( 'PHET_CORE/inherit' );
-  var Timer = require( 'PHET_CORE/Timer' );
+  var timer = require( 'PHET_CORE/timer' );
   var twixt = require( 'TWIXT/twixt' );
   var Util = require( 'DOT/Util' );
 
@@ -119,7 +119,7 @@ define( function( require ) {
 
       // {string} - One of the following config:
       // 'manual' - `step( dt )` should be called manually to advance the animation
-      // 'timer' - When this animation is running, it will listen to the global phet-core Timer.
+      // 'timer' - When this animation is running, it will listen to the global phet-core timer.
       // TODO #3: {ScreenView} - animates only when the ScreenView is the active one.
       // TODO #3: {Node} - animates only when the node's trail is visible on a Display
       stepper: 'manual'
@@ -332,10 +332,10 @@ define( function( require ) {
     },
 
     /**
-     * Attaches this animation to the global phet-core Timer.
+     * Attaches this animation to the global phet-core timer.
      * @private
      *
-     * Whenever this animation is started, it will add a listener to the Timer (and conversely, will be removed when
+     * Whenever this animation is started, it will add a listener to the timer (and conversely, will be removed when
      * stopped). This means it will animate with the timer, but will not leak memory as long as the animation doesn't
      * last forever.
      *
@@ -350,10 +350,10 @@ define( function( require ) {
           isAttached = running;
 
           if ( running ) {
-            Timer.addListener( stepListener );
+            timer.addListener( stepListener );
           }
           else {
-            Timer.removeListener( stepListener );
+            timer.removeListener( stepListener );
           }
         }
       } );

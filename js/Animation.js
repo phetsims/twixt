@@ -182,7 +182,7 @@ define( function( require ) {
     // A {number} is provided as a single argument to the emit callback, and represents how much "extra" time occurred
     // after the end of the animation. For example, if you have a 1-second animation and stepped it by 3 seconds, this
     // finished emitter would be called with 2 seconds.
-    this.finishEmitter = new Emitter();
+    this.finishEmitter = new Emitter( { valueTypes: [ 'number' ] } );
 
     // @public {Emitter} - Fired when the animation is manually stopped (with stop()). Does NOT fire when it finishes
     // normally.

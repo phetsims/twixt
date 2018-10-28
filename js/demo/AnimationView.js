@@ -61,7 +61,6 @@ define( function( require ) {
     this.addChild( targetCircle );
 
     var larger = new Animation( {
-      stepper: 'timer',
       setValue: function( value ) { animatedCircle.setScaleMagnitude( value ); },
       from: 0.7,
       to: 1,
@@ -69,7 +68,6 @@ define( function( require ) {
       easing: Easing.QUADRATIC_IN_OUT
     } );
     var smaller = new Animation( {
-      stepper: 'timer',
       setValue: function( value ) { animatedCircle.setScaleMagnitude( value ); },
       from: 1,
       to: 0.7,
@@ -91,7 +89,6 @@ define( function( require ) {
 
         animation && animation.stop();
         animation = new Animation( {
-          stepper: 'timer',
           targets: [ {
             property: positionProperty,
             easing: easingProperty.value,

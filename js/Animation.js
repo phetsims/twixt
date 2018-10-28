@@ -28,7 +28,7 @@ define( function( require ) {
   var BooleanProperty = require( 'AXON/BooleanProperty' );
   var Emitter = require( 'AXON/Emitter' );
   var inherit = require( 'PHET_CORE/inherit' );
-  var Timer = require( 'PHET_CORE/Timer' );
+  var timer = require( 'PHET_CORE/timer' );
   var twixt = require( 'TWIXT/twixt' );
   var Util = require( 'DOT/Util' );
 
@@ -121,7 +121,7 @@ define( function( require ) {
       // as part of the Sim time step.
       // TODO #3: {ScreenView} - animates only when the ScreenView is the active one.
       // TODO #3: {Node} - animates only when the node's trail is visible on a Display
-      steppedEmitter: Timer
+      animationStepEmitter: timer
     }, config );
 
     assert && assert( +( config.property !== undefined ) + +( config.object !== undefined ) + +( config.setValue !== undefined ) + +( config.targets !== null ) === 1,
@@ -130,8 +130,8 @@ define( function( require ) {
     assert && assert( typeof config.delay === 'number' && isFinite( config.delay ) && config.delay >= 0,
       'The delay should be a non-negative number.' );
 
-    assert && assert( config.steppedEmitter === null || config.steppedEmitter instanceof Emitter,
-      'steppedEmitter must be null or an Emitter, or (TODO)' );
+    assert && assert( config.animationStepEmitter === null || config.animationStepEmitter instanceof Emitter,
+      'animationStepEmitter must be null or an Emitter, or (TODO)' );
 
     // @private {Array.<AnimationTarget>} - All of the different values that will be animated by this animation.
     // If config.targets was supplied, those targets will be wrapped into AnimationTargets
@@ -198,15 +198,15 @@ define( function( require ) {
     // Wire up to the provided Emitter, if any. Whenever this animation is started, it will add a listener to the Timer
     // (and conversely, will be removed when stopped). This means it will animate with the timer, but will not leak
     // memory as long as the animation doesn't last forever.
-    if ( config.steppedEmitter ) {
+    if ( config.animationStepEmitter ) {
       var stepListener = this.step.bind( this );
 
       this.runningProperty.link( function( running ) {
-        if ( running && !config.steppedEmitter.hasListener( stepListener ) ) {
-          config.steppedEmitter.addListener( stepListener );
+        if ( running && !config.animationStepEmitter.hasListener( stepListener ) ) {
+          config.animationStepEmitter.addListener( stepListener );
         }
-        else if ( !running && config.steppedEmitter.hasListener( stepListener ) ) {
-          config.steppedEmitter.removeListener( stepListener );
+        else if ( !running && config.animationStepEmitter.hasListener( stepListener ) ) {
+          config.animationStepEmitter.removeListener( stepListener );
         }
       } );
     }

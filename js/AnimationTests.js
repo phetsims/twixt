@@ -9,7 +9,7 @@ define( function( require ) {
   'use strict';
 
   // modules
-  var Animation = require( 'Animation' );
+  var Animation = require( 'TWIXT/Animation' );
   var NumberProperty = require( 'AXON/NumberProperty' );
 
   QUnit.module( 'Animation' );
@@ -26,7 +26,9 @@ define( function( require ) {
 
       // Options for the one target to change
       property: numberProperty,
-      to: targetValue
+      to: targetValue,
+
+      stepEmitter: null
     } );
     animation.start();
     for ( var i = 0; i < 10; i++ ) {

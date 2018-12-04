@@ -138,6 +138,7 @@ define( function( require ) {
      * @returns {Transition} - Available to add end listeners, etc.
      */
     slideLeftTo: function( content, config ) {
+      this.interrupt();
       return this.startTransition( content, Transition.slideLeft( this.boundsProperty.value, this.fromContent, content, config ) );
     },
 
@@ -150,6 +151,7 @@ define( function( require ) {
      * @returns {Transition} - Available to add end listeners, etc.
      */
     slideRightTo: function( content, config ) {
+      this.interrupt();
       return this.startTransition( content, Transition.slideRight( this.boundsProperty.value, this.fromContent, content, config ) );
     },
 
@@ -162,6 +164,7 @@ define( function( require ) {
      * * @returns {Transition} - Available to add end listeners, etc.
      */
     slideUpTo: function( content, config ) {
+      this.interrupt();
       return this.startTransition( content, Transition.slideUp( this.boundsProperty.value, this.fromContent, content, config ) );
     },
 
@@ -174,6 +177,7 @@ define( function( require ) {
      * * @returns {Transition} - Available to add end listeners, etc.
      */
     slideDownTo: function( content, config ) {
+      this.interrupt();
       return this.startTransition( content, Transition.slideDown( this.boundsProperty.value, this.fromContent, content, config ) );
     },
 
@@ -186,6 +190,7 @@ define( function( require ) {
      * * @returns {Transition} - Available to add end listeners, etc.
      */
     wipeLeftTo: function( content, config ) {
+      this.interrupt();
       return this.startTransition( content, Transition.wipeLeft( this.boundsProperty.value, this.fromContent, content, config ) );
     },
 
@@ -198,6 +203,7 @@ define( function( require ) {
      * * @returns {Transition} - Available to add end listeners, etc.
      */
     wipeRightTo: function( content, config ) {
+      this.interrupt();
       return this.startTransition( content, Transition.wipeRight( this.boundsProperty.value, this.fromContent, content, config ) );
     },
 
@@ -210,6 +216,7 @@ define( function( require ) {
      * * @returns {Transition} - Available to add end listeners, etc.
      */
     wipeUpTo: function( content, config ) {
+      this.interrupt();
       return this.startTransition( content, Transition.wipeUp( this.boundsProperty.value, this.fromContent, content, config ) );
     },
 
@@ -222,6 +229,7 @@ define( function( require ) {
      * * @returns {Transition} - Available to add end listeners, etc.
      */
     wipeDownTo: function( content, config ) {
+      this.interrupt();
       return this.startTransition( content, Transition.wipeDown( this.boundsProperty.value, this.fromContent, content, config ) );
     },
 
@@ -234,6 +242,7 @@ define( function( require ) {
      * * @returns {Transition} - Available to add end listeners, etc.
      */
     dissolveTo: function( content, config ) {
+      this.interrupt();
       return this.startTransition( content, Transition.dissolve( this.fromContent, content, config ) );
     },
 

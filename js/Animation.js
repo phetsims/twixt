@@ -27,7 +27,6 @@ define( function( require ) {
   var AnimationTarget = require( 'TWIXT/AnimationTarget' );
   var BooleanProperty = require( 'AXON/BooleanProperty' );
   var Emitter = require( 'AXON/Emitter' );
-  var EmitterIO = require( 'AXON/EmitterIO' );
   var inherit = require( 'PHET_CORE/inherit' );
   var timer = require( 'PHET_CORE/timer' );
   var twixt = require( 'TWIXT/twixt' );
@@ -182,7 +181,7 @@ define( function( require ) {
     // A {number} is provided as a single argument to the emit callback, and represents how much "extra" time occurred
     // after the end of the animation. For example, if you have a 1-second animation and stepped it by 3 seconds, this
     // finished emitter would be called with 2 seconds.
-    this.finishEmitter = new Emitter( { phetioType: EmitterIO( [ { type: 'number' } ] ) } );
+    this.finishEmitter = new Emitter( { argumentTypes: [ { validValue: 'number' } ] } );
 
     // @public {Emitter} - Fired when the animation is manually stopped (with stop()). Does NOT fire when it finishes
     // normally.

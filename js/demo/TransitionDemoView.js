@@ -47,11 +47,13 @@ define( function( require ) {
       function randomColor() {
         return new Color( phet.joist.random.nextInt( 256 ), phet.joist.random.nextInt( 256 ), phet.joist.random.nextInt( 256 ) );
       }
+
       function randomString() {
         return _.range( 0, 7 ).map( function() {
           return String.fromCharCode( phet.joist.random.nextIntBetween( 65, 122 ) );
         } ).join( '' );
       }
+
       return Rectangle.bounds( bounds, {
         fill: randomColor(),
         children: [
@@ -71,19 +73,19 @@ define( function( require ) {
     var listParent = new Node();
     var comboTextOptions = { font: new PhetFont( 16 ) };
     var comboBox = new ComboBox( [
-      { node: new Text( 'Linear', comboTextOptions ), value: Easing.LINEAR },
-      { node: new Text( 'Quadratic in-out', comboTextOptions ), value: Easing.QUADRATIC_IN_OUT },
-      { node: new Text( 'Quadratic in', comboTextOptions ), value: Easing.QUADRATIC_IN },
-      { node: new Text( 'Quadratic out', comboTextOptions ), value: Easing.QUADRATIC_OUT },
-      { node: new Text( 'Cubic in-out', comboTextOptions ), value: Easing.CUBIC_IN_OUT },
-      { node: new Text( 'Cubic in', comboTextOptions ), value: Easing.CUBIC_IN },
-      { node: new Text( 'Cubic out', comboTextOptions ), value: Easing.CUBIC_OUT },
-      { node: new Text( 'Quartic in-out', comboTextOptions ), value: Easing.QUARTIC_IN_OUT },
-      { node: new Text( 'Quartic in', comboTextOptions ), value: Easing.QUARTIC_IN },
-      { node: new Text( 'Quartic out', comboTextOptions ), value: Easing.QUARTIC_OUT },
-      { node: new Text( 'Quintic in-out', comboTextOptions ), value: Easing.QUINTIC_IN_OUT },
-      { node: new Text( 'Quintic in', comboTextOptions ), value: Easing.QUINTIC_IN },
-      { node: new Text( 'Quintic out', comboTextOptions ), value: Easing.QUINTIC_OUT }
+      ComboBox.createItem( new Text( 'Linear', comboTextOptions ), Easing.LINEAR ),
+      ComboBox.createItem( new Text( 'Quadratic in-out', comboTextOptions ), Easing.QUADRATIC_IN_OUT ),
+      ComboBox.createItem( new Text( 'Quadratic in', comboTextOptions ), Easing.QUADRATIC_IN ),
+      ComboBox.createItem( new Text( 'Quadratic out', comboTextOptions ), Easing.QUADRATIC_OUT ),
+      ComboBox.createItem( new Text( 'Cubic in-out', comboTextOptions ), Easing.CUBIC_IN_OUT ),
+      ComboBox.createItem( new Text( 'Cubic in', comboTextOptions ), Easing.CUBIC_IN ),
+      ComboBox.createItem( new Text( 'Cubic out', comboTextOptions ), Easing.CUBIC_OUT ),
+      ComboBox.createItem( new Text( 'Quartic in-out', comboTextOptions ), Easing.QUARTIC_IN_OUT ),
+      ComboBox.createItem( new Text( 'Quartic in', comboTextOptions ), Easing.QUARTIC_IN ),
+      ComboBox.createItem( new Text( 'Quartic out', comboTextOptions ), Easing.QUARTIC_OUT ),
+      ComboBox.createItem( new Text( 'Quintic in-out', comboTextOptions ), Easing.QUINTIC_IN_OUT ),
+      ComboBox.createItem( new Text( 'Quintic in', comboTextOptions ), Easing.QUINTIC_IN ),
+      ComboBox.createItem( new Text( 'Quintic out', comboTextOptions ), Easing.QUINTIC_OUT )
     ], easingProperty, listParent, {
       centerX: this.layoutBounds.centerX,
       bottom: this.transitionNode.top - 10
@@ -149,7 +151,7 @@ define( function( require ) {
         durationProperty.reset();
         easingProperty.reset();
       },
-      right:  this.layoutBounds.maxX - 10,
+      right: this.layoutBounds.maxX - 10,
       bottom: this.layoutBounds.maxY - 10
     } );
     this.addChild( resetAllButton );

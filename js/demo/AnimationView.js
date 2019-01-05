@@ -127,19 +127,19 @@ define( function( require ) {
 
     var comboTextOptions = { font: new PhetFont( 16 ) };
     this.addChild( new ComboBox( [
-      { node: new Text( 'Linear', comboTextOptions ), value: Easing.LINEAR },
-      { node: new Text( 'Quadratic in-out', comboTextOptions ), value: Easing.QUADRATIC_IN_OUT },
-      { node: new Text( 'Quadratic in', comboTextOptions ), value: Easing.QUADRATIC_IN },
-      { node: new Text( 'Quadratic out', comboTextOptions ), value: Easing.QUADRATIC_OUT },
-      { node: new Text( 'Cubic in-out', comboTextOptions ), value: Easing.CUBIC_IN_OUT },
-      { node: new Text( 'Cubic in', comboTextOptions ), value: Easing.CUBIC_IN },
-      { node: new Text( 'Cubic out', comboTextOptions ), value: Easing.CUBIC_OUT },
-      { node: new Text( 'Quartic in-out', comboTextOptions ), value: Easing.QUARTIC_IN_OUT },
-      { node: new Text( 'Quartic in', comboTextOptions ), value: Easing.QUARTIC_IN },
-      { node: new Text( 'Quartic out', comboTextOptions ), value: Easing.QUARTIC_OUT },
-      { node: new Text( 'Quintic in-out', comboTextOptions ), value: Easing.QUINTIC_IN_OUT },
-      { node: new Text( 'Quintic in', comboTextOptions ), value: Easing.QUINTIC_IN },
-      { node: new Text( 'Quintic out', comboTextOptions ), value: Easing.QUINTIC_OUT }
+      ComboBox.createItem( new Text( 'Linear', comboTextOptions ), Easing.LINEAR ),
+      ComboBox.createItem( new Text( 'Quadratic in-out', comboTextOptions ), Easing.QUADRATIC_IN_OUT ),
+      ComboBox.createItem( new Text( 'Quadratic in', comboTextOptions ), Easing.QUADRATIC_IN ),
+      ComboBox.createItem( new Text( 'Quadratic out', comboTextOptions ), Easing.QUADRATIC_OUT ),
+      ComboBox.createItem( new Text( 'Cubic in-out', comboTextOptions ), Easing.CUBIC_IN_OUT ),
+      ComboBox.createItem( new Text( 'Cubic in', comboTextOptions ), Easing.CUBIC_IN ),
+      ComboBox.createItem( new Text( 'Cubic out', comboTextOptions ), Easing.CUBIC_OUT ),
+      ComboBox.createItem( new Text( 'Quartic in-out', comboTextOptions ), Easing.QUARTIC_IN_OUT ),
+      ComboBox.createItem( new Text( 'Quartic in', comboTextOptions ), Easing.QUARTIC_IN ),
+      ComboBox.createItem( new Text( 'Quartic out', comboTextOptions ), Easing.QUARTIC_OUT ),
+      ComboBox.createItem( new Text( 'Quintic in-out', comboTextOptions ), Easing.QUINTIC_IN_OUT ),
+      ComboBox.createItem( new Text( 'Quintic in', comboTextOptions ), Easing.QUINTIC_IN ),
+      ComboBox.createItem( new Text( 'Quintic out', comboTextOptions ), Easing.QUINTIC_OUT )
     ], easingProperty, listParent, {
       right: this.layoutBounds.right - 10,
       top: 10

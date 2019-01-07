@@ -11,9 +11,9 @@ define( function( require ) {
   // modules
   var Bounds2 = require( 'DOT/Bounds2' );
   var Color = require( 'SCENERY/util/Color' );
-  var ComboBox = require( 'SUN/ComboBox' );
   var Dimension2 = require( 'DOT/Dimension2' );
   var Easing = require( 'TWIXT/Easing' );
+  var EasingComboBox = require( 'TWIXT/demo/EasingComboBox' );
   var HBox = require( 'SCENERY/nodes/HBox' );
   var HSlider = require( 'SUN/HSlider' );
   var inherit = require( 'PHET_CORE/inherit' );
@@ -71,22 +71,8 @@ define( function( require ) {
     } );
 
     var listParent = new Node();
-    var comboTextOptions = { font: new PhetFont( 16 ) };
-    var comboBox = new ComboBox( [
-      ComboBox.createItem( new Text( 'Linear', comboTextOptions ), Easing.LINEAR ),
-      ComboBox.createItem( new Text( 'Quadratic in-out', comboTextOptions ), Easing.QUADRATIC_IN_OUT ),
-      ComboBox.createItem( new Text( 'Quadratic in', comboTextOptions ), Easing.QUADRATIC_IN ),
-      ComboBox.createItem( new Text( 'Quadratic out', comboTextOptions ), Easing.QUADRATIC_OUT ),
-      ComboBox.createItem( new Text( 'Cubic in-out', comboTextOptions ), Easing.CUBIC_IN_OUT ),
-      ComboBox.createItem( new Text( 'Cubic in', comboTextOptions ), Easing.CUBIC_IN ),
-      ComboBox.createItem( new Text( 'Cubic out', comboTextOptions ), Easing.CUBIC_OUT ),
-      ComboBox.createItem( new Text( 'Quartic in-out', comboTextOptions ), Easing.QUARTIC_IN_OUT ),
-      ComboBox.createItem( new Text( 'Quartic in', comboTextOptions ), Easing.QUARTIC_IN ),
-      ComboBox.createItem( new Text( 'Quartic out', comboTextOptions ), Easing.QUARTIC_OUT ),
-      ComboBox.createItem( new Text( 'Quintic in-out', comboTextOptions ), Easing.QUINTIC_IN_OUT ),
-      ComboBox.createItem( new Text( 'Quintic in', comboTextOptions ), Easing.QUINTIC_IN ),
-      ComboBox.createItem( new Text( 'Quintic out', comboTextOptions ), Easing.QUINTIC_OUT )
-    ], easingProperty, listParent, {
+
+    var comboBox = new EasingComboBox( easingProperty, listParent, {
       centerX: this.layoutBounds.centerX,
       bottom: this.transitionNode.top - 10
     } );

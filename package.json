@@ -19,6 +19,6 @@
     ]
   },
   "eslintConfig": {
-    "extends": "../chipper/eslint/.eslintrc.js"
+    "extends": "../chipper/eslint/sim_eslintrc.js"
   }
 }

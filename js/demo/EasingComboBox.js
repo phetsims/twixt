@@ -10,6 +10,7 @@ define( require => {
 
   // modules
   const ComboBox = require( 'SUN/ComboBox' );
+  const ComboBoxItem = require( 'SUN/ComboBoxItem' );
   const Easing = require( 'TWIXT/Easing' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
   const Text = require( 'SCENERY/nodes/Text' );
@@ -26,19 +27,19 @@ define( require => {
 
       var comboTextOptions = { font: new PhetFont( 16 ) };
       const items = [
-        ComboBox.createItem( new Text( 'Linear', comboTextOptions ), Easing.LINEAR ),
-        ComboBox.createItem( new Text( 'Quadratic in-out', comboTextOptions ), Easing.QUADRATIC_IN_OUT ),
-        ComboBox.createItem( new Text( 'Quadratic in', comboTextOptions ), Easing.QUADRATIC_IN ),
-        ComboBox.createItem( new Text( 'Quadratic out', comboTextOptions ), Easing.QUADRATIC_OUT ),
-        ComboBox.createItem( new Text( 'Cubic in-out', comboTextOptions ), Easing.CUBIC_IN_OUT ),
-        ComboBox.createItem( new Text( 'Cubic in', comboTextOptions ), Easing.CUBIC_IN ),
-        ComboBox.createItem( new Text( 'Cubic out', comboTextOptions ), Easing.CUBIC_OUT ),
-        ComboBox.createItem( new Text( 'Quartic in-out', comboTextOptions ), Easing.QUARTIC_IN_OUT ),
-        ComboBox.createItem( new Text( 'Quartic in', comboTextOptions ), Easing.QUARTIC_IN ),
-        ComboBox.createItem( new Text( 'Quartic out', comboTextOptions ), Easing.QUARTIC_OUT ),
-        ComboBox.createItem( new Text( 'Quintic in-out', comboTextOptions ), Easing.QUINTIC_IN_OUT ),
-        ComboBox.createItem( new Text( 'Quintic in', comboTextOptions ), Easing.QUINTIC_IN ),
-        ComboBox.createItem( new Text( 'Quintic out', comboTextOptions ), Easing.QUINTIC_OUT )
+        new ComboBoxItem( new Text( 'Linear', comboTextOptions ), Easing.LINEAR ),
+        new ComboBoxItem( new Text( 'Quadratic in-out', comboTextOptions ), Easing.QUADRATIC_IN_OUT ),
+        new ComboBoxItem( new Text( 'Quadratic in', comboTextOptions ), Easing.QUADRATIC_IN ),
+        new ComboBoxItem( new Text( 'Quadratic out', comboTextOptions ), Easing.QUADRATIC_OUT ),
+        new ComboBoxItem( new Text( 'Cubic in-out', comboTextOptions ), Easing.CUBIC_IN_OUT ),
+        new ComboBoxItem( new Text( 'Cubic in', comboTextOptions ), Easing.CUBIC_IN ),
+        new ComboBoxItem( new Text( 'Cubic out', comboTextOptions ), Easing.CUBIC_OUT ),
+        new ComboBoxItem( new Text( 'Quartic in-out', comboTextOptions ), Easing.QUARTIC_IN_OUT ),
+        new ComboBoxItem( new Text( 'Quartic in', comboTextOptions ), Easing.QUARTIC_IN ),
+        new ComboBoxItem( new Text( 'Quartic out', comboTextOptions ), Easing.QUARTIC_OUT ),
+        new ComboBoxItem( new Text( 'Quintic in-out', comboTextOptions ), Easing.QUINTIC_IN_OUT ),
+        new ComboBoxItem( new Text( 'Quintic in', comboTextOptions ), Easing.QUINTIC_IN ),
+        new ComboBoxItem( new Text( 'Quintic out', comboTextOptions ), Easing.QUINTIC_OUT )
       ];
 
       super( items, easingProperty, listParent, options );

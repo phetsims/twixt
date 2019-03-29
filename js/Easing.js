@@ -23,11 +23,18 @@ define( function( require ) {
    * @constructor
    * @protected
    */
-  function Easing() {
-
-  }
+  function Easing() {}
 
   twixt.register( 'Easing', Easing );
+
+  /**
+   * Verifies that t is valid.
+   * @param t - The linear ratio [0,1] of the animation
+   * @returns {boolean}
+   */
+  function tIsValid( t ) {
+    return typeof t === 'number' && isFinite( t ) && t >= 0 && t <= 1;
+  }
 
   inherit( Object, Easing, {
 
@@ -74,7 +81,7 @@ define( function( require ) {
    * @returns {number}
    */
   Easing.polynomialEaseInValue = function( n, t ) {
-    assert && assert( typeof t === 'number' && isFinite( t ) && t >= 0 && t <= 1 );
+    assert && assert( tIsValid( t ), `invalid t: ${t}` );
 
     return Math.pow( t, n );
   };
@@ -88,7 +95,7 @@ define( function( require ) {
    * @returns {number}
    */
   Easing.polynomialEaseOutValue = function( n, t ) {
-    assert && assert( typeof t === 'number' && isFinite( t ) && t >= 0 && t <= 1 );
+    assert && assert( tIsValid( t ), `invalid t: ${t}` );
 
     return 1 - Math.pow( 1 - t, n );
   };
@@ -102,7 +109,7 @@ define( function( require ) {
    * @returns {number}
    */
   Easing.polynomialEaseInOutValue = function( n, t ) {
-    assert && assert( typeof t === 'number' && isFinite( t ) && t >= 0 && t <= 1 );
+    assert && assert( tIsValid( t ), `invalid t: ${t}` );
 
     if ( t <= 0.5 ) {
       return 0.5 * Math.pow( 2 * t, n );
@@ -121,7 +128,7 @@ define( function( require ) {
    * @returns {number}
    */
   Easing.polynomialEaseInDerivative = function( n, t ) {
-    assert && assert( typeof t === 'number' && isFinite( t ) && t >= 0 && t <= 1 );
+    assert && assert( tIsValid( t ), `invalid t: ${t}` );
 
     return n * Math.pow( t, n - 1 );
   };
@@ -135,7 +142,7 @@ define( function( require ) {
    * @returns {number}
    */
   Easing.polynomialEaseOutDerivative = function( n, t ) {
-    assert && assert( typeof t === 'number' && isFinite( t ) && t >= 0 && t <= 1 );
+    assert && assert( tIsValid( t ), `invalid t: ${t}` );
 
     return n * Math.pow( 1 - t, n - 1 );
   };
@@ -149,7 +156,7 @@ define( function( require ) {
    * @returns {number}
    */
   Easing.polynomialEaseInOutDerivative = function( n, t ) {
-    assert && assert( typeof t === 'number' && isFinite( t ) && t >= 0 && t <= 1 );
+    assert && assert( tIsValid( t ), `invalid t: ${t}` );
 
     if ( t <= 0.5 ) {
       return Math.pow( 2, n - 1 ) * n * Math.pow( t, n - 1 );
@@ -167,7 +174,7 @@ define( function( require ) {
    * @returns {number}
    */
   Easing.polynomialEaseInSecondDerivative = function( n, t ) {
-    assert && assert( typeof t === 'number' && isFinite( t ) && t >= 0 && t <= 1 );
+    assert && assert( tIsValid( t ), `invalid t: ${t}` );
 
     return ( n - 1 ) * n * Math.pow( t, n - 2 );
   };
@@ -181,7 +188,7 @@ define( function( require ) {
    * @returns {number}
    */
   Easing.polynomialEaseOutSecondDerivative = function( n, t ) {
-    assert && assert( typeof t === 'number' && isFinite( t ) && t >= 0 && t <= 1 );
+    assert && assert( tIsValid( t ), `invalid t: ${t}` );
 
     return -( n - 1 ) * n * Math.pow( 1 - t, n - 2 );
   };
@@ -195,7 +202,7 @@ define( function( require ) {
    * @returns {number}
    */
   Easing.polynomialEaseInOutSecondDerivative = function( n, t ) {
-    assert && assert( typeof t === 'number' && isFinite( t ) && t >= 0 && t <= 1 );
+    assert && assert( tIsValid( t ), `invalid t: ${t}` );
 
     if ( t <= 0.5 ) {
       return Math.pow( 2, n - 1 ) * ( n - 1 ) * n * Math.pow( t, n - 2 );

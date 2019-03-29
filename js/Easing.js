@@ -6,7 +6,7 @@
  *
  * Contains an implementation of generalized polynomial easing functions (where the 'in' version simply takes the input
  * to a specific power, and other functions are generalized). These should be equivalent to the polynomial tweens that
- * TWEEN.js uses.
+ * TWEEN.js uses, where t is The linear ratio [0,1] of the animation.
  *
  * TODO: unit tests.
  *
@@ -30,11 +30,12 @@ define( function( require ) {
   twixt.register( 'Easing', Easing );
 
   inherit( Object, Easing, {
+
     /**
      * Returns the result of applying our easing function to the input value.
      * @public
      *
-     * @param {number} t - Should be in the range [0,1].
+     * @param {number} t - The linear ratio [0,1] of the animation
      * @returns {number} - Should be in the range [0,1].
      */
     value: function( t ) {
@@ -45,7 +46,7 @@ define( function( require ) {
      * Returns the first derivative of our easing function at the input value.
      * @public
      *
-     * @param {number} t - Should be in the range [0,1].
+     * @param {number} t - The linear ratio [0,1] of the animation
      * @returns {number}
      */
     derivative: function( t ) {
@@ -56,7 +57,7 @@ define( function( require ) {
      * Returns the second derivative of our easing function at the input value.
      * @public
      *
-     * @param {number} t - Should be in the range [0,1].
+     * @param {number} t - The linear ratio [0,1] of the animation
      * @returns {number}
      */
     secondDerivative: function( t ) {
@@ -69,7 +70,7 @@ define( function( require ) {
    * @public
    *
    * @param {number} n - The degree of the polynomial (does not have to be an integer!)
-   * @param {number} t - Should be in the range [0,1]
+   * @param {number} t - The linear ratio [0,1] of the animation
    * @returns {number}
    */
   Easing.polynomialEaseInValue = function( n, t ) {
@@ -83,7 +84,7 @@ define( function( require ) {
    * @public
    *
    * @param {number} n - The degree of the polynomial (does not have to be an integer!)
-   * @param {number} t - Should be in the range [0,1]
+   * @param {number} t - The linear ratio [0,1] of the animation
    * @returns {number}
    */
   Easing.polynomialEaseOutValue = function( n, t ) {
@@ -97,7 +98,7 @@ define( function( require ) {
    * @public
    *
    * @param {number} n - The degree of the polynomial (does not have to be an integer!)
-   * @param {number} t - Should be in the range [0,1]
+   * @param {number} t - The linear ratio [0,1] of the animation
    * @returns {number}
    */
   Easing.polynomialEaseInOutValue = function( n, t ) {
@@ -116,7 +117,7 @@ define( function( require ) {
    * @public
    *
    * @param {number} n - The degree of the polynomial (does not have to be an integer!)
-   * @param {number} t - Should be in the range [0,1]
+   * @param {number} t - The linear ratio [0,1] of the animation
    * @returns {number}
    */
   Easing.polynomialEaseInDerivative = function( n, t ) {
@@ -130,7 +131,7 @@ define( function( require ) {
    * @public
    *
    * @param {number} n - The degree of the polynomial (does not have to be an integer!)
-   * @param {number} t - Should be in the range [0,1]
+   * @param {number} t - The linear ratio [0,1] of the animation
    * @returns {number}
    */
   Easing.polynomialEaseOutDerivative = function( n, t ) {
@@ -144,7 +145,7 @@ define( function( require ) {
    * @public
    *
    * @param {number} n - The degree of the polynomial (does not have to be an integer!)
-   * @param {number} t - Should be in the range [0,1]
+   * @param {number} t - The linear ratio [0,1] of the animation
    * @returns {number}
    */
   Easing.polynomialEaseInOutDerivative = function( n, t ) {
@@ -162,7 +163,7 @@ define( function( require ) {
    * @public
    *
    * @param {number} n - The degree of the polynomial (does not have to be an integer!)
-   * @param {number} t - Should be in the range [0,1]
+   * @param {number} t - The linear ratio [0,1] of the animation
    * @returns {number}
    */
   Easing.polynomialEaseInSecondDerivative = function( n, t ) {
@@ -176,7 +177,7 @@ define( function( require ) {
    * @public
    *
    * @param {number} n - The degree of the polynomial (does not have to be an integer!)
-   * @param {number} t - Should be in the range [0,1]
+   * @param {number} t - The linear ratio [0,1] of the animation
    * @returns {number}
    */
   Easing.polynomialEaseOutSecondDerivative = function( n, t ) {
@@ -190,7 +191,7 @@ define( function( require ) {
    * @public
    *
    * @param {number} n - The degree of the polynomial (does not have to be an integer!)
-   * @param {number} t - Should be in the range [0,1]
+   * @param {number} t - The linear ratio [0,1] of the animation
    * @returns {number}
    */
   Easing.polynomialEaseInOutSecondDerivative = function( n, t ) {

@@ -8,7 +8,7 @@
  * to a specific power, and other functions are generalized). These should be equivalent to the polynomial tweens that
  * TWEEN.js uses, where t is The linear ratio [0,1] of the animation.
  *
- * TODO: unit tests.
+ * TODO #23 create unit tests
  *
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */

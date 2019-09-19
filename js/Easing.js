@@ -219,7 +219,7 @@ define( require => {
    * @returns {Easing}
    */
   Easing.polynomialEaseIn = function( n ) {
-    var easing = new Easing();
+    const easing = new Easing();
     easing.value = Easing.polynomialEaseInValue.bind( easing, n );
     easing.derivative = Easing.polynomialEaseInDerivative.bind( easing, n );
     easing.secondDerivative = Easing.polynomialEaseInSecondDerivative.bind( easing, n );
@@ -234,7 +234,7 @@ define( require => {
    * @returns {Easing}
    */
   Easing.polynomialEaseOut = function( n ) {
-    var easing = new Easing();
+    const easing = new Easing();
     easing.value = Easing.polynomialEaseOutValue.bind( easing, n );
     easing.derivative = Easing.polynomialEaseOutDerivative.bind( easing, n );
     easing.secondDerivative = Easing.polynomialEaseOutSecondDerivative.bind( easing, n );
@@ -249,7 +249,7 @@ define( require => {
    * @returns {Easing}
    */
   Easing.polynomialEaseInOut = function( n ) {
-    var easing = new Easing();
+    const easing = new Easing();
     easing.value = Easing.polynomialEaseInOutValue.bind( easing, n );
     easing.derivative = Easing.polynomialEaseInOutDerivative.bind( easing, n );
     easing.secondDerivative = Easing.polynomialEaseInOutSecondDerivative.bind( easing, n );

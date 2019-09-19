@@ -27,15 +27,15 @@ define( require => {
    * @constructor
    */
   function DampedMotionView() {
-    var self = this;
+    const self = this;
 
     ScreenView.call( this );
 
     // TODO: better handling of vector properties, etc.
-    var xProperty = new Property( this.layoutBounds.centerX );
-    var yProperty = new Property( this.layoutBounds.centerY );
-    var forceProperty = new Property( 40 );
-    var dampingProperty = new Property( 1 );
+    const xProperty = new Property( this.layoutBounds.centerX );
+    const yProperty = new Property( this.layoutBounds.centerY );
+    const forceProperty = new Property( 40 );
+    const dampingProperty = new Property( 1 );
 
     this.xAnimation = new DampedAnimation( {
       valueProperty: xProperty,
@@ -69,7 +69,7 @@ define( require => {
     // to get the input events :(
     this.addChild( new Plane() );
 
-    var animatedCircle = new Circle( 20, {
+    const animatedCircle = new Circle( 20, {
       fill: 'rgba(0,128,255,0.5)',
       stroke: 'black',
       children: [
@@ -80,7 +80,7 @@ define( require => {
     yProperty.linkAttribute( animatedCircle, 'y' );
     this.addChild( animatedCircle );
 
-    var targetCircle = new Circle( 20, {
+    const targetCircle = new Circle( 20, {
       stroke: 'red',
       x: xProperty.value,
       y: yProperty.value
@@ -88,7 +88,7 @@ define( require => {
     this.addChild( targetCircle );
 
     function moveToEvent( event ) {
-      var localPoint = self.globalToLocalPoint( event.pointer.point );
+      const localPoint = self.globalToLocalPoint( event.pointer.point );
       targetCircle.translation = localPoint;
       self.xAnimation.targetValue = localPoint.x;
       self.yAnimation.targetValue = localPoint.y;
@@ -108,8 +108,8 @@ define( require => {
     } );
 
     function sliderGroup( property, range, label, majorTicks, options ) {
-      var labelNode = new Text( label, { font: new PhetFont( 20 ) } );
-      var slider = new HSlider( property, range, {
+      const labelNode = new Text( label, { font: new PhetFont( 20 ) } );
+      const slider = new HSlider( property, range, {
         trackSize: new Dimension2( 300, 5 )
       } );
       majorTicks.forEach( function( tick ) {

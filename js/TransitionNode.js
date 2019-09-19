@@ -66,8 +66,8 @@ define( require => {
     this.toContent = null;
 
     this.children = this.cachedNodes;
-    for ( var i = 0; i < this.cachedNodes.length; i++ ) {
-      var cachedNode = this.cachedNodes[ i ];
+    for ( let i = 0; i < this.cachedNodes.length; i++ ) {
+      const cachedNode = this.cachedNodes[ i ];
       cachedNode.visible = cachedNode === this.fromContent;
     }
 
@@ -255,7 +255,7 @@ define( require => {
      * @returns {Transition} - Available to add end listeners, etc. (chained)
      */
     startTransition: function( content, transition ) {
-      var self = this;
+      const self = this;
 
       // Stop animating if we were before
       this.interrupt();

@@ -25,7 +25,7 @@ define( require => {
      */
     constructor( easingProperty, listParent, options ) {
 
-      var comboTextOptions = { font: new PhetFont( 16 ) };
+      const comboTextOptions = { font: new PhetFont( 16 ) };
       const items = [
         new ComboBoxItem( new Text( 'Linear', comboTextOptions ), Easing.LINEAR ),
         new ComboBoxItem( new Text( 'Quadratic in-out', comboTextOptions ), Easing.QUADRATIC_IN_OUT ),

@@ -34,14 +34,14 @@ define( require => {
    * @constructor
    */
   function TransitionDemoView() {
-    var self = this;
+    const self = this;
 
     ScreenView.call( this );
 
-    var bounds = new Bounds2( 0, 0, 320, 240 );
+    const bounds = new Bounds2( 0, 0, 320, 240 );
 
-    var easingProperty = new Property( Easing.QUADRATIC_IN_OUT );
-    var durationProperty = new Property( 0.3 );
+    const easingProperty = new Property( Easing.QUADRATIC_IN_OUT );
+    const durationProperty = new Property( 0.3 );
 
     function createSomething() {
       function randomColor() {
@@ -70,16 +70,16 @@ define( require => {
       content: createSomething()
     } );
 
-    var listParent = new Node();
+    const listParent = new Node();
 
-    var comboBox = new EasingComboBox( easingProperty, listParent, {
+    const comboBox = new EasingComboBox( easingProperty, listParent, {
       centerX: this.layoutBounds.centerX,
       bottom: this.transitionNode.top - 10
     } );
 
     function sliderGroup( property, range, label, majorTicks, options ) {
-      var labelNode = new Text( label, { font: new PhetFont( 20 ) } );
-      var slider = new HSlider( property, range, {
+      const labelNode = new Text( label, { font: new PhetFont( 20 ) } );
+      const slider = new HSlider( property, range, {
         trackSize: new Dimension2( 300, 5 )
       } );
       majorTicks.forEach( function( tick ) {
@@ -91,12 +91,12 @@ define( require => {
       }, options ) );
     }
 
-    var durationSlider = sliderGroup( durationProperty, new Range( 0.1, 2 ), 'Duration', [ 0.1, 0.5, 1, 2 ], {
+    const durationSlider = sliderGroup( durationProperty, new Range( 0.1, 2 ), 'Duration', [ 0.1, 0.5, 1, 2 ], {
       left: 10,
       top: 10
     } );
 
-    var buttons = [
+    const buttons = [
       'slideLeftTo',
       'slideRightTo',
       'slideUpTo',
@@ -132,7 +132,7 @@ define( require => {
     } ) );
 
     // Reset All button
-    var resetAllButton = new ResetAllButton( {
+    const resetAllButton = new ResetAllButton( {
       listener: function() {
         durationProperty.reset();
         easingProperty.reset();

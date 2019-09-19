@@ -26,7 +26,7 @@ define( require => {
    * @param {Object} config
    */
   function Transition( fromNode, toNode, config ) {
-    var defaults = {
+    const defaults = {
       // {Array.<Object>} - A list of partial configurations that will individually be passed to
       // the targets for an Animation (and thus to AnimationTarget). They will be combined with `object: node` and
       // options.targetOptions to create the Animation. See Animation's targets parameter for more information
@@ -45,11 +45,11 @@ define( require => {
     assert && assert( config.toTargets );
     assert && assert( typeof config.resetNode === 'function' );
 
-    var targetOptions = _.extend( {
+    const targetOptions = _.extend( {
       // NOTE: no defaults, but we want it to be an object so we extend anyways
     }, config.targetOptions );
 
-    var targets = [];
+    let targets = [];
 
     if ( fromNode ) {
       targets = targets.concat( config.fromTargets.map( function( target ) {
@@ -243,7 +243,7 @@ define( require => {
      * @returns {Transition}
      */
     createSlide: function( fromNode, toNode, attribute, size, reversed, options ) {
-      var sign = reversed ? -1 : 1;
+      const sign = reversed ? -1 : 1;
       return new Transition( fromNode, toNode, _.extend( {
         fromTargets: [ {
           attribute: attribute,
@@ -274,8 +274,8 @@ define( require => {
      * @returns {Transition}
      */
     createWipe: function( bounds, fromNode, toNode, minAttribute, maxAttribute, options ) {
-      var fromNodeBounds = bounds.copy();
-      var toNodeBounds = bounds.copy();
+      const fromNodeBounds = bounds.copy();
+      const toNodeBounds = bounds.copy();
 
       fromNodeBounds[ minAttribute ] = bounds[ maxAttribute ];
       toNodeBounds[ maxAttribute ] = bounds[ minAttribute ];

@@ -17,10 +17,10 @@ define( require => {
   QUnit.test( 'basic animation tests', function( assert ) {
     assert.equal( 1, 1, 'sanity check' );
 
-    var numberProperty = new NumberProperty( 0 );
+    const numberProperty = new NumberProperty( 0 );
 
-    var targetValue = 7;
-    var animation = new Animation( {
+    const targetValue = 7;
+    const animation = new Animation( {
       // Options for the Animation as a whole
       duration: 2,
 

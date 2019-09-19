@@ -20,7 +20,7 @@ define( require => {
   // strings
   const twixtTitleString = require( 'string!TWIXT/twixt.title' );
 
-  var simOptions = {
+  const simOptions = {
     credits: {
       leadDesign: 'PhET'
     }
@@ -28,7 +28,7 @@ define( require => {
 
   SimLauncher.launch( function() {
 
-    var screens = [
+    const screens = [
       new Screen(
         function() { return {}; },
         function( model ) { return new AnimationView(); },

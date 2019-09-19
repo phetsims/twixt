@@ -199,7 +199,7 @@ define( require => {
     // (and conversely, will be removed when stopped). This means it will animate with the timer, but will not leak
     // memory as long as the animation doesn't last forever.
     if ( config.stepEmitter ) {
-      var stepListener = this.step.bind( this );
+      const stepListener = this.step.bind( this );
 
       this.runningProperty.link( function( running ) {
         if ( running && !config.stepEmitter.hasListener( stepListener ) ) {
@@ -287,8 +287,8 @@ define( require => {
 
         // Compute the start/end for each target, and determine the length of our animation
         this.length = this.duration;
-        for ( var i = 0; i < this.targets.length; i++ ) {
-          var target = this.targets[ i ];
+        for ( let i = 0; i < this.targets.length; i++ ) {
+          const target = this.targets[ i ];
           target.computeStartEnd();
 
           // If we don't have a computed length yet, check all of our targets
@@ -308,8 +308,8 @@ define( require => {
       this.remainingAnimation -= dt;
       dt = -this.remainingAnimation; // record how far past the animation we go
 
-      var ratio = Util.clamp( ( this.length - this.remainingAnimation ) / this.length, 0, 1 );
-      for ( var j = 0; j < this.targets.length; j++ ) {
+      const ratio = Util.clamp( ( this.length - this.remainingAnimation ) / this.length, 0, 1 );
+      for ( let j = 0; j < this.targets.length; j++ ) {
         this.targets[ j ].update( ratio );
       }
 

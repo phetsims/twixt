@@ -5,14 +5,14 @@
  *
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */
-define( function( require ) {
+define( require => {
   'use strict';
 
   // modules
-  var Animation = require( 'TWIXT/Animation' );
-  var inherit = require( 'PHET_CORE/inherit' );
-  var Shape = require( 'KITE/Shape' );
-  var twixt = require( 'TWIXT/twixt' );
+  const Animation = require( 'TWIXT/Animation' );
+  const inherit = require( 'PHET_CORE/inherit' );
+  const Shape = require( 'KITE/Shape' );
+  const twixt = require( 'TWIXT/twixt' );
 
   /**
    * @constructor

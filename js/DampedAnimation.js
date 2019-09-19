@@ -8,14 +8,14 @@
  *
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */
-define( function( require ) {
+define( require => {
   'use strict';
 
   // modules
-  var DampedHarmonic = require( 'DOT/DampedHarmonic' );
-  var inherit = require( 'PHET_CORE/inherit' );
-  var Property = require( 'AXON/Property' );
-  var twixt = require( 'TWIXT/twixt' );
+  const DampedHarmonic = require( 'DOT/DampedHarmonic' );
+  const inherit = require( 'PHET_CORE/inherit' );
+  const Property = require( 'AXON/Property' );
+  const twixt = require( 'TWIXT/twixt' );
 
   /**
    * @constructor

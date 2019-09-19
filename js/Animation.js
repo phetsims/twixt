@@ -20,17 +20,17 @@
  *
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */
-define( function( require ) {
+define( require => {
   'use strict';
 
   // modules
-  var AnimationTarget = require( 'TWIXT/AnimationTarget' );
-  var BooleanProperty = require( 'AXON/BooleanProperty' );
-  var Emitter = require( 'AXON/Emitter' );
-  var inherit = require( 'PHET_CORE/inherit' );
-  var timer = require( 'AXON/timer' );
-  var twixt = require( 'TWIXT/twixt' );
-  var Util = require( 'DOT/Util' );
+  const AnimationTarget = require( 'TWIXT/AnimationTarget' );
+  const BooleanProperty = require( 'AXON/BooleanProperty' );
+  const Emitter = require( 'AXON/Emitter' );
+  const inherit = require( 'PHET_CORE/inherit' );
+  const timer = require( 'AXON/timer' );
+  const twixt = require( 'TWIXT/twixt' );
+  const Util = require( 'DOT/Util' );
 
   /**
    * @constructor

@@ -6,15 +6,15 @@
  *
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */
-define( function( require ) {
+define( require => {
   'use strict';
 
   // modules
-  var inherit = require( 'PHET_CORE/inherit' );
-  var Node = require( 'SCENERY/nodes/Node' );
-  var Shape = require( 'KITE/Shape' );
-  var Transition = require( 'TWIXT/Transition' );
-  var twixt = require( 'TWIXT/twixt' );
+  const inherit = require( 'PHET_CORE/inherit' );
+  const Node = require( 'SCENERY/nodes/Node' );
+  const Shape = require( 'KITE/Shape' );
+  const Transition = require( 'TWIXT/Transition' );
+  const twixt = require( 'TWIXT/twixt' );
 
   /**
    * @constructor

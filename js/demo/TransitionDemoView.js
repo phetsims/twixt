@@ -5,30 +5,30 @@
  *
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */
-define( function( require ) {
+define( require => {
   'use strict';
 
   // modules
-  var Bounds2 = require( 'DOT/Bounds2' );
-  var Color = require( 'SCENERY/util/Color' );
-  var Dimension2 = require( 'DOT/Dimension2' );
-  var Easing = require( 'TWIXT/Easing' );
-  var EasingComboBox = require( 'TWIXT/demo/EasingComboBox' );
-  var HBox = require( 'SCENERY/nodes/HBox' );
-  var HSlider = require( 'SUN/HSlider' );
-  var inherit = require( 'PHET_CORE/inherit' );
-  var Node = require( 'SCENERY/nodes/Node' );
-  var PhetFont = require( 'SCENERY_PHET/PhetFont' );
-  var Property = require( 'AXON/Property' );
-  var Range = require( 'DOT/Range' );
-  var Rectangle = require( 'SCENERY/nodes/Rectangle' );
-  var RectangularPushButton = require( 'SUN/buttons/RectangularPushButton' );
-  var ResetAllButton = require( 'SCENERY_PHET/buttons/ResetAllButton' );
-  var ScreenView = require( 'JOIST/ScreenView' );
-  var Text = require( 'SCENERY/nodes/Text' );
-  var TransitionNode = require( 'TWIXT/TransitionNode' );
-  var twixt = require( 'TWIXT/twixt' );
-  var VBox = require( 'SCENERY/nodes/VBox' );
+  const Bounds2 = require( 'DOT/Bounds2' );
+  const Color = require( 'SCENERY/util/Color' );
+  const Dimension2 = require( 'DOT/Dimension2' );
+  const Easing = require( 'TWIXT/Easing' );
+  const EasingComboBox = require( 'TWIXT/demo/EasingComboBox' );
+  const HBox = require( 'SCENERY/nodes/HBox' );
+  const HSlider = require( 'SUN/HSlider' );
+  const inherit = require( 'PHET_CORE/inherit' );
+  const Node = require( 'SCENERY/nodes/Node' );
+  const PhetFont = require( 'SCENERY_PHET/PhetFont' );
+  const Property = require( 'AXON/Property' );
+  const Range = require( 'DOT/Range' );
+  const Rectangle = require( 'SCENERY/nodes/Rectangle' );
+  const RectangularPushButton = require( 'SUN/buttons/RectangularPushButton' );
+  const ResetAllButton = require( 'SCENERY_PHET/buttons/ResetAllButton' );
+  const ScreenView = require( 'JOIST/ScreenView' );
+  const Text = require( 'SCENERY/nodes/Text' );
+  const TransitionNode = require( 'TWIXT/TransitionNode' );
+  const twixt = require( 'TWIXT/twixt' );
+  const VBox = require( 'SCENERY/nodes/VBox' );
 
   /**
    * @constructor

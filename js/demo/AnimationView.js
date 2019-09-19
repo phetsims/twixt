@@ -5,27 +5,27 @@
  *
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */
-define( function( require ) {
+define( require => {
   'use strict';
 
   // modules
-  var Animation = require( 'TWIXT/Animation' );
-  var Circle = require( 'SCENERY/nodes/Circle' );
-  var Color = require( 'SCENERY/util/Color' );
-  var Dimension2 = require( 'DOT/Dimension2' );
-  var Easing = require( 'TWIXT/Easing' );
-  var EasingComboBox = require( 'TWIXT/demo/EasingComboBox' );
-  var HSlider = require( 'SUN/HSlider' );
-  var inherit = require( 'PHET_CORE/inherit' );
-  var Node = require( 'SCENERY/nodes/Node' );
-  var PhetFont = require( 'SCENERY_PHET/PhetFont' );
-  var Plane = require( 'SCENERY/nodes/Plane' );
-  var Property = require( 'AXON/Property' );
-  var Range = require( 'DOT/Range' );
-  var ScreenView = require( 'JOIST/ScreenView' );
-  var Text = require( 'SCENERY/nodes/Text' );
-  var twixt = require( 'TWIXT/twixt' );
-  var VBox = require( 'SCENERY/nodes/VBox' );
+  const Animation = require( 'TWIXT/Animation' );
+  const Circle = require( 'SCENERY/nodes/Circle' );
+  const Color = require( 'SCENERY/util/Color' );
+  const Dimension2 = require( 'DOT/Dimension2' );
+  const Easing = require( 'TWIXT/Easing' );
+  const EasingComboBox = require( 'TWIXT/demo/EasingComboBox' );
+  const HSlider = require( 'SUN/HSlider' );
+  const inherit = require( 'PHET_CORE/inherit' );
+  const Node = require( 'SCENERY/nodes/Node' );
+  const PhetFont = require( 'SCENERY_PHET/PhetFont' );
+  const Plane = require( 'SCENERY/nodes/Plane' );
+  const Property = require( 'AXON/Property' );
+  const Range = require( 'DOT/Range' );
+  const ScreenView = require( 'JOIST/ScreenView' );
+  const Text = require( 'SCENERY/nodes/Text' );
+  const twixt = require( 'TWIXT/twixt' );
+  const VBox = require( 'SCENERY/nodes/VBox' );
 
   /**
    * @constructor

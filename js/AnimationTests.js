@@ -5,12 +5,12 @@
  *
  * @author Sam Reid (PhET Interactive Simulations)
  */
-define( function( require ) {
+define( require => {
   'use strict';
 
   // modules
-  var Animation = require( 'TWIXT/Animation' );
-  var NumberProperty = require( 'AXON/NumberProperty' );
+  const Animation = require( 'TWIXT/Animation' );
+  const NumberProperty = require( 'AXON/NumberProperty' );
 
   QUnit.module( 'Animation' );
 

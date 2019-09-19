@@ -5,20 +5,20 @@
  *
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */
-define( function( require ) {
+define( require => {
   'use strict';
 
   // modules
-  var AnimationView = require( 'TWIXT/demo/AnimationView' );
-  var DampedMotionView = require( 'TWIXT/demo/DampedMotionView' );
-  var Property = require( 'AXON/Property' );
-  var Screen = require( 'JOIST/Screen' );
-  var Sim = require( 'JOIST/Sim' );
-  var SimLauncher = require( 'JOIST/SimLauncher' );
-  var TransitionDemoView = require( 'TWIXT/demo/TransitionDemoView' );
+  const AnimationView = require( 'TWIXT/demo/AnimationView' );
+  const DampedMotionView = require( 'TWIXT/demo/DampedMotionView' );
+  const Property = require( 'AXON/Property' );
+  const Screen = require( 'JOIST/Screen' );
+  const Sim = require( 'JOIST/Sim' );
+  const SimLauncher = require( 'JOIST/SimLauncher' );
+  const TransitionDemoView = require( 'TWIXT/demo/TransitionDemoView' );
 
   // strings
-  var twixtTitleString = require( 'string!TWIXT/twixt.title' );
+  const twixtTitleString = require( 'string!TWIXT/twixt.title' );
 
   var simOptions = {
     credits: {

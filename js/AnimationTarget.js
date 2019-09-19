@@ -5,14 +5,14 @@
  *
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */
-define( function( require ) {
+define( require => {
   'use strict';
 
   // modules
-  var Easing = require( 'TWIXT/Easing' );
-  var inherit = require( 'PHET_CORE/inherit' );
-  var Property = require( 'AXON/Property' );
-  var twixt = require( 'TWIXT/twixt' );
+  const Easing = require( 'TWIXT/Easing' );
+  const inherit = require( 'PHET_CORE/inherit' );
+  const Property = require( 'AXON/Property' );
+  const twixt = require( 'TWIXT/twixt' );
 
   /**
    * @constructor

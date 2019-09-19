@@ -12,12 +12,12 @@
  *
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */
-define( function( require ) {
+define( require => {
   'use strict';
 
   // modules
-  var inherit = require( 'PHET_CORE/inherit' );
-  var twixt = require( 'TWIXT/twixt' );
+  const inherit = require( 'PHET_CORE/inherit' );
+  const twixt = require( 'TWIXT/twixt' );
 
   /**
    * @constructor

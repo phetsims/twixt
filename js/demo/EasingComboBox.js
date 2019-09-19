@@ -12,7 +12,7 @@ define( require => {
   const ComboBox = require( 'SUN/ComboBox' );
   const ComboBoxItem = require( 'SUN/ComboBoxItem' );
   const Easing = require( 'TWIXT/Easing' );
-  var PhetFont = require( 'SCENERY_PHET/PhetFont' );
+  const PhetFont = require( 'SCENERY_PHET/PhetFont' );
   const Text = require( 'SCENERY/nodes/Text' );
   const twixt = require( 'TWIXT/twixt' );
 

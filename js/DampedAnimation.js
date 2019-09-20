@@ -1,4 +1,4 @@
-// Copyright 2017, University of Colorado Boulder
+// Copyright 2017-2019, University of Colorado Boulder
 
 /**
  * WARNING: PROTOTYPE, see https://github.com/phetsims/twixt/issues/3 before using!

@@ -17,6 +17,7 @@ define( require => {
   const HBox = require( 'SCENERY/nodes/HBox' );
   const HSlider = require( 'SUN/HSlider' );
   const inherit = require( 'PHET_CORE/inherit' );
+  const merge = require( 'PHET_CORE/merge' );
   const Node = require( 'SCENERY/nodes/Node' );
   const PhetFont = require( 'SCENERY_PHET/PhetFont' );
   const Property = require( 'AXON/Property' );
@@ -85,7 +86,7 @@ define( require => {
       majorTicks.forEach( function( tick ) {
         slider.addMajorTick( tick, new Text( tick, { font: new PhetFont( 20 ) } ) );
       } );
-      return new VBox( _.extend( {
+      return new VBox( merge( {
         children: [ labelNode, slider ],
         spacing: 10
       }, options ) );

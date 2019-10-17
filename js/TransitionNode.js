@@ -11,6 +11,7 @@ define( require => {
 
   // modules
   const inherit = require( 'PHET_CORE/inherit' );
+  const merge = require( 'PHET_CORE/merge' );
   const Node = require( 'SCENERY/nodes/Node' );
   const Shape = require( 'KITE/Shape' );
   const Transition = require( 'TWIXT/Transition' );
@@ -29,7 +30,7 @@ define( require => {
    * @param {Object} [options]
    */
   function TransitionNode( boundsProperty, options ) {
-    options = _.extend( {
+    options = merge( {
       // {Node|null} - Optionally may have initial content
       content: null,
 

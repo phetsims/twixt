@@ -11,6 +11,7 @@ define( require => {
   // modules
   const Animation = require( 'TWIXT/Animation' );
   const inherit = require( 'PHET_CORE/inherit' );
+  const merge = require( 'PHET_CORE/merge' );
   const Shape = require( 'KITE/Shape' );
   const twixt = require( 'TWIXT/twixt' );
 
@@ -39,13 +40,13 @@ define( require => {
       // {Object|null} (optional) - Passed as additional objects to every target
       targetOptions: null
     };
-    config = _.extend( {}, defaults, config );
+    config = merge( {}, defaults, config );
 
     assert && assert( config.fromTargets );
     assert && assert( config.toTargets );
     assert && assert( typeof config.resetNode === 'function' );
 
-    const targetOptions = _.extend( {
+    const targetOptions = merge( {
       // NOTE: no defaults, but we want it to be an object so we extend anyways
     }, config.targetOptions );
 
@@ -53,20 +54,20 @@ define( require => {
 
     if ( fromNode ) {
       targets = targets.concat( config.fromTargets.map( function( target ) {
-        return _.extend( target, {
+        return merge( target, {
           object: fromNode
         }, targetOptions );
       } ) );
     }
     if ( toNode ) {
       targets = targets.concat( config.toTargets.map( function( target ) {
-        return _.extend( target, {
+        return merge( target, {
           object: toNode
         }, targetOptions );
       } ) );
     }
 
-    Animation.call( this, _.extend( {
+    Animation.call( this, merge( {
       targets: targets
     }, _.omit( config, _.keys( defaults ) ) ) );
 
@@ -202,7 +203,7 @@ define( require => {
      * @returns {Transition}
      */
     dissolve: function( fromNode, toNode, options ) {
-      options = _.extend( {
+      options = merge( {
         // {number} - Handles gamma correction for the opacity when required
         gamma: 1
       }, options );
@@ -211,7 +212,7 @@ define( require => {
         return Math.pow( ( 1 - ratio ) * a + ratio * b, options.gamma );
       }
 
-      return new Transition( fromNode, toNode, _.extend( {
+      return new Transition( fromNode, toNode, merge( {
         fromTargets: [ {
           attribute: 'opacity',
           from: 1,
@@ -244,7 +245,7 @@ define( require => {
      */
     createSlide: function( fromNode, toNode, attribute, size, reversed, options ) {
       const sign = reversed ? -1 : 1;
-      return new Transition( fromNode, toNode, _.extend( {
+      return new Transition( fromNode, toNode, merge( {
         fromTargets: [ {
           attribute: attribute,
           from: 0,
@@ -285,7 +286,7 @@ define( require => {
         return Shape.bounds( boundsA.blend( boundsB, ratio ) );
       }
 
-      return new Transition( fromNode, toNode, _.extend( {
+      return new Transition( fromNode, toNode, merge( {
         fromTargets: [ {
           attribute: 'clipArea',
           from: bounds,

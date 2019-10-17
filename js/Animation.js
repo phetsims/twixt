@@ -28,6 +28,7 @@ define( require => {
   const BooleanProperty = require( 'AXON/BooleanProperty' );
   const Emitter = require( 'AXON/Emitter' );
   const inherit = require( 'PHET_CORE/inherit' );
+  const merge = require( 'PHET_CORE/merge' );
   const timer = require( 'AXON/timer' );
   const twixt = require( 'TWIXT/twixt' );
   const Util = require( 'DOT/Util' );
@@ -96,7 +97,7 @@ define( require => {
    */
   function Animation( config ) {
 
-    config = _.extend( {
+    config = merge( {
       // IMPORTANT: See AnimationTarget's config documentation, as those config can be passed in either here, or in
       // the targets array.
 

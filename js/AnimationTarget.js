@@ -11,6 +11,7 @@ define( require => {
   // modules
   const Easing = require( 'TWIXT/Easing' );
   const inherit = require( 'PHET_CORE/inherit' );
+  const merge = require( 'PHET_CORE/merge' );
   const Property = require( 'AXON/Property' );
   const twixt = require( 'TWIXT/twixt' );
 
@@ -28,7 +29,7 @@ define( require => {
    */
   function AnimationTarget( config ) {
 
-    config = _.extend( {
+    config = merge( {
       /*
        * NOTE: One of `setValue`/`property`/`object` is REQUIRED.
        *

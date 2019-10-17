@@ -14,6 +14,7 @@ define( require => {
   // modules
   const DampedHarmonic = require( 'DOT/DampedHarmonic' );
   const inherit = require( 'PHET_CORE/inherit' );
+  const merge = require( 'PHET_CORE/merge' );
   const Property = require( 'AXON/Property' );
   const twixt = require( 'TWIXT/twixt' );
 
@@ -21,7 +22,7 @@ define( require => {
    * @constructor
    */
   function DampedAnimation( options ) {
-    options = _.extend( {
+    options = merge( {
       // {Property.<number>} - The current value/location.
       valueProperty: new Property( 0 ),
 

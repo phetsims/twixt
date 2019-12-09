@@ -12,6 +12,7 @@ define( require => {
   const Animation = require( 'TWIXT/Animation' );
   const inherit = require( 'PHET_CORE/inherit' );
   const merge = require( 'PHET_CORE/merge' );
+  const required = require( 'PHET_CORE/required' );
   const Shape = require( 'KITE/Shape' );
   const twixt = require( 'TWIXT/twixt' );
 
@@ -28,26 +29,25 @@ define( require => {
    */
   function Transition( fromNode, toNode, config ) {
     const defaults = {
+
       // {Array.<Object>} - A list of partial configurations that will individually be passed to
       // the targets for an Animation (and thus to AnimationTarget). They will be combined with `object: node` and
       // options.targetOptions to create the Animation. See Animation's targets parameter for more information
-      fromTargets: null,
-      toTargets: null,
+      fromTargets: required( config.fromTargets ),
+      toTargets: required( config.toTargets ),
 
       // {function} - function( {Node} ), resets the animated parameter(s) to their default values.
-      resetNode: null,
+      resetNode: required( config.resetNode ),
 
       // {Object|null} (optional) - Passed as additional objects to every target
       targetOptions: null
     };
     config = merge( {}, defaults, config );
 
-    assert && assert( config.fromTargets );
-    assert && assert( config.toTargets );
     assert && assert( typeof config.resetNode === 'function' );
 
     const targetOptions = merge( {
-      // NOTE: no defaults, but we want it to be an object so we extend anyways
+      // NOTE: no defaults, but we want it to be an object so we merge anyways
     }, config.targetOptions );
 
     let targets = [];

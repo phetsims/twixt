@@ -31,7 +31,7 @@ define( require => {
   const merge = require( 'PHET_CORE/merge' );
   const timer = require( 'AXON/timer' );
   const twixt = require( 'TWIXT/twixt' );
-  const Util = require( 'DOT/Util' );
+  const Utils = require( 'DOT/Utils' );
 
   /**
    * @constructor
@@ -309,7 +309,7 @@ define( require => {
       this.remainingAnimation -= dt;
       dt = -this.remainingAnimation; // record how far past the animation we go
 
-      const ratio = Util.clamp( ( this.length - this.remainingAnimation ) / this.length, 0, 1 );
+      const ratio = Utils.clamp( ( this.length - this.remainingAnimation ) / this.length, 0, 1 );
       for ( let j = 0; j < this.targets.length; j++ ) {
         this.targets[ j ].update( ratio );
       }

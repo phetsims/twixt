@@ -309,7 +309,7 @@ define( require => {
       this.remainingAnimation -= dt;
       dt = -this.remainingAnimation; // record how far past the animation we go
 
-      const ratio = Utils.clamp( ( this.length - this.remainingAnimation ) / this.length, 0, 1 );
+      const ratio = this.length > 0 ? Utils.clamp( ( this.length - this.remainingAnimation ) / this.length, 0, 1 ) : 1;
       for ( let j = 0; j < this.targets.length; j++ ) {
         this.targets[ j ].update( ratio );
       }

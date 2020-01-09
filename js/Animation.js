@@ -132,7 +132,7 @@ define( require => {
       'The delay should be a non-negative number.' );
 
     assert && assert( config.stepEmitter === null || config.stepEmitter instanceof Emitter,
-      'stepEmitter must be null or an Emitter, or (TODO)' );
+      'stepEmitter must be null or an Emitter' );
 
     // @private {Array.<AnimationTarget>} - All of the different values that will be animated by this animation.
     // If config.targets was supplied, those targets will be wrapped into AnimationTargets

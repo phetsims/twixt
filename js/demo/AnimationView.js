@@ -32,7 +32,6 @@ define( require => {
    * @constructor
    */
   function AnimationView() {
-    // TODO: remove duplication between screenviews
     const self = this;
 
     ScreenView.call( this );

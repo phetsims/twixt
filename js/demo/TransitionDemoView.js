@@ -1,7 +1,7 @@
 // Copyright 2017-2019, University of Colorado Boulder
 
 /**
- * TODO
+ * Demos how TransitionNode works
  *
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */

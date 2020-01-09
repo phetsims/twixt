@@ -43,34 +43,105 @@ define( require => {
       targetValue: 0
     }, options );
 
-    // TODO: decide on visibility annotations
+    // @public {Property.<number>}
     this.valueProperty = options.valueProperty;
     this.velocityProperty = options.velocityProperty;
 
-    // TODO: support mutation?
-    this.damping = options.damping;
-    this.force = options.force;
+    // @private {number}
+    this._damping = options.damping;
+    this._force = options.force;
 
+    // @public {number}
     this.timeElapsed = 0;
 
-    this.targetValue = options.targetValue; // Sets this._targetValue
+    // @private {number}
+    this._targetValue = options.targetValue;
   }
 
   twixt.register( 'DampedAnimation', DampedAnimation );
 
   return inherit( Object, DampedAnimation, {
-    // Change the target value that we are moving towards.
+    /**
+     * Change the target value that we are moving toward.
+     * @public
+     *
+     * @param {number} value
+     */
     set targetValue( value ) {
       this._targetValue = value;
+
       this.recompute();
     },
 
-    // On a change, we need to recompute our harmonic (that plots out the motion to the target)
-    recompute: function() {
-      this.timeElapsed = 0;
-      this.harmonic = new DampedHarmonic( 1, Math.sqrt( 4 * this.force ) * this.damping, this.force, this.valueProperty.value - this._targetValue, this.velocityProperty.value );
+    /**
+     * Returns the target value
+     * @public
+     *
+     * @returns {number}
+     */
+    get targetValue() {
+      return this._targetValue;
     },
 
+    /**
+     * Sets the damping value.
+     * @public
+     *
+     * @param {number} value
+     */
+    set damping( value ) {
+      this._damping = value;
+
+      this.recompute();
+    },
+
+    /**
+     * Returns the damping value
+     * @public
+     *
+     * @returns {number}
+     */
+    get damping() {
+      return this._damping;
+    },
+
+    /**
+     * Sets the force value.
+     * @public
+     *
+     * @param {number} value
+     */
+    set force( value ) {
+      this._force = value;
+
+      this.recompute();
+    },
+
+    /**
+     * Returns the force value
+     * @public
+     *
+     * @returns {number}
+     */
+    get force() {
+      return this._force;
+    },
+
+    /**
+     * On a change, we need to recompute our harmonic (that plots out the motion to the target)
+     * @private
+     */
+    recompute: function() {
+      this.timeElapsed = 0;
+      this.harmonic = new DampedHarmonic( 1, Math.sqrt( 4 * this._force ) * this._damping, this._force, this.valueProperty.value - this._targetValue, this.velocityProperty.value );
+    },
+
+    /**
+     * Steps the animation forward in time.
+     * @public
+     *
+     * @param {number} dt
+     */
     step: function( dt ) {
       this.timeElapsed += dt;
 

@@ -1,7 +1,7 @@
 // Copyright 2017-2019, University of Colorado Boulder
 
 /**
- * TODO
+ * Displays a demo for showing how damped motion (with DampedAnimation) works.
  *
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */
@@ -32,7 +32,6 @@ define( require => {
 
     ScreenView.call( this );
 
-    // TODO: better handling of vector properties, etc.
     const xProperty = new Property( this.layoutBounds.centerX );
     const yProperty = new Property( this.layoutBounds.centerY );
     const forceProperty = new Property( 40 );
@@ -42,29 +41,21 @@ define( require => {
       valueProperty: xProperty,
       force: forceProperty.value,
       damping: dampingProperty.value,
-      targetValue: xProperty.value // TODO don't require this
+      targetValue: xProperty.value
     } );
     this.yAnimation = new DampedAnimation( {
       valueProperty: yProperty,
       force: forceProperty.value,
       damping: dampingProperty.value,
-      targetValue: yProperty.value // TODO don't require this
+      targetValue: yProperty.value
     } );
     forceProperty.link( function( force ) {
-      // TODO: have actual mutable calls (this is unclean)
       self.xAnimation.force = force;
-      self.xAnimation.recompute();
-
       self.yAnimation.force = force;
-      self.yAnimation.recompute();
     } );
     dampingProperty.link( function( damping ) {
-      // TODO: have actual mutable calls (this is unclean)
       self.xAnimation.damping = damping;
-      self.xAnimation.recompute();
-
       self.yAnimation.damping = damping;
-      self.yAnimation.recompute();
     } );
 
     // to get the input events :(

@@ -1,9 +1,6 @@
 // Copyright 2016-2019, University of Colorado Boulder
 
-define( require => {
-  'use strict';
 
-  const Namespace = require( 'PHET_CORE/Namespace' );
+import Namespace from '../../phet-core/js/Namespace.js';
 
-  return new Namespace( 'twixt' );
-} );
+export default new Namespace( 'twixt' );

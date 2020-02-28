@@ -1,4 +1,4 @@
-// Copyright 2017-2019, University of Colorado Boulder
+// Copyright 2017-2020, University of Colorado Boulder
 
 /**
  * An Easing represents a function from the range [0,1] => [0,1] where f(0)=0 and f(1)=1. It is helpful for animation,

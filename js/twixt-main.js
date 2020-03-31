@@ -13,7 +13,7 @@ import SimLauncher from '../../joist/js/SimLauncher.js';
 import AnimationView from './demo/AnimationView.js';
 import DampedMotionView from './demo/DampedMotionView.js';
 import TransitionDemoView from './demo/TransitionDemoView.js';
-import twixtStrings from './twixt-strings.js';
+import twixtStrings from './twixtStrings.js';
 
 const twixtTitleString = twixtStrings.twixt.title;
 

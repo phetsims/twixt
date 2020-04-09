@@ -21,17 +21,17 @@ import twixt from './twixt.js';
  * NOTE: The content's transform/pickability/visibility/opacity/clipArea/etc. can be modified, and will be reset to
  * the default value
  *
- * @param {Property.<Bounds2>} boundsProperty - Use visibleBoundsProperty (from the ScreenView) for full-screen
+ * @param {Property.<Bounds2>} transitionBoundsProperty - Use visibleBoundsProperty (from the ScreenView) for full-screen
  *                                              transitions. Generally TransitionNode assumes all content, when it has
  *                                              no transform applied, is meant to by laid out within these bounds.
  * @param {Object} [options]
  */
-function TransitionNode( boundsProperty, options ) {
+function TransitionNode( transitionBoundsProperty, options ) {
   options = merge( {
     // {Node|null} - Optionally may have initial content
     content: null,
 
-    // {boolean} - If true, a clip area will be set to the value of the boundsProperty so that outside content won't
+    // {boolean} - If true, a clip area will be set to the value of the transitionBoundsProperty so that outside content won't
     // be shown.
     useBoundsClip: true,
 
@@ -48,7 +48,7 @@ function TransitionNode( boundsProperty, options ) {
   Node.call( this );
 
   // @private {Property.<Bounds2>}
-  this.boundsProperty = boundsProperty;
+  this.transitionBoundsProperty = transitionBoundsProperty;
 
   // @private {boolean}
   this.useBoundsClip = options.useBoundsClip;
@@ -82,7 +82,7 @@ function TransitionNode( boundsProperty, options ) {
 
   // @private {function}
   this.boundsListener = this.onBoundsChange.bind( this );
-  this.boundsProperty.link( this.boundsListener );
+  this.transitionBoundsProperty.link( this.boundsListener );
 
   this.mutate( options );
 }
@@ -137,7 +137,7 @@ inherit( Node, TransitionNode, {
    */
   slideLeftTo: function( content, config ) {
     this.interrupt();
-    return this.startTransition( content, Transition.slideLeft( this.boundsProperty.value, this.fromContent, content, config ) );
+    return this.startTransition( content, Transition.slideLeft( this.transitionBoundsProperty.value, this.fromContent, content, config ) );
   },
 
   /**
@@ -150,7 +150,7 @@ inherit( Node, TransitionNode, {
    */
   slideRightTo: function( content, config ) {
     this.interrupt();
-    return this.startTransition( content, Transition.slideRight( this.boundsProperty.value, this.fromContent, content, config ) );
+    return this.startTransition( content, Transition.slideRight( this.transitionBoundsProperty.value, this.fromContent, content, config ) );
   },
 
   /**
@@ -163,7 +163,7 @@ inherit( Node, TransitionNode, {
    */
   slideUpTo: function( content, config ) {
     this.interrupt();
-    return this.startTransition( content, Transition.slideUp( this.boundsProperty.value, this.fromContent, content, config ) );
+    return this.startTransition( content, Transition.slideUp( this.transitionBoundsProperty.value, this.fromContent, content, config ) );
   },
 
   /**
@@ -176,7 +176,7 @@ inherit( Node, TransitionNode, {
    */
   slideDownTo: function( content, config ) {
     this.interrupt();
-    return this.startTransition( content, Transition.slideDown( this.boundsProperty.value, this.fromContent, content, config ) );
+    return this.startTransition( content, Transition.slideDown( this.transitionBoundsProperty.value, this.fromContent, content, config ) );
   },
 
   /**
@@ -189,7 +189,7 @@ inherit( Node, TransitionNode, {
    */
   wipeLeftTo: function( content, config ) {
     this.interrupt();
-    return this.startTransition( content, Transition.wipeLeft( this.boundsProperty.value, this.fromContent, content, config ) );
+    return this.startTransition( content, Transition.wipeLeft( this.transitionBoundsProperty.value, this.fromContent, content, config ) );
   },
 
   /**
@@ -202,7 +202,7 @@ inherit( Node, TransitionNode, {
    */
   wipeRightTo: function( content, config ) {
     this.interrupt();
-    return this.startTransition( content, Transition.wipeRight( this.boundsProperty.value, this.fromContent, content, config ) );
+    return this.startTransition( content, Transition.wipeRight( this.transitionBoundsProperty.value, this.fromContent, content, config ) );
   },
 
   /**
@@ -215,7 +215,7 @@ inherit( Node, TransitionNode, {
    */
   wipeUpTo: function( content, config ) {
     this.interrupt();
-    return this.startTransition( content, Transition.wipeUp( this.boundsProperty.value, this.fromContent, content, config ) );
+    return this.startTransition( content, Transition.wipeUp( this.transitionBoundsProperty.value, this.fromContent, content, config ) );
   },
 
   /**
@@ -228,7 +228,7 @@ inherit( Node, TransitionNode, {
    */
   wipeDownTo: function( content, config ) {
     this.interrupt();
-    return this.startTransition( content, Transition.wipeDown( this.boundsProperty.value, this.fromContent, content, config ) );
+    return this.startTransition( content, Transition.wipeDown( this.transitionBoundsProperty.value, this.fromContent, content, config ) );
   },
 
   /**
@@ -318,7 +318,7 @@ inherit( Node, TransitionNode, {
    */
   dispose: function() {
     this.interrupt();
-    this.boundsProperty.unlink( this.boundsListener );
+    this.transitionBoundsProperty.unlink( this.boundsListener );
 
     Node.prototype.dispose.call( this );
   }

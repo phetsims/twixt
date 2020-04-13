@@ -1,0 +1,91 @@
+{
+  "comment": "# twixt 1.0.0-dev.2 Mon Apr 13 2020 14:49:39 GMT-0600 (Mountain Daylight Time)",
+  "assert": {
+    "sha": "a99a9ce9ee0774bf3ef509bf3e31ca7383f67478",
+    "branch": "master"
+  },
+  "axon": {
+    "sha": "c9d027108b5f57bc93ac04c744d19dae0f534b00",
+    "branch": "master"
+  },
+  "brand": {
+    "sha": "3533091fd055c8cee2523530f1ee803e5be07fc3",
+    "branch": "master"
+  },
+  "chipper": {
+    "sha": "fcc38d8452b01846a67ec6e2772e053e3872b20a",
+    "branch": "master"
+  },
+  "dot": {
+    "sha": "fe8a6c8d08699b351b13bd4e3ee87668a0807457",
+    "branch": "master"
+  },
+  "joist": {
+    "sha": "e263dba85124bf2d14e69e875e1995b4acf2a6de",
+    "branch": "master"
+  },
+  "kite": {
+    "sha": "9bce6c25d44ba697060b9fa34c6a8e7d91b4218d",
+    "branch": "master"
+  },
+  "phet-core": {
+    "sha": "3a6ae9b043b972dcd179144e0b183fc1af305e87",
+    "branch": "master"
+  },
+  "phet-io": {
+    "sha": "9abab5cc345d959964c2b7fd484841c3bd6978d9",
+    "branch": "master"
+  },
+  "phet-io-wrappers": {
+    "sha": "5ae070afc78497d61805f310ec4c8c0d9d21473f",
+    "branch": "master"
+  },
+  "phetcommon": {
+    "sha": "24ab095131c5282972c7365d06ca6f04e232798c",
+    "branch": "master"
+  },
+  "phetmarks": {
+    "sha": "4a494be0017bace89eb8a2c844d790cccfd1b3f6",
+    "branch": "master"
+  },
+  "query-string-machine": {
+    "sha": "0e74e18c51fc6d25eec1880e4848af1b12cae7f6",
+    "branch": "master"
+  },
+  "scenery": {
+    "sha": "756f89016ad2cb5db53afcdf29f1204722562343",
+    "branch": "master"
+  },
+  "scenery-phet": {
+    "sha": "7d4a391a569f29bf90ff23daf4383441df118fb6",
+    "branch": "master"
+  },
+  "sherpa": {
+    "sha": "e77f262e5d5ee9e9fd8171d44c6aa14550bb3239",
+    "branch": "master"
+  },
+  "studio": {
+    "sha": "50c172da9ab4946c65137b0c0a73c86c2c3fd6e5",
+    "branch": "master"
+  },
+  "sun": {
+    "sha": "497673b45dfadcbe000667695431b0ceacc2e47d",
+    "branch": "master"
+  },
+  "tambo": {
+    "sha": "464542a24c446e3bf69e486573dc062ede3f6c5f",
+    "branch": "master"
+  },
+  "tandem": {
+    "sha": "2389d2f7294b87bd3d66088b990f5cd3742c2769",
+    "branch": "master"
+  },
+  "twixt": {
+    "sha": "57b77d161199db34fd7f9f4c0d008229b260225e",
+    "branch": "master"
+  },
+  "utterance-queue": {
+    "sha": "b275895573d6c878faa2e61b7f27305b901d3939",
+    "branch": "master"
+  }
+}

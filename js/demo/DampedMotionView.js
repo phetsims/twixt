@@ -129,9 +129,11 @@ function DampedMotionView() {
 
 twixt.register( 'DampedMotionView', DampedMotionView );
 
-export default inherit( ScreenView, DampedMotionView, {
+inherit( ScreenView, DampedMotionView, {
   step: function( dt ) {
     this.xAnimation.step( dt );
     this.yAnimation.step( dt );
   }
 } );
+
+export default DampedMotionView;

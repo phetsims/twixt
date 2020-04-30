@@ -145,8 +145,10 @@ function TransitionDemoView() {
 
 twixt.register( 'TransitionDemoView', TransitionDemoView );
 
-export default inherit( ScreenView, TransitionDemoView, {
+inherit( ScreenView, TransitionDemoView, {
   step: function( dt ) {
     this.transitionNode.step( dt );
   }
 } );
+
+export default TransitionDemoView;

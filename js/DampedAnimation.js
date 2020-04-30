@@ -57,7 +57,7 @@ function DampedAnimation( options ) {
 
 twixt.register( 'DampedAnimation', DampedAnimation );
 
-export default inherit( Object, DampedAnimation, {
+inherit( Object, DampedAnimation, {
   /**
    * Change the target value that we are moving toward.
    * @public
@@ -146,3 +146,5 @@ export default inherit( Object, DampedAnimation, {
     this.velocityProperty.value = this.harmonic.getDerivative( this.timeElapsed );
   }
 } );
+
+export default DampedAnimation;

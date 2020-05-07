@@ -9,7 +9,7 @@
 import Property from '../../axon/js/Property.js';
 import Screen from '../../joist/js/Screen.js';
 import Sim from '../../joist/js/Sim.js';
-import SimLauncher from '../../joist/js/SimLauncher.js';
+import simLauncher from '../../joist/js/simLauncher.js';
 import AnimationView from './demo/AnimationView.js';
 import DampedMotionView from './demo/DampedMotionView.js';
 import TransitionDemoView from './demo/TransitionDemoView.js';
@@ -23,7 +23,7 @@ const simOptions = {
   }
 };
 
-SimLauncher.launch( function() {
+simLauncher.launch( function() {
 
   const screens = [
     new Screen(

@@ -20,7 +20,7 @@ import twixt from './twixt.js';
  */
 function DampedAnimation( options ) {
   options = merge( {
-    // {Property.<number>} - The current value/location.
+    // {Property.<number>} - The current value/position.
     valueProperty: new Property( 0 ),
 
     // {Property.<number>} - The current derivative of the value

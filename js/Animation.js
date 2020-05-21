@@ -24,6 +24,7 @@
 import BooleanProperty from '../../axon/js/BooleanProperty.js';
 import Emitter from '../../axon/js/Emitter.js';
 import timer from '../../axon/js/timer.js';
+import TinyEmitter from '../../axon/js/TinyEmitter.js';
 import Utils from '../../dot/js/Utils.js';
 import inherit from '../../phet-core/js/inherit.js';
 import merge from '../../phet-core/js/merge.js';
@@ -113,7 +114,7 @@ function Animation( config ) {
     // animation of the value begins. Negative delays are not supported.
     delay: 0,
 
-    // {Emitter|null} - One of the following config:
+    // {TinyEmitter|Emitter|null} - One of the following config:
     // The Emitter (which provides a dt {number} value on emit) which drives the animation, or null if the client
     // will drive the animation by calling `step(dt)` manually.  Defaults to the joist Timer which runs automatically
     // as part of the Sim time step.
@@ -128,8 +129,8 @@ function Animation( config ) {
   assert && assert( typeof config.delay === 'number' && isFinite( config.delay ) && config.delay >= 0,
     'The delay should be a non-negative number.' );
 
-  assert && assert( config.stepEmitter === null || config.stepEmitter instanceof Emitter,
-    'stepEmitter must be null or an Emitter' );
+  assert && assert( config.stepEmitter === null || config.stepEmitter instanceof Emitter || config.stepEmitter instanceof TinyEmitter,
+    'stepEmitter must be null or an (Tiny)Emitter' );
 
   // @private {Array.<AnimationTarget>} - All of the different values that will be animated by this animation.
   // If config.targets was supplied, those targets will be wrapped into AnimationTargets

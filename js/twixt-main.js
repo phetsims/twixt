@@ -10,12 +10,10 @@ import Property from '../../axon/js/Property.js';
 import Screen from '../../joist/js/Screen.js';
 import Sim from '../../joist/js/Sim.js';
 import simLauncher from '../../joist/js/simLauncher.js';
-import AnimationView from './demo/AnimationView.js';
-import DampedMotionView from './demo/DampedMotionView.js';
-import TransitionDemoView from './demo/TransitionDemoView.js';
+import AnimationScreenView from './demo/AnimationScreenView.js';
+import DampedMotionScreenView from './demo/DampedMotionScreenView.js';
+import TransitionsScreenView from './demo/TransitionsScreenView.js';
 import twixtStrings from './twixtStrings.js';
-
-const twixtTitleString = twixtStrings.twixt.title;
 
 const simOptions = {
   credits: {
@@ -28,7 +26,7 @@ simLauncher.launch( function() {
   const screens = [
     new Screen(
       function() { return {}; },
-      function( model ) { return new AnimationView(); },
+      function( model ) { return new AnimationScreenView(); },
       {
         name: 'Animation',
         backgroundColorProperty: new Property( 'white' )
@@ -36,7 +34,7 @@ simLauncher.launch( function() {
     ),
     new Screen(
       function() { return {}; },
-      function( model ) { return new DampedMotionView(); },
+      function( model ) { return new DampedMotionScreenView(); },
       {
         name: 'Damped Motion',
         backgroundColorProperty: new Property( 'white' )
@@ -44,7 +42,7 @@ simLauncher.launch( function() {
     ),
     new Screen(
       function() { return {}; },
-      function( model ) { return new TransitionDemoView(); },
+      function( model ) { return new TransitionsScreenView(); },
       {
         name: 'Transitions',
         backgroundColorProperty: new Property( 'white' )
@@ -52,5 +50,5 @@ simLauncher.launch( function() {
     )
   ];
 
-  new Sim( twixtTitleString, screens, simOptions ).start();
+  new Sim( twixtStrings.twixt.title, screens, simOptions ).start();
 } );

@@ -11,53 +11,62 @@
 
 import Property from '../../axon/js/Property.js';
 import DampedHarmonic from '../../dot/js/DampedHarmonic.js';
-import inherit from '../../phet-core/js/inherit.js';
 import merge from '../../phet-core/js/merge.js';
 import twixt from './twixt.js';
 
-/**
- * @constructor
- */
-function DampedAnimation( options ) {
-  options = merge( {
-    // {Property.<number>} - The current value/position.
-    valueProperty: new Property( 0 ),
+class DampedAnimation {
 
-    // {Property.<number>} - The current derivative of the value
-    velocityProperty: new Property( 0 ),
+  /**
+   * @param {Object} [options]
+   */
+  constructor( options ) {
+    options = merge( {
 
-    // {number} - Proportion of damping applied, relative to critical damping. Thus:
-    // - damping = 1: Critically damped (fastest approach towards the target without overshooting)
-    // - damping < 1: Underdamped (will overshoot the target with exponentially-decaying oscillation)
-    // - damping > 1: Overdamped (will approach with an exponential curve)
-    damping: 1,
+      // {Property.<number>} - The current value/position.
+      valueProperty: new Property( 0 ),
 
-    // {number} - Coefficient that determines the amount of force "pushing" towards the target (will be proportional
-    // to the distance from the target).
-    force: 1,
+      // {Property.<number>} - The current derivative of the value
+      velocityProperty: new Property( 0 ),
 
-    // {number} - The target value that we are animating towards.
-    targetValue: 0
-  }, options );
+      // {number} - Proportion of damping applied, relative to critical damping. Thus:
+      // - damping = 1: Critically damped (fastest approach towards the target without overshooting)
+      // - damping < 1: Underdamped (will overshoot the target with exponentially-decaying oscillation)
+      // - damping > 1: Overdamped (will approach with an exponential curve)
+      damping: 1,
 
-  // @public {Property.<number>}
-  this.valueProperty = options.valueProperty;
-  this.velocityProperty = options.velocityProperty;
+      // {number} - Coefficient that determines the amount of force "pushing" towards the target (will be proportional
+      // to the distance from the target).
+      force: 1,
 
-  // @private {number}
-  this._damping = options.damping;
-  this._force = options.force;
+      // {number} - The target value that we are animating towards.
+      targetValue: 0
+    }, options );
 
-  // @public {number}
-  this.timeElapsed = 0;
+    // @public {Property.<number>}
+    this.valueProperty = options.valueProperty;
+    this.velocityProperty = options.velocityProperty;
 
-  // @private {number}
-  this._targetValue = options.targetValue;
-}
+    // @private {number}
+    this._damping = options.damping;
+    this._force = options.force;
 
-twixt.register( 'DampedAnimation', DampedAnimation );
+    // @public {number}
+    this.timeElapsed = 0;
 
-inherit( Object, DampedAnimation, {
+    // @private {number}
+    this._targetValue = options.targetValue;
+  }
+
+  /**
+   * Returns the target value
+   * @public
+   *
+   * @returns {number}
+   */
+  get targetValue() {
+    return this._targetValue;
+  }
+
   /**
    * Change the target value that we are moving toward.
    * @public
@@ -68,17 +77,17 @@ inherit( Object, DampedAnimation, {
     this._targetValue = value;
 
     this.recompute();
-  },
+  }
 
   /**
-   * Returns the target value
+   * Returns the damping value
    * @public
    *
    * @returns {number}
    */
-  get targetValue() {
-    return this._targetValue;
-  },
+  get damping() {
+    return this._damping;
+  }
 
   /**
    * Sets the damping value.
@@ -90,17 +99,17 @@ inherit( Object, DampedAnimation, {
     this._damping = value;
 
     this.recompute();
-  },
+  }
 
   /**
-   * Returns the damping value
+   * Returns the force value
    * @public
    *
    * @returns {number}
    */
-  get damping() {
-    return this._damping;
-  },
+  get force() {
+    return this._force;
+  }
 
   /**
    * Sets the force value.
@@ -112,26 +121,16 @@ inherit( Object, DampedAnimation, {
     this._force = value;
 
     this.recompute();
-  },
-
-  /**
-   * Returns the force value
-   * @public
-   *
-   * @returns {number}
-   */
-  get force() {
-    return this._force;
-  },
+  }
 
   /**
    * On a change, we need to recompute our harmonic (that plots out the motion to the target)
    * @private
    */
-  recompute: function() {
+  recompute() {
     this.timeElapsed = 0;
     this.harmonic = new DampedHarmonic( 1, Math.sqrt( 4 * this._force ) * this._damping, this._force, this.valueProperty.value - this._targetValue, this.velocityProperty.value );
-  },
+  }
 
   /**
    * Steps the animation forward in time.
@@ -139,12 +138,13 @@ inherit( Object, DampedAnimation, {
    *
    * @param {number} dt
    */
-  step: function( dt ) {
+  step( dt ) {
     this.timeElapsed += dt;
 
     this.valueProperty.value = this._targetValue + this.harmonic.getValue( this.timeElapsed );
     this.velocityProperty.value = this.harmonic.getDerivative( this.timeElapsed );
   }
-} );
+}
 
+twixt.register( 'DampedAnimation', DampedAnimation );
 export default DampedAnimation;

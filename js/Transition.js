@@ -7,77 +7,74 @@
  */
 
 import Shape from '../../kite/js/Shape.js';
-import inherit from '../../phet-core/js/inherit.js';
 import merge from '../../phet-core/js/merge.js';
 import required from '../../phet-core/js/required.js';
 import Animation from './Animation.js';
 import twixt from './twixt.js';
 
-/**
- * @constructor
- * @extends {Animation}
- *
- * NOTE: The nodes' transform/pickability/visibility/opacity/clipArea/etc. can be modified, and will be reset to
- * the default value when the transition finishes.
- *
- * @param {Node|null} fromNode
- * @param {Node|null} toNode
- * @param {Object} config
- */
-function Transition( fromNode, toNode, config ) {
-  const defaults = {
+class Transition extends Animation {
 
-    // {Array.<Object>} - A list of partial configurations that will individually be passed to
-    // the targets for an Animation (and thus to AnimationTarget). They will be combined with `object: node` and
-    // options.targetOptions to create the Animation. See Animation's targets parameter for more information
-    fromTargets: required( config.fromTargets ),
-    toTargets: required( config.toTargets ),
+  /**
+   * @extends {Animation}
+   *
+   * NOTE: The nodes' transform/pickability/visibility/opacity/clipArea/etc. can be modified, and will be reset to
+   * the default value when the transition finishes.
+   *
+   * @param {Node|null} fromNode
+   * @param {Node|null} toNode
+   * @param {Object} config
+   */
+  constructor( fromNode, toNode, config ) {
+    const defaults = {
 
-    // {function} - function( {Node} ), resets the animated parameter(s) to their default values.
-    resetNode: required( config.resetNode ),
+      // {Array.<Object>} - A list of partial configurations that will individually be passed to
+      // the targets for an Animation (and thus to AnimationTarget). They will be combined with `object: node` and
+      // options.targetOptions to create the Animation. See Animation's targets parameter for more information
+      fromTargets: required( config.fromTargets ),
+      toTargets: required( config.toTargets ),
 
-    // {Object|null} (optional) - Passed as additional objects to every target
-    targetOptions: null
-  };
-  config = merge( {}, defaults, config );
+      // {function} - function( {Node} ), resets the animated parameter(s) to their default values.
+      resetNode: required( config.resetNode ),
 
-  assert && assert( typeof config.resetNode === 'function' );
+      // {Object|null} (optional) - Passed as additional objects to every target
+      targetOptions: null
+    };
+    config = merge( {}, defaults, config );
 
-  const targetOptions = merge( {
-    // NOTE: no defaults, but we want it to be an object so we merge anyways
-  }, config.targetOptions );
+    assert && assert( typeof config.resetNode === 'function' );
 
-  let targets = [];
+    const targetOptions = merge( {
+      // NOTE: no defaults, but we want it to be an object so we merge anyways
+    }, config.targetOptions );
 
-  if ( fromNode ) {
-    targets = targets.concat( config.fromTargets.map( function( target ) {
-      return merge( target, {
-        object: fromNode
-      }, targetOptions );
-    } ) );
+    let targets = [];
+
+    if ( fromNode ) {
+      targets = targets.concat( config.fromTargets.map( function( target ) {
+        return merge( target, {
+          object: fromNode
+        }, targetOptions );
+      } ) );
+    }
+    if ( toNode ) {
+      targets = targets.concat( config.toTargets.map( function( target ) {
+        return merge( target, {
+          object: toNode
+        }, targetOptions );
+      } ) );
+    }
+
+    super( merge( {
+      targets: targets
+    }, _.omit( config, _.keys( defaults ) ) ) );
+
+    // When this animation ends, reset the values for both nodes
+    this.endedEmitter.addListener( function() {
+      fromNode && config.resetNode( fromNode );
+      toNode && config.resetNode( toNode );
+    } );
   }
-  if ( toNode ) {
-    targets = targets.concat( config.toTargets.map( function( target ) {
-      return merge( target, {
-        object: toNode
-      }, targetOptions );
-    } ) );
-  }
 
-  Animation.call( this, merge( {
-    targets: targets
-  }, _.omit( config, _.keys( defaults ) ) ) );
-
-  // When this animation ends, reset the values for both nodes
-  this.endedEmitter.addListener( function() {
-    fromNode && config.resetNode( fromNode );
-    toNode && config.resetNode( toNode );
-  } );
-}
-
-twixt.register( 'Transition', Transition );
-
-inherit( Animation, Transition, {}, {
   /**
    * Creates an animation that slides the `fromNode` out to the left (and the `toNode` in from the right).
    * @public
@@ -88,9 +85,9 @@ inherit( Animation, Transition, {}, {
    * @param {Object} [options] - Usually specify duration, easing, or other Animation options.
    * @returns {Transition}
    */
-  slideLeft: function( bounds, fromNode, toNode, options ) {
+  static slideLeft( bounds, fromNode, toNode, options ) {
     return Transition.createSlide( fromNode, toNode, 'x', bounds.width, true, options );
-  },
+  }
 
   /**
    * Creates an animation that slides the `fromNode` out to the right (and the `toNode` in from the left).
@@ -102,9 +99,9 @@ inherit( Animation, Transition, {}, {
    * @param {Object} [options] - Usually specify duration, easing, or other Animation options.
    * @returns {Transition}
    */
-  slideRight: function( bounds, fromNode, toNode, options ) {
+  static slideRight( bounds, fromNode, toNode, options ) {
     return Transition.createSlide( fromNode, toNode, 'x', bounds.width, false, options );
-  },
+  }
 
   /**
    * Creates an animation that slides the `fromNode` out to the top (and the `toNode` in from the bottom).
@@ -116,9 +113,9 @@ inherit( Animation, Transition, {}, {
    * @param {Object} [options] - Usually specify duration, easing, or other Animation options.
    * @returns {Transition}
    */
-  slideUp: function( bounds, fromNode, toNode, options ) {
+  static slideUp( bounds, fromNode, toNode, options ) {
     return Transition.createSlide( fromNode, toNode, 'y', bounds.height, true, options );
-  },
+  }
 
   /**
    * Creates an animation that slides the `fromNode` out to the bottom (and the `toNode` in from the top).
@@ -130,9 +127,9 @@ inherit( Animation, Transition, {}, {
    * @param {Object} [options] - Usually specify duration, easing, or other Animation options.
    * @returns {Transition}
    */
-  slideDown: function( bounds, fromNode, toNode, options ) {
+  static slideDown( bounds, fromNode, toNode, options ) {
     return Transition.createSlide( fromNode, toNode, 'y', bounds.height, false, options );
-  },
+  }
 
   /**
    * Creates a transition that wipes across the screen, moving to the left.
@@ -144,9 +141,9 @@ inherit( Animation, Transition, {}, {
    * @param {Object} [options] - Usually specify duration, easing, or other Animation options.
    * @returns {Transition}
    */
-  wipeLeft: function( bounds, fromNode, toNode, options ) {
+  static wipeLeft( bounds, fromNode, toNode, options ) {
     return Transition.createWipe( bounds, fromNode, toNode, 'maxX', 'minX', options );
-  },
+  }
 
   /**
    * Creates a transition that wipes across the screen, moving to the right.
@@ -158,9 +155,9 @@ inherit( Animation, Transition, {}, {
    * @param {Object} [options] - Usually specify duration, easing, or other Animation options.
    * @returns {Transition}
    */
-  wipeRight: function( bounds, fromNode, toNode, options ) {
+  static wipeRight( bounds, fromNode, toNode, options ) {
     return Transition.createWipe( bounds, fromNode, toNode, 'minX', 'maxX', options );
-  },
+  }
 
   /**
    * Creates a transition that wipes across the screen, moving up.
@@ -172,9 +169,9 @@ inherit( Animation, Transition, {}, {
    * @param {Object} [options] - Usually specify duration, easing, or other Animation options.
    * @returns {Transition}
    */
-  wipeUp: function( bounds, fromNode, toNode, options ) {
+  static wipeUp( bounds, fromNode, toNode, options ) {
     return Transition.createWipe( bounds, fromNode, toNode, 'maxY', 'minY', options );
-  },
+  }
 
   /**
    * Creates a transition that wipes across the screen, moving down.
@@ -186,9 +183,9 @@ inherit( Animation, Transition, {}, {
    * @param {Object} [options] - Usually specify duration, easing, or other Animation options.
    * @returns {Transition}
    */
-  wipeDown: function( bounds, fromNode, toNode, options ) {
+  static wipeDown( bounds, fromNode, toNode, options ) {
     return Transition.createWipe( bounds, fromNode, toNode, 'minY', 'maxY', options );
-  },
+  }
 
   /**
    * Creates a transition that fades from `fromNode` to `toNode` by varying the opacity of both.
@@ -199,7 +196,7 @@ inherit( Animation, Transition, {}, {
    * @param {Object} [options] - Usually specify duration, easing, or other Animation options.
    * @returns {Transition}
    */
-  dissolve: function( fromNode, toNode, options ) {
+  static dissolve( fromNode, toNode, options ) {
     options = merge( {
       // {number} - Handles gamma correction for the opacity when required
       gamma: 1
@@ -226,7 +223,7 @@ inherit( Animation, Transition, {}, {
         node.opacity = 1;
       }
     }, options ) );
-  },
+  }
 
   /**
    * Creates a sliding transition within the bounds.
@@ -240,7 +237,7 @@ inherit( Animation, Transition, {}, {
    * @param {Object} [options]
    * @returns {Transition}
    */
-  createSlide: function( fromNode, toNode, attribute, size, reversed, options ) {
+  static createSlide( fromNode, toNode, attribute, size, reversed, options ) {
     const sign = reversed ? -1 : 1;
     return new Transition( fromNode, toNode, merge( {
       fromTargets: [ {
@@ -257,7 +254,7 @@ inherit( Animation, Transition, {}, {
         node[ attribute ] = 0;
       }
     }, options ) );
-  },
+  }
 
   /**
    * Creates a wiping transition within the bounds.
@@ -271,7 +268,7 @@ inherit( Animation, Transition, {}, {
    * @param {Object} [options]
    * @returns {Transition}
    */
-  createWipe: function( bounds, fromNode, toNode, minAttribute, maxAttribute, options ) {
+  static createWipe( bounds, fromNode, toNode, minAttribute, maxAttribute, options ) {
     const fromNodeBounds = bounds.copy();
     const toNodeBounds = bounds.copy();
 
@@ -301,6 +298,7 @@ inherit( Animation, Transition, {}, {
       }
     }, options ) );
   }
-} );
+}
 
+twixt.register( 'Transition', Transition );
 export default Transition;

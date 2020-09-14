@@ -23,6 +23,42 @@ class Easing {
   constructor() {}
 
   /**
+   * Returns the result of applying our easing function to the input value.
+   * @public
+   * @abstract
+   *
+   * @param {number} t - The linear ratio [0,1] of the animation
+   * @returns {number} - Should be in the range [0,1].
+   */
+  value( t ) {
+    throw new Error( 'Unimplemented easing value' );
+  }
+
+  /**
+   * Returns the first derivative of our easing function at the input value.
+   * @public
+   * @abstract
+   *
+   * @param {number} t - The linear ratio [0,1] of the animation
+   * @returns {number}
+   */
+  derivative( t ) {
+    throw new Error( 'Unimplemented easing derivative' );
+  }
+
+  /**
+   * Returns the second derivative of our easing function at the input value.
+   * @public
+   * @abstract
+   *
+   * @param {number} t - The linear ratio [0,1] of the animation
+   * @returns {number}
+   */
+  secondDerivative( t ) {
+    throw new Error( 'Unimplemented easing secondDerivative' );
+  }
+
+  /**
    * The "polynomial ease in" function.
    * @public
    *
@@ -206,39 +242,6 @@ class Easing {
     easing.derivative = Easing.polynomialEaseInOutDerivative.bind( easing, n );
     easing.secondDerivative = Easing.polynomialEaseInOutSecondDerivative.bind( easing, n );
     return easing;
-  }
-
-  /**
-   * Returns the result of applying our easing function to the input value.
-   * @public
-   *
-   * @param {number} t - The linear ratio [0,1] of the animation
-   * @returns {number} - Should be in the range [0,1].
-   */
-  value( t ) {
-    throw new Error( 'Unimplemented easing value' );
-  }
-
-  /**
-   * Returns the first derivative of our easing function at the input value.
-   * @public
-   *
-   * @param {number} t - The linear ratio [0,1] of the animation
-   * @returns {number}
-   */
-  derivative( t ) {
-    throw new Error( 'Unimplemented easing derivative' );
-  }
-
-  /**
-   * Returns the second derivative of our easing function at the input value.
-   * @public
-   *
-   * @param {number} t - The linear ratio [0,1] of the animation
-   * @returns {number}
-   */
-  secondDerivative( t ) {
-    throw new Error( 'Unimplemented easing secondDerivative' );
   }
 }
 

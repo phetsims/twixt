@@ -8,6 +8,7 @@
 
 import Property from '../../../axon/js/Property.js';
 import Dimension2 from '../../../dot/js/Dimension2.js';
+import dotRandom from '../../../dot/js/dotRandom.js';
 import Range from '../../../dot/js/Range.js';
 import ScreenView from '../../../joist/js/ScreenView.js';
 import merge from '../../../phet-core/js/merge.js';
@@ -89,7 +90,7 @@ class AnimationScreenView extends ScreenView {
           }, {
             property: colorProperty,
             easing: easingProperty.value,
-            to: new Color( phet.joist.random.nextInt( 256 ), phet.joist.random.nextInt( 256 ), phet.joist.random.nextInt( 256 ), 0.5 )
+            to: new Color( dotRandom.nextInt( 256 ), dotRandom.nextInt( 256 ), dotRandom.nextInt( 256 ), 0.5 )
           } ],
           duration: durationProperty.value
         } ).start();

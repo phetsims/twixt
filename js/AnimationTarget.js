@@ -7,6 +7,7 @@
  */
 
 import Property from '../../axon/js/Property.js';
+import TinyProperty from '../../axon/js/TinyProperty.js';
 import merge from '../../phet-core/js/merge.js';
 import Easing from './Easing.js';
 import twixt from './twixt.js';
@@ -68,8 +69,8 @@ class AnimationTarget {
       // current value would just be ignored).
       getValue: null,
 
-      // {Property.<*>|null} - If provided, it should be an axon Property with the current value. It will be modified
-      // by the animation. NOTE: do not provide this and setValue/object
+      // {Property.<*>|TinyProperty.<*>|null} - If provided, it should be an axon Property with the current value. It
+      // will be modified by the animation. NOTE: do not provide this and setValue/object
       property: null,
 
       // {*|null} - If provided, it should point to an object where `object[ attribute ]` is the value to be modified
@@ -142,7 +143,7 @@ class AnimationTarget {
     assert && assert( config.to !== null || config.delta !== null,
       'Need something to animate to, use to/delta' );
 
-    assert && assert( config.property === null || config.property instanceof Property );
+    assert && assert( config.property === null || config.property instanceof Property || config.property instanceof TinyProperty );
 
     assert && assert( config.object === null || ( typeof config.object === 'object' && typeof config.attribute === 'string' ),
       'If object is provided, then object should be an object, and attribute should be a string.' );

@@ -143,7 +143,10 @@ class AnimationTarget {
     assert && assert( config.to !== null || config.delta !== null,
       'Need something to animate to, use to/delta' );
 
-    assert && assert( config.property === null || config.property instanceof Property || config.property instanceof TinyProperty );
+    assert && assert(
+      config.property === null ||
+      ( ( config.property instanceof Property || config.property instanceof TinyProperty ) && config.property.isSettable() ),
+      'If property is provided, it should be a settable Property or TinyProperty' );
 
     assert && assert( config.object === null || ( typeof config.object === 'object' && typeof config.attribute === 'string' ),
       'If object is provided, then object should be an object, and attribute should be a string.' );

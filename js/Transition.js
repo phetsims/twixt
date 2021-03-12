@@ -50,14 +50,14 @@ class Transition extends Animation {
     let targets = [];
 
     if ( fromNode ) {
-      targets = targets.concat( config.fromTargets.map( function( target ) {
+      targets = targets.concat( config.fromTargets.map( target => {
         return merge( target, {
           object: fromNode
         }, targetOptions );
       } ) );
     }
     if ( toNode ) {
-      targets = targets.concat( config.toTargets.map( function( target ) {
+      targets = targets.concat( config.toTargets.map( target => {
         return merge( target, {
           object: toNode
         }, targetOptions );
@@ -69,7 +69,7 @@ class Transition extends Animation {
     }, _.omit( config, _.keys( defaults ) ) ) );
 
     // When this animation ends, reset the values for both nodes
-    this.endedEmitter.addListener( function() {
+    this.endedEmitter.addListener( () => {
       fromNode && config.resetNode( fromNode );
       toNode && config.resetNode( toNode );
     } );

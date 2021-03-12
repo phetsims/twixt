@@ -278,7 +278,7 @@ class TransitionNode extends Node {
       this.toContent.pickable = false;
     }
 
-    transition.endedEmitter.addListener( function() {
+    transition.endedEmitter.addListener( () => {
       if ( self.fromContent ) {
         self.fromContent.pickable = null;
       }

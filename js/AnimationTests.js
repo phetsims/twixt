@@ -11,7 +11,7 @@ import Animation from './Animation.js';
 
 QUnit.module( 'Animation' );
 
-QUnit.test( 'basic animation tests', function( assert ) {
+QUnit.test( 'basic animation tests', assert => {
   assert.equal( 1, 1, 'sanity check' );
 
   const numberProperty = new NumberProperty( 0 );

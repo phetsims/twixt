@@ -21,28 +21,34 @@ const simOptions = {
   }
 };
 
-simLauncher.launch( function() {
+simLauncher.launch( () => {
 
   const screens = [
     new Screen(
-      function() { return {}; },
-      function( model ) { return new AnimationScreenView(); },
+      ( () => {
+        return {};
+      } ),
+      ( model => new AnimationScreenView() ),
       {
         name: 'Animation',
         backgroundColorProperty: new Property( 'white' )
       }
     ),
     new Screen(
-      function() { return {}; },
-      function( model ) { return new DampedMotionScreenView(); },
+      ( () => {
+        return {};
+      } ),
+      ( model => new DampedMotionScreenView() ),
       {
         name: 'Damped Motion',
         backgroundColorProperty: new Property( 'white' )
       }
     ),
     new Screen(
-      function() { return {}; },
-      function( model ) { return new TransitionsScreenView(); },
+      ( () => {
+        return {};
+      } ),
+      ( model => new TransitionsScreenView() ),
       {
         name: 'Transitions',
         backgroundColorProperty: new Property( 'white' )

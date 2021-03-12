@@ -102,7 +102,7 @@ class AnimationScreenView extends ScreenView {
       const slider = new HSlider( property, range, {
         trackSize: new Dimension2( 300, 5 )
       } );
-      majorTicks.forEach( function( tick ) {
+      majorTicks.forEach( tick => {
         slider.addMajorTick( tick, new Text( tick, { font: new PhetFont( 20 ) } ) );
       } );
       return new VBox( merge( {

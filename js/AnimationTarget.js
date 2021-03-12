@@ -203,7 +203,7 @@ class AnimationTarget {
    * @returns {*}
    */
   static DEFAULT_BLEND( a, b, ratio ) {
-    assert && assert( typeof ratio === 'number' && isFinite( ratio ) && ratio >= 0 && ratio <= 1, 'Invalid ratio: ' + ratio );
+    assert && assert( typeof ratio === 'number' && isFinite( ratio ) && ratio >= 0 && ratio <= 1, `Invalid ratio: ${ratio}` );
 
     if ( ratio === 0 ) { return a; }
     if ( ratio === 1 ) { return b; }
@@ -215,7 +215,7 @@ class AnimationTarget {
       return a.blend( b, ratio );
     }
 
-    throw new Error( 'Blending not supported for: ' + a + ', ' + b + ', pass in a blend option' );
+    throw new Error( `Blending not supported for: ${a}, ${b}, pass in a blend option` );
   }
 
   /**
@@ -234,7 +234,7 @@ class AnimationTarget {
       return a.distance( b );
     }
 
-    throw new Error( 'Distance (required for speed) by default not supported for: ' + a + ', ' + b + ', pass in a distance option' );
+    throw new Error( `Distance (required for speed) by default not supported for: ${a}, ${b}, pass in a distance option` );
   }
 
   /**
@@ -253,7 +253,7 @@ class AnimationTarget {
       return a.plus( b );
     }
 
-    throw new Error( 'Addition (required for delta) by default not supported for: ' + a + ', ' + b + ', pass in an add option' );
+    throw new Error( `Addition (required for delta) by default not supported for: ${a}, ${b}, pass in an add option` );
   }
 
   /**

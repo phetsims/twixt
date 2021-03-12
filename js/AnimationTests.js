@@ -28,11 +28,11 @@ QUnit.test( 'basic animation tests', function( assert ) {
     stepEmitter: null
   } );
   animation.start();
-  for ( var i = 0; i < 10; i++ ) {
+  for ( let i = 0; i < 10; i++ ) {
     animation.step( 0.1 );
   }
   assert.ok( Math.abs( numberProperty.value - targetValue / 2 ) < 1E-6, 'should be halfway there' );
-  for ( i = 0; i < 10; i++ ) {
+  for ( let i = 0; i < 10; i++ ) {
     animation.step( 0.1 );
   }
   assert.ok( Math.abs( numberProperty.value - targetValue ) < 1E-6, 'should be all the way there' );

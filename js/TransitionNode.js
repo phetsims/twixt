@@ -309,15 +309,13 @@ class TransitionNode extends Node {
   }
 
   /**
-   * Releases references.
    * @public
    * @override
    */
   dispose() {
     this.interrupt();
     this.transitionBoundsProperty.unlink( this.boundsListener );
-
-    Node.prototype.dispose.call( this );
+    super.dispose();
   }
 }
 

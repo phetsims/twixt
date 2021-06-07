@@ -156,7 +156,7 @@ class TransitionNode extends Node {
    *
    * @param {Node|null} content - If null, the current content will still animate out (with nothing replacing it).
    * @param {Object} config - Passed as config to the Animation. Usually a duration should be included.
-   * * @returns {Transition} - Available to add end listeners, etc.
+   * @returns {Transition} - Available to add end listeners, etc.
    */
   slideUpTo( content, config ) {
     this.interrupt();
@@ -169,7 +169,7 @@ class TransitionNode extends Node {
    *
    * @param {Node|null} content - If null, the current content will still animate out (with nothing replacing it).
    * @param {Object} config - Passed as config to the Animation. Usually a duration should be included.
-   * * @returns {Transition} - Available to add end listeners, etc.
+   * @returns {Transition} - Available to add end listeners, etc.
    */
   slideDownTo( content, config ) {
     this.interrupt();
@@ -182,7 +182,7 @@ class TransitionNode extends Node {
    *
    * @param {Node|null} content - If null, the current content will still animate out (with nothing replacing it).
    * @param {Object} config - Passed as config to the Animation. Usually a duration should be included.
-   * * @returns {Transition} - Available to add end listeners, etc.
+   * @returns {Transition} - Available to add end listeners, etc.
    */
   wipeLeftTo( content, config ) {
     this.interrupt();
@@ -195,7 +195,7 @@ class TransitionNode extends Node {
    *
    * @param {Node|null} content - If null, the current content will still animate out (with nothing replacing it).
    * @param {Object} config - Passed as config to the Animation. Usually a duration should be included.
-   * * @returns {Transition} - Available to add end listeners, etc.
+   * @returns {Transition} - Available to add end listeners, etc.
    */
   wipeRightTo( content, config ) {
     this.interrupt();
@@ -208,7 +208,7 @@ class TransitionNode extends Node {
    *
    * @param {Node|null} content - If null, the current content will still animate out (with nothing replacing it).
    * @param {Object} config - Passed as config to the Animation. Usually a duration should be included.
-   * * @returns {Transition} - Available to add end listeners, etc.
+   * @returns {Transition} - Available to add end listeners, etc.
    */
   wipeUpTo( content, config ) {
     this.interrupt();
@@ -221,7 +221,7 @@ class TransitionNode extends Node {
    *
    * @param {Node|null} content - If null, the current content will still animate out (with nothing replacing it).
    * @param {Object} config - Passed as config to the Animation. Usually a duration should be included.
-   * * @returns {Transition} - Available to add end listeners, etc.
+   * @returns {Transition} - Available to add end listeners, etc.
    */
   wipeDownTo( content, config ) {
     this.interrupt();
@@ -234,7 +234,7 @@ class TransitionNode extends Node {
    *
    * @param {Node|null} content - If null, the current content will still animate out (with nothing replacing it).
    * @param {Object} config - Passed as config to the Animation. Usually a duration should be included.
-   * * @returns {Transition} - Available to add end listeners, etc.
+   * @returns {Transition} - Available to add end listeners, etc.
    */
   dissolveTo( content, config ) {
     this.interrupt();

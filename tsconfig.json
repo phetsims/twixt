@@ -14,7 +14,7 @@
     "js/**/*"
   ],
   "exclude": [
-    "js/**/*test*",
+    "js/**/*Test*",
     "js/twixt-main.js",
     "js/demo/**/*"
   ]

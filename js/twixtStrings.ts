@@ -3,11 +3,17 @@
 /**
  * Auto-generated from modulify, DO NOT manually modify.
  */
-
+/* eslint-disable */
 import getStringModule from '../../chipper/js/getStringModule.js';
 import twixt from './twixt.js';
 
-const twixtStrings = getStringModule( 'TWIXT' );
+type StringsType = {
+  'twixt': {
+    'title': string
+  }
+};
+
+const twixtStrings = getStringModule( 'TWIXT' ) as StringsType;
 
 twixt.register( 'twixtStrings', twixtStrings );
 

@@ -7,7 +7,7 @@
  */
 
 import PhetFont from '../../../scenery-phet/js/PhetFont.js';
-import Text from '../../../scenery/js/nodes/Text.js';
+import { Text } from '../../../scenery/js/imports.js';
 import ComboBox from '../../../sun/js/ComboBox.js';
 import ComboBoxItem from '../../../sun/js/ComboBoxItem.js';
 import Easing from '../Easing.js';

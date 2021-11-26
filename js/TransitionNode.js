@@ -9,7 +9,7 @@
 
 import Shape from '../../kite/js/Shape.js';
 import merge from '../../phet-core/js/merge.js';
-import Node from '../../scenery/js/nodes/Node.js';
+import { Node } from '../../scenery/js/imports.js';
 import Transition from './Transition.js';
 import twixt from './twixt.js';
 

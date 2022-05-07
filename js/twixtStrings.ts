@@ -9,7 +9,7 @@ import twixt from './twixt.js';
 
 type StringsType = {
   'twixt': {
-    'title': string
+    'title': string;
   }
 };
 

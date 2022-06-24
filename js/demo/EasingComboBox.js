@@ -39,7 +39,7 @@ class EasingComboBox extends ComboBox {
       new ComboBoxItem( new Text( 'Quintic out', comboTextOptions ), Easing.QUINTIC_OUT )
     ];
 
-    super( items, easingProperty, listParent, options );
+    super( easingProperty, items, listParent, options );
   }
 }
 

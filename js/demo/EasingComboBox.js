@@ -9,7 +9,6 @@
 import PhetFont from '../../../scenery-phet/js/PhetFont.js';
 import { Text } from '../../../scenery/js/imports.js';
 import ComboBox from '../../../sun/js/ComboBox.js';
-import ComboBoxItem from '../../../sun/js/ComboBoxItem.js';
 import Easing from '../Easing.js';
 import twixt from '../twixt.js';
 
@@ -24,19 +23,19 @@ class EasingComboBox extends ComboBox {
 
     const comboTextOptions = { font: new PhetFont( 16 ) };
     const items = [
-      new ComboBoxItem( new Text( 'Linear', comboTextOptions ), Easing.LINEAR ),
-      new ComboBoxItem( new Text( 'Quadratic in-out', comboTextOptions ), Easing.QUADRATIC_IN_OUT ),
-      new ComboBoxItem( new Text( 'Quadratic in', comboTextOptions ), Easing.QUADRATIC_IN ),
-      new ComboBoxItem( new Text( 'Quadratic out', comboTextOptions ), Easing.QUADRATIC_OUT ),
-      new ComboBoxItem( new Text( 'Cubic in-out', comboTextOptions ), Easing.CUBIC_IN_OUT ),
-      new ComboBoxItem( new Text( 'Cubic in', comboTextOptions ), Easing.CUBIC_IN ),
-      new ComboBoxItem( new Text( 'Cubic out', comboTextOptions ), Easing.CUBIC_OUT ),
-      new ComboBoxItem( new Text( 'Quartic in-out', comboTextOptions ), Easing.QUARTIC_IN_OUT ),
-      new ComboBoxItem( new Text( 'Quartic in', comboTextOptions ), Easing.QUARTIC_IN ),
-      new ComboBoxItem( new Text( 'Quartic out', comboTextOptions ), Easing.QUARTIC_OUT ),
-      new ComboBoxItem( new Text( 'Quintic in-out', comboTextOptions ), Easing.QUINTIC_IN_OUT ),
-      new ComboBoxItem( new Text( 'Quintic in', comboTextOptions ), Easing.QUINTIC_IN ),
-      new ComboBoxItem( new Text( 'Quintic out', comboTextOptions ), Easing.QUINTIC_OUT )
+      { value: Easing.LINEAR, node: new Text( 'Linear', comboTextOptions ) },
+      { value: Easing.QUADRATIC_IN_OUT, node: new Text( 'Quadratic in-out', comboTextOptions ) },
+      { value: Easing.QUADRATIC_IN, node: new Text( 'Quadratic in', comboTextOptions ) },
+      { value: Easing.QUADRATIC_OUT, node: new Text( 'Quadratic out', comboTextOptions ) },
+      { value: Easing.CUBIC_IN_OUT, node: new Text( 'Cubic in-out', comboTextOptions ) },
+      { value: Easing.CUBIC_IN, node: new Text( 'Cubic in', comboTextOptions ) },
+      { value: Easing.CUBIC_OUT, node: new Text( 'Cubic out', comboTextOptions ) },
+      { value: Easing.QUARTIC_IN_OUT, node: new Text( 'Quartic in-out', comboTextOptions ) },
+      { value: Easing.QUARTIC_IN, node: new Text( 'Quartic in', comboTextOptions ) },
+      { value: Easing.QUARTIC_OUT, node: new Text( 'Quartic out', comboTextOptions ) },
+      { value: Easing.QUINTIC_IN_OUT, node: new Text( 'Quintic in-out', comboTextOptions ) },
+      { value: Easing.QUINTIC_IN, node: new Text( 'Quintic in', comboTextOptions ) },
+      { value: Easing.QUINTIC_OUT, node: new Text( 'Quintic out', comboTextOptions ) }
     ];
 
     super( easingProperty, items, listParent, options );

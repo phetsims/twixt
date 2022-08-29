@@ -11,7 +11,7 @@ import twixt from './twixt.js';
 type StringsType = {
   'twixt': {
     'title': string;
-    'titleProperty': TReadOnlyProperty<string>;
+    'titleStringProperty': TReadOnlyProperty<string>;
   }
 };
 

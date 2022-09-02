@@ -56,5 +56,5 @@ simLauncher.launch( () => {
     )
   ];
 
-  new Sim( twixtStrings.twixt.title, screens, simOptions ).start();
+  new Sim( twixtStrings.twixt.titleStringProperty, screens, simOptions ).start();
 } );

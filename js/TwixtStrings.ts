@@ -15,8 +15,8 @@ type StringsType = {
   }
 };
 
-const twixtStrings = getStringModule( 'TWIXT' ) as StringsType;
+const TwixtStrings = getStringModule( 'TWIXT' ) as StringsType;
 
-twixt.register( 'twixtStrings', twixtStrings );
+twixt.register( 'TwixtStrings', TwixtStrings );
 
-export default twixtStrings;
+export default TwixtStrings;

@@ -13,7 +13,7 @@ import simLauncher from '../../joist/js/simLauncher.js';
 import AnimationScreenView from './demo/AnimationScreenView.js';
 import DampedMotionScreenView from './demo/DampedMotionScreenView.js';
 import TransitionsScreenView from './demo/TransitionsScreenView.js';
-import twixtStrings from './twixtStrings.js';
+import TwixtStrings from './TwixtStrings.js';
 
 const simOptions = {
   credits: {
@@ -56,5 +56,5 @@ simLauncher.launch( () => {
     )
   ];
 
-  new Sim( twixtStrings.twixt.titleStringProperty, screens, simOptions ).start();
+  new Sim( TwixtStrings.twixt.titleStringProperty, screens, simOptions ).start();
 } );

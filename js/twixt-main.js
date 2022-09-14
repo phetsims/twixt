@@ -30,7 +30,7 @@ simLauncher.launch( () => {
       } ),
       ( model => new AnimationScreenView() ),
       {
-        name: 'Animation',
+        name: new Property( 'Animation' ),
         backgroundColorProperty: new Property( 'white' )
       }
     ),
@@ -40,7 +40,7 @@ simLauncher.launch( () => {
       } ),
       ( model => new DampedMotionScreenView() ),
       {
-        name: 'Damped Motion',
+        name: new Property( 'Damped Motion' ),
         backgroundColorProperty: new Property( 'white' )
       }
     ),
@@ -50,7 +50,7 @@ simLauncher.launch( () => {
       } ),
       ( model => new TransitionsScreenView() ),
       {
-        name: 'Transitions',
+        name: new Property( 'Transitions' ),
         backgroundColorProperty: new Property( 'white' )
       }
     )

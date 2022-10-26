@@ -10,7 +10,6 @@ import twixt from './twixt.js';
 
 type StringsType = {
   'twixt': {
-    'title': string;
     'titleStringProperty': LinkableProperty<string>;
   }
 };

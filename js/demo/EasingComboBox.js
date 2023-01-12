@@ -23,19 +23,19 @@ class EasingComboBox extends ComboBox {
 
     const comboTextOptions = { font: new PhetFont( 16 ) };
     const items = [
-      { value: Easing.LINEAR, node: new Text( 'Linear', comboTextOptions ) },
-      { value: Easing.QUADRATIC_IN_OUT, node: new Text( 'Quadratic in-out', comboTextOptions ) },
-      { value: Easing.QUADRATIC_IN, node: new Text( 'Quadratic in', comboTextOptions ) },
-      { value: Easing.QUADRATIC_OUT, node: new Text( 'Quadratic out', comboTextOptions ) },
-      { value: Easing.CUBIC_IN_OUT, node: new Text( 'Cubic in-out', comboTextOptions ) },
-      { value: Easing.CUBIC_IN, node: new Text( 'Cubic in', comboTextOptions ) },
-      { value: Easing.CUBIC_OUT, node: new Text( 'Cubic out', comboTextOptions ) },
-      { value: Easing.QUARTIC_IN_OUT, node: new Text( 'Quartic in-out', comboTextOptions ) },
-      { value: Easing.QUARTIC_IN, node: new Text( 'Quartic in', comboTextOptions ) },
-      { value: Easing.QUARTIC_OUT, node: new Text( 'Quartic out', comboTextOptions ) },
-      { value: Easing.QUINTIC_IN_OUT, node: new Text( 'Quintic in-out', comboTextOptions ) },
-      { value: Easing.QUINTIC_IN, node: new Text( 'Quintic in', comboTextOptions ) },
-      { value: Easing.QUINTIC_OUT, node: new Text( 'Quintic out', comboTextOptions ) }
+      { value: Easing.LINEAR, createNode: tandem => new Text( 'Linear', comboTextOptions ) },
+      { value: Easing.QUADRATIC_IN_OUT, createNode: tandem => new Text( 'Quadratic in-out', comboTextOptions ) },
+      { value: Easing.QUADRATIC_IN, createNode: tandem => new Text( 'Quadratic in', comboTextOptions ) },
+      { value: Easing.QUADRATIC_OUT, createNode: tandem => new Text( 'Quadratic out', comboTextOptions ) },
+      { value: Easing.CUBIC_IN_OUT, createNode: tandem => new Text( 'Cubic in-out', comboTextOptions ) },
+      { value: Easing.CUBIC_IN, createNode: tandem => new Text( 'Cubic in', comboTextOptions ) },
+      { value: Easing.CUBIC_OUT, createNode: tandem => new Text( 'Cubic out', comboTextOptions ) },
+      { value: Easing.QUARTIC_IN_OUT, createNode: tandem => new Text( 'Quartic in-out', comboTextOptions ) },
+      { value: Easing.QUARTIC_IN, createNode: tandem => new Text( 'Quartic in', comboTextOptions ) },
+      { value: Easing.QUARTIC_OUT, createNode: tandem => new Text( 'Quartic out', comboTextOptions ) },
+      { value: Easing.QUINTIC_IN_OUT, createNode: tandem => new Text( 'Quintic in-out', comboTextOptions ) },
+      { value: Easing.QUINTIC_IN, createNode: tandem => new Text( 'Quintic in', comboTextOptions ) },
+      { value: Easing.QUINTIC_OUT, createNode: tandem => new Text( 'Quintic out', comboTextOptions ) }
     ];
 
     super( easingProperty, items, listParent, options );

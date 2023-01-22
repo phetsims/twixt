@@ -1,4 +1,4 @@
-// Copyright 2018-2021, University of Colorado Boulder
+// Copyright 2023, University of Colorado Boulder
 
 /**
  * Controls a specific animated value for an Animation.

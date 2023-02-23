@@ -40,7 +40,7 @@ type InternalAnimationTargetOptions<T, Obj = unknown> = {
    *   // other config
    * } )
    *
-   * var someVectorProperty = new axon.Property( new dot.Vector2( 10, 5 ) );
+   * var someVectorProperty = new phet.axon.Property( new phet.dot.Vector2( 10, 5 ) );
    * new Animation( {
    *   property: someVectorProperty,
    *   // other config

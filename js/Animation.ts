@@ -53,7 +53,7 @@ type SelfOptions<TargetTypes, TargetObjectTypes extends { [K in keyof TargetType
   // as part of the Sim time step.
   // TODO #3: {ScreenView} - animates only when the ScreenView is the active one.
   // TODO #3: {Node} - animates only when the node's trail is visible on a Display
-  stepEmitter?: TEmitter<[number]> | null;
+  stepEmitter?: TEmitter<[ number ]> | null;
 };
 
 // IMPORTANT: See AnimationTarget's config documentation, as those config can be passed in either here, or in
@@ -101,7 +101,7 @@ class Animation<SelfType = unknown, SelfObjectType = unknown, TargetTypes = unkn
   // argument to the emit callback, and represents how much "extra" time occurred after the end of the animation. For
   // example, if you have a 1-second animation and stepped it by 3 seconds, this finished emitter would be called with
   // 2 seconds.
-  public readonly finishEmitter = new Emitter<[number]>( { parameters: [ { valueType: 'number' } ] } );
+  public readonly finishEmitter = new Emitter<[ number ]>( { parameters: [ { valueType: 'number' } ] } );
 
   // Fired when the animation is manually stopped (with stop()). Does NOT fire when it finishes normally.
   public readonly stopEmitter = new Emitter();

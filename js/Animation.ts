@@ -107,7 +107,7 @@ class Animation<SelfType = unknown, SelfObjectType = unknown, TargetTypes = unkn
   public readonly stopEmitter = new Emitter();
 
   // Fired when the animation ends, regardless of whether it fully finished, or was stopped prematurely.
-  public readonly endedEmitter = new Emitter( { hasListenerOrderDependencies: true } );
+  public readonly endedEmitter = new Emitter( { hasListenerOrderDependencies: true } ); // TODO: listener order dependencies in should be dealt with, https://github.com/phetsims/fraction-matcher/issues/110
 
   // Fired when (just after) the animation has changed animated values/targets.
   public readonly updateEmitter = new Emitter();

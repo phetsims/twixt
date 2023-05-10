@@ -11,6 +11,11 @@ import twixt from './twixt.js';
 type StringsType = {
   'twixt': {
     'titleStringProperty': LinkableProperty<string>;
+  };
+  'screen': {
+    'animationStringProperty': LinkableProperty<string>;
+    'dampedMotionStringProperty': LinkableProperty<string>;
+    'transitionsStringProperty': LinkableProperty<string>;
   }
 };
 

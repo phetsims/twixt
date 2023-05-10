@@ -30,7 +30,7 @@ simLauncher.launch( () => {
       } ),
       ( model => new AnimationScreenView() ),
       {
-        name: new Property( 'Animation' ),
+        name: TwixtStrings.screen.animationStringProperty,
         backgroundColorProperty: new Property( 'white' )
       }
     ),
@@ -40,7 +40,7 @@ simLauncher.launch( () => {
       } ),
       ( model => new DampedMotionScreenView() ),
       {
-        name: new Property( 'Damped Motion' ),
+        name: TwixtStrings.screen.dampedMotionStringProperty,
         backgroundColorProperty: new Property( 'white' )
       }
     ),
@@ -50,7 +50,7 @@ simLauncher.launch( () => {
       } ),
       ( model => new TransitionsScreenView() ),
       {
-        name: new Property( 'Transitions' ),
+        name: TwixtStrings.screen.transitionsStringProperty,
         backgroundColorProperty: new Property( 'white' )
       }
     )

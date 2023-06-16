@@ -8,53 +8,58 @@
 
 import Property from '../../axon/js/Property.js';
 import Screen from '../../joist/js/Screen.js';
-import Sim from '../../joist/js/Sim.js';
+import Sim, { SimOptions } from '../../joist/js/Sim.js';
 import simLauncher from '../../joist/js/simLauncher.js';
 import AnimationScreenView from './demo/AnimationScreenView.js';
 import DampedMotionScreenView from './demo/DampedMotionScreenView.js';
 import TransitionsScreenView from './demo/TransitionsScreenView.js';
 import TwixtStrings from './TwixtStrings.js';
+import TModel from '../../joist/js/TModel.js';
+import Tandem from '../../tandem/js/Tandem.js';
 
-const simOptions = {
-  credits: {
-    leadDesign: 'PhET'
+class EmptyModel implements TModel {
+  public reset(): void {
+    // do nothing
   }
-};
+}
 
 simLauncher.launch( () => {
 
   const screens = [
-    new Screen(
-      ( () => {
-        return {};
-      } ),
-      ( model => new AnimationScreenView() ),
+    new Screen<EmptyModel, AnimationScreenView>(
+      () => new EmptyModel(),
+      model => new AnimationScreenView(),
       {
         name: TwixtStrings.screen.animationStringProperty,
-        backgroundColorProperty: new Property( 'white' )
+        backgroundColorProperty: new Property( 'white' ),
+        tandem: Tandem.OPT_OUT
       }
     ),
     new Screen(
-      ( () => {
-        return {};
-      } ),
-      ( model => new DampedMotionScreenView() ),
+      () => new EmptyModel(),
+      model => new DampedMotionScreenView(),
       {
         name: TwixtStrings.screen.dampedMotionStringProperty,
-        backgroundColorProperty: new Property( 'white' )
+        backgroundColorProperty: new Property( 'white' ),
+        tandem: Tandem.OPT_OUT
       }
     ),
     new Screen(
-      ( () => {
-        return {};
-      } ),
-      ( model => new TransitionsScreenView() ),
+      () => new EmptyModel(),
+      model => new TransitionsScreenView(),
       {
         name: TwixtStrings.screen.transitionsStringProperty,
-        backgroundColorProperty: new Property( 'white' )
+        backgroundColorProperty: new Property( 'white' ),
+        tandem: Tandem.OPT_OUT
       }
     )
   ];
+
+  const simOptions: SimOptions = {
+    credits: {
+      leadDesign: 'PhET'
+    }
+  };
 
   new Sim( TwixtStrings.twixt.titleStringProperty, screens, simOptions ).start();
 } );

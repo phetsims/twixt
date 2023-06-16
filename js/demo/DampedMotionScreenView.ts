@@ -12,19 +12,22 @@ import Range from '../../../dot/js/Range.js';
 import ScreenView from '../../../joist/js/ScreenView.js';
 import merge from '../../../phet-core/js/merge.js';
 import PhetFont from '../../../scenery-phet/js/PhetFont.js';
-import { Circle, Plane, Text, VBox } from '../../../scenery/js/imports.js';
+import { Circle, Node, NodeTranslationOptions, Plane, SceneryEvent, Text, VBox } from '../../../scenery/js/imports.js';
 import HSlider from '../../../sun/js/HSlider.js';
 import DampedAnimation from '../DampedAnimation.js';
 import twixt from '../twixt.js';
+import Tandem from '../../../tandem/js/Tandem.js';
 
-class DampedMotionScreenView extends ScreenView {
+export default class DampedMotionScreenView extends ScreenView {
 
-  /**
-   * @constructor
-   */
-  constructor() {
+  private readonly xAnimation: DampedAnimation;
+  private readonly yAnimation: DampedAnimation;
 
-    super();
+  public constructor() {
+
+    super( {
+      tandem: Tandem.OPT_OUT
+    } );
 
     const xProperty = new Property( this.layoutBounds.centerX );
     const yProperty = new Property( this.layoutBounds.centerY );
@@ -73,7 +76,7 @@ class DampedMotionScreenView extends ScreenView {
     } );
     this.addChild( targetCircle );
 
-    const moveToEvent = event => {
+    const moveToEvent = ( event: SceneryEvent ) => {
       const localPoint = this.globalToLocalPoint( event.pointer.point );
       targetCircle.translation = localPoint;
       this.xAnimation.targetValue = localPoint.x;
@@ -109,14 +112,13 @@ class DampedMotionScreenView extends ScreenView {
     } ) );
   }
 
-  // @public
-  step( dt ) {
+  public override step( dt: number ): void {
     this.xAnimation.step( dt );
     this.yAnimation.step( dt );
   }
 }
 
-function createSliderBox( property, range, label, majorTicks, options ) {
+function createSliderBox( property: Property<number>, range: Range, label: string, majorTicks: number[], options?: NodeTranslationOptions ): Node {
   const labelNode = new Text( label, { font: new PhetFont( 20 ) } );
   const slider = new HSlider( property, range, {
     trackSize: new Dimension2( 300, 5 )
@@ -131,4 +133,3 @@ function createSliderBox( property, range, label, majorTicks, options ) {
 }
 
 twixt.register( 'DampedMotionScreenView', DampedMotionScreenView );
-export default DampedMotionScreenView;

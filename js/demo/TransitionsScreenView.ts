@@ -15,25 +15,30 @@ import ScreenView from '../../../joist/js/ScreenView.js';
 import merge from '../../../phet-core/js/merge.js';
 import ResetAllButton from '../../../scenery-phet/js/buttons/ResetAllButton.js';
 import PhetFont from '../../../scenery-phet/js/PhetFont.js';
-import { Color, HBox, Node, Rectangle, Text, VBox } from '../../../scenery/js/imports.js';
+import { Color, HBox, Node, NodeTranslationOptions, Rectangle, Text, VBox } from '../../../scenery/js/imports.js';
 import RectangularPushButton from '../../../sun/js/buttons/RectangularPushButton.js';
 import HSlider from '../../../sun/js/HSlider.js';
 import Easing from '../Easing.js';
 import TransitionNode from '../TransitionNode.js';
 import twixt from '../twixt.js';
 import EasingComboBox from './EasingComboBox.js';
+import Tandem from '../../../tandem/js/Tandem.js';
 
-class TransitionsScreenView extends ScreenView {
-  constructor() {
+export default class TransitionsScreenView extends ScreenView {
 
-    super();
+  private readonly transitionNode: TransitionNode;
+
+  public constructor() {
+
+    super( {
+      tandem: Tandem.OPT_OUT
+    } );
 
     const bounds = new Bounds2( 0, 0, 320, 240 );
 
     const easingProperty = new Property( Easing.QUADRATIC_IN_OUT );
     const durationProperty = new Property( 0.3 );
 
-    // @private {TransitionNode}
     this.transitionNode = new TransitionNode( new Property( bounds ), {
       content: createSomething( bounds )
     } );
@@ -50,37 +55,42 @@ class TransitionsScreenView extends ScreenView {
       top: 10
     } );
 
-    const buttons = [
-      'slideLeftTo',
-      'slideRightTo',
-      'slideUpTo',
-      'slideDownTo',
-      'wipeLeftTo',
-      'wipeRightTo',
-      'wipeUpTo',
-      'wipeDownTo',
-      'dissolveTo'
-    ].map( name => {
+    // Function of TransitionNode that we want to demonstrate
+    const transitionFunctions = [
+      this.transitionNode.slideLeftTo.bind( this.transitionNode ),
+      this.transitionNode.slideRightTo.bind( this.transitionNode ),
+      this.transitionNode.slideUpTo.bind( this.transitionNode ),
+      this.transitionNode.slideDownTo.bind( this.transitionNode ),
+      this.transitionNode.wipeLeftTo.bind( this.transitionNode ),
+      this.transitionNode.wipeRightTo.bind( this.transitionNode ),
+      this.transitionNode.wipeUpTo.bind( this.transitionNode ),
+      this.transitionNode.wipeDownTo.bind( this.transitionNode ),
+      this.transitionNode.dissolveTo.bind( this.transitionNode )
+    ];
+
+    // Create a button to demonstrate each transition function.
+    const transitionButtons = transitionFunctions.map( transitionFunction => {
       return new RectangularPushButton( {
-        content: new Text( name, { font: new PhetFont( 20 ) } ),
-        listener: () => {
-          this.transitionNode[ name ]( createSomething( bounds ), {
-            duration: durationProperty.value,
-            targetOptions: {
-              easing: easingProperty.value
-            }
-          } );
-        }
+        content: new Text( transitionFunction.name, { font: new PhetFont( 20 ) } ),
+        listener: () => transitionFunction( createSomething( bounds ), {
+          duration: durationProperty.value,
+          targetOptions: {
+            easing: easingProperty.value
+          }
+        } )
+      } );
+    } );
+
+    // Create rows of buttons.
+    const transitionButtonRows = _.chunk( transitionButtons, 4 ).map( children => {
+      return new HBox( {
+        children: children,
+        spacing: 10
       } );
     } );
 
     this.addChild( new VBox( {
-      children: [ durationSlider, comboBox, this.transitionNode ].concat( _.chunk( buttons, 4 ).map( children => {
-        return new HBox( {
-          children: children,
-          spacing: 10
-        } );
-      } ) ),
+      children: [ durationSlider, comboBox, this.transitionNode, ...transitionButtonRows ],
       spacing: 10,
       center: this.layoutBounds.center
     } ) );
@@ -99,19 +109,18 @@ class TransitionsScreenView extends ScreenView {
     this.addChild( listParent );
   }
 
-  // @public
-  step( dt ) {
+  public override step( dt: number ): void {
     this.transitionNode.step( dt );
   }
 }
 
-function createSomething( bounds ) {
+function createSomething( bounds: Bounds2 ): Node {
 
-  function randomColor() {
+  function randomColor(): Color {
     return new Color( dotRandom.nextInt( 256 ), dotRandom.nextInt( 256 ), dotRandom.nextInt( 256 ) );
   }
 
-  function randomString() {
+  function randomString(): string {
     return _.range( 0, 7 )
       .map( () => String.fromCharCode( dotRandom.nextIntBetween( 65, 122 ) ) )
       .join( '' );
@@ -128,7 +137,7 @@ function createSomething( bounds ) {
   } );
 }
 
-function createSliderGroup( property, range, label, majorTicks, options ) {
+function createSliderGroup( property: Property<number>, range: Range, label: string, majorTicks: number[], options?: NodeTranslationOptions ): Node {
   const labelNode = new Text( label, { font: new PhetFont( 20 ) } );
   const slider = new HSlider( property, range, {
     trackSize: new Dimension2( 300, 5 )
@@ -143,4 +152,3 @@ function createSliderGroup( property, range, label, majorTicks, options ) {
 }
 
 twixt.register( 'TransitionsScreenView', TransitionsScreenView );
-export default TransitionsScreenView;

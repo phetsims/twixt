@@ -13,17 +13,20 @@ import Range from '../../../dot/js/Range.js';
 import ScreenView from '../../../joist/js/ScreenView.js';
 import merge from '../../../phet-core/js/merge.js';
 import PhetFont from '../../../scenery-phet/js/PhetFont.js';
-import { Circle, Color, Node, Plane, Text, VBox } from '../../../scenery/js/imports.js';
+import { Circle, Color, Node, NodeTranslationOptions, Plane, Text, VBox } from '../../../scenery/js/imports.js';
 import HSlider from '../../../sun/js/HSlider.js';
 import Animation from '../Animation.js';
 import Easing from '../Easing.js';
 import twixt from '../twixt.js';
 import EasingComboBox from './EasingComboBox.js';
+import Tandem from '../../../tandem/js/Tandem.js';
 
-class AnimationScreenView extends ScreenView {
-  constructor() {
+export default class AnimationScreenView extends ScreenView {
+  public constructor() {
 
-    super();
+    super( {
+      tandem: Tandem.OPT_OUT
+    } );
 
     const positionProperty = new Property( this.layoutBounds.center );
     const colorProperty = new Property( new Color( 0, 128, 255, 0.5 ) );
@@ -67,7 +70,7 @@ class AnimationScreenView extends ScreenView {
     smaller.then( larger );
     smaller.start();
 
-    let animation = null;
+    let animation: Animation;
     this.addInputListener( {
       down: event => {
         if ( !event.canStartPress() ) { return; }
@@ -92,21 +95,7 @@ class AnimationScreenView extends ScreenView {
       }
     } );
 
-    function sliderGroup( property, range, label, majorTicks, options ) {
-      const labelNode = new Text( label, { font: new PhetFont( 20 ) } );
-      const slider = new HSlider( property, range, {
-        trackSize: new Dimension2( 300, 5 )
-      } );
-      majorTicks.forEach( tick => {
-        slider.addMajorTick( tick, new Text( tick, { font: new PhetFont( 20 ) } ) );
-      } );
-      return new VBox( merge( {
-        children: [ labelNode, slider ],
-        spacing: 10
-      }, options ) );
-    }
-
-    this.addChild( sliderGroup( durationProperty, new Range( 0.1, 2 ), 'Duration', [ 0.1, 0.5, 1, 2 ], {
+    this.addChild( createSliderBox( durationProperty, new Range( 0.1, 2 ), 'Duration', [ 0.1, 0.5, 1, 2 ], {
       left: 10,
       top: 10
     } ) );
@@ -128,5 +117,18 @@ class AnimationScreenView extends ScreenView {
   }
 }
 
+function createSliderBox( property: Property<number>, range: Range, label: string, majorTicks: number[], options?: NodeTranslationOptions ): Node {
+  const labelNode = new Text( label, { font: new PhetFont( 20 ) } );
+  const slider = new HSlider( property, range, {
+    trackSize: new Dimension2( 300, 5 )
+  } );
+  majorTicks.forEach( tick => {
+    slider.addMajorTick( tick, new Text( tick, { font: new PhetFont( 20 ) } ) );
+  } );
+  return new VBox( merge( {
+    children: [ labelNode, slider ],
+    spacing: 10
+  }, options ) );
+}
+
 twixt.register( 'AnimationScreenView', AnimationScreenView );
-export default AnimationScreenView;

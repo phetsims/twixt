@@ -7,22 +7,28 @@
  */
 
 import PhetFont from '../../../scenery-phet/js/PhetFont.js';
-import { Text } from '../../../scenery/js/imports.js';
-import ComboBox from '../../../sun/js/ComboBox.js';
+import { Node, NodeTranslationOptions, Text } from '../../../scenery/js/imports.js';
+import ComboBox, { ComboBoxItem } from '../../../sun/js/ComboBox.js';
 import Easing from '../Easing.js';
 import twixt from '../twixt.js';
+import Property from '../../../axon/js/Property.js';
+import { EmptySelfOptions } from '../../../phet-core/js/optionize.js';
 
-class EasingComboBox extends ComboBox {
+type SelfOptions = EmptySelfOptions;
+type EasingComboBoxOptions = SelfOptions & NodeTranslationOptions;
+
+export default class EasingComboBox extends ComboBox<Easing> {
 
   /**
-   * @param {Property.<function>} easingProperty - see Easing for values
-   * @param {Node} listParent - node that will be used as the list's parent
-   * @param {Object} [options]
+   * @param easingProperty - see Easing for values
+   * @param listParent - Node that will be used as the list's parent
+   * @param [providedOptions]
    */
-  constructor( easingProperty, listParent, options ) {
+  public constructor( easingProperty: Property<Easing>, listParent: Node, providedOptions: EasingComboBoxOptions ) {
 
     const comboTextOptions = { font: new PhetFont( 16 ) };
-    const items = [
+
+    const items: ComboBoxItem<Easing>[] = [
       { value: Easing.LINEAR, createNode: () => new Text( 'Linear', comboTextOptions ) },
       { value: Easing.QUADRATIC_IN_OUT, createNode: () => new Text( 'Quadratic in-out', comboTextOptions ) },
       { value: Easing.QUADRATIC_IN, createNode: () => new Text( 'Quadratic in', comboTextOptions ) },
@@ -38,9 +44,8 @@ class EasingComboBox extends ComboBox {
       { value: Easing.QUINTIC_OUT, createNode: () => new Text( 'Quintic out', comboTextOptions ) }
     ];
 
-    super( easingProperty, items, listParent, options );
+    super( easingProperty, items, listParent, providedOptions );
   }
 }
 
 twixt.register( 'EasingComboBox', EasingComboBox );
-export default EasingComboBox;

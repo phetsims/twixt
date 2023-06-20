@@ -5,17 +5,17 @@
  */
 /* eslint-disable */
 import getStringModule from '../../chipper/js/getStringModule.js';
-import LinkableProperty from '../../axon/js/LinkableProperty.js';
+import type LocalizedStringProperty from '../../chipper/js/LocalizedStringProperty.js';
 import twixt from './twixt.js';
 
 type StringsType = {
   'twixt': {
-    'titleStringProperty': LinkableProperty<string>;
+    'titleStringProperty': LocalizedStringProperty;
   };
   'screen': {
-    'animationStringProperty': LinkableProperty<string>;
-    'dampedMotionStringProperty': LinkableProperty<string>;
-    'transitionsStringProperty': LinkableProperty<string>;
+    'animationStringProperty': LocalizedStringProperty;
+    'dampedMotionStringProperty': LocalizedStringProperty;
+    'transitionsStringProperty': LocalizedStringProperty;
   }
 };
 

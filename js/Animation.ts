@@ -30,6 +30,7 @@ import Utils from '../../dot/js/Utils.js';
 import optionize from '../../phet-core/js/optionize.js';
 import AnimationTarget, { AnimationTargetOptions } from './AnimationTarget.js';
 import twixt from './twixt.js';
+import Disposable, { DisposableOptions } from '../../axon/js/Disposable.js';
 
 type SelfOptions<TargetTypes, TargetObjectTypes extends { [K in keyof TargetTypes]: unknown }> = {
   // Can be provided instead of setValue/property/object, and it contains an array of config-style objects that allows
@@ -58,9 +59,12 @@ type SelfOptions<TargetTypes, TargetObjectTypes extends { [K in keyof TargetType
 
 // IMPORTANT: See AnimationTarget's config documentation, as those config can be passed in either here, or in
 // the targets array.
-export type AnimationOptions<SelfType = unknown, SelfObjectType = unknown, TargetTypes = unknown[], TargetObjectTypes extends { [K in keyof TargetTypes]: unknown } = { [K in keyof TargetTypes]: unknown }> = SelfOptions<TargetTypes, TargetObjectTypes> & AnimationTargetOptions<SelfType, SelfObjectType>;
+export type AnimationOptions<SelfType = unknown, SelfObjectType = unknown, TargetTypes = unknown[], TargetObjectTypes extends { [K in keyof TargetTypes]: unknown } = { [K in keyof TargetTypes]: unknown }> =
+  SelfOptions<TargetTypes, TargetObjectTypes> &
+  AnimationTargetOptions<SelfType, SelfObjectType> &
+  DisposableOptions;
 
-class Animation<SelfType = unknown, SelfObjectType = unknown, TargetTypes = unknown[], TargetObjectTypes extends { [K in keyof TargetTypes]: unknown } = { [K in keyof TargetTypes]: unknown }> {
+class Animation<SelfType = unknown, SelfObjectType = unknown, TargetTypes = unknown[], TargetObjectTypes extends { [K in keyof TargetTypes]: unknown } = { [K in keyof TargetTypes]: unknown }> extends Disposable {
 
   // All of the different values that will be animated by this animation.
   // If config.targets was supplied, those targets will be wrapped into AnimationTargets
@@ -172,7 +176,7 @@ class Animation<SelfType = unknown, SelfObjectType = unknown, TargetTypes = unkn
    */
   public constructor( providedConfig: AnimationOptions<SelfType, SelfObjectType, TargetTypes, TargetObjectTypes> ) {
 
-    const config = optionize<AnimationOptions<SelfType, SelfObjectType, TargetTypes, TargetObjectTypes>, SelfOptions<TargetTypes, TargetObjectTypes>>()( {
+    const config = optionize<AnimationOptions<SelfType, SelfObjectType, TargetTypes, TargetObjectTypes>, SelfOptions<TargetTypes, TargetObjectTypes>, DisposableOptions>()( {
       targets: null,
       duration: null,
       delay: 0,
@@ -187,6 +191,8 @@ class Animation<SelfType = unknown, SelfObjectType = unknown, TargetTypes = unkn
 
     assert && assert( config.stepEmitter === null || config.stepEmitter instanceof Emitter || config.stepEmitter instanceof TinyEmitter,
       'stepEmitter must be null or an (Tiny)Emitter' );
+
+    super( config );
 
     this.targets = ( ( config.targets === null ? [ config ] : config.targets ) as AnimationTargetOptions[] ).map( config => {
       return new AnimationTarget( config ); // TODO #3: strip out the irrelevant config when using config arg
@@ -213,6 +219,10 @@ class Animation<SelfType = unknown, SelfObjectType = unknown, TargetTypes = unkn
         else if ( !running && stepEmitter.hasListener( stepListener ) ) {
           stepEmitter.removeListener( stepListener );
         }
+      } );
+
+      this.disposeEmitter.addListener( () => {
+        stepEmitter.hasListener( stepListener ) && stepEmitter.removeListener( stepListener );
       } );
     }
   }
@@ -333,6 +343,18 @@ class Animation<SelfType = unknown, SelfObjectType = unknown, TargetTypes = unkn
   public then( animation: Animation ): Animation {
     this.finishEmitter.addListener( ( dt: number ) => animation.start( dt ) );
     return animation;
+  }
+
+  public override dispose(): void {
+    this.runningProperty.dispose();
+    this.animatingProperty.dispose();
+    this.startEmitter.dispose();
+    this.beginEmitter.dispose();
+    this.finishEmitter.dispose();
+    this.stopEmitter.dispose();
+    this.endedEmitter.dispose();
+    this.updateEmitter.dispose();
+    super.dispose();
   }
 }
 

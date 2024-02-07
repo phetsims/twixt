@@ -190,7 +190,7 @@ class Animation<SelfType = unknown, SelfObjectType = unknown, TargetTypes = unkn
       'The delay should be a non-negative number.' );
 
     assert && assert( config.stepEmitter === null || config.stepEmitter instanceof Emitter || config.stepEmitter instanceof TinyEmitter,
-      'clock must be null or an (Tiny)Emitter' );
+      'stepEmitter must be null or an (Tiny)Emitter' );
 
     super( config );
 

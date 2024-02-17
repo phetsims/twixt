@@ -6,8 +6,6 @@
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */
 
-import Property from '../../axon/js/Property.js';
-import TinyProperty from '../../axon/js/TinyProperty.js';
 import TProperty from '../../axon/js/TProperty.js';
 import Vector2 from '../../dot/js/Vector2.js';
 import Vector3 from '../../dot/js/Vector3.js';
@@ -17,6 +15,7 @@ import KeysMatching from '../../phet-core/js/types/KeysMatching.js';
 import { Color } from '../../scenery/js/imports.js';
 import Easing from './Easing.js';
 import twixt from './twixt.js';
+import { isTReadOnlyProperty } from '../../axon/js/imports.js';
 
 type BlendFunction<T> = ( a: T, b: T, fraction: number ) => T;
 type DistanceFunction<T> = ( a: T, b: T ) => number;
@@ -194,7 +193,7 @@ class AnimationTarget<T, Obj = unknown> {
 
     assert && assert(
       config.property === null ||
-      ( ( config.property instanceof Property || config.property instanceof TinyProperty ) && config.property.isSettable() ),
+      ( ( isTReadOnlyProperty( config.property ) ) && config.property.isSettable() ),
       'If property is provided, it should be a settable Property or TinyProperty' );
 
     assert && assert( config.object === null || ( typeof config.object === 'object' && typeof config.attribute === 'string' ),

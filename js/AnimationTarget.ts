@@ -15,7 +15,7 @@ import KeysMatching from '../../phet-core/js/types/KeysMatching.js';
 import { Color } from '../../scenery/js/imports.js';
 import Easing from './Easing.js';
 import twixt from './twixt.js';
-import { isTReadOnlyProperty } from '../../axon/js/imports.js';
+import { isTReadOnlyProperty } from '../../axon/js/TReadOnlyProperty.js';
 
 type BlendFunction<T> = ( a: T, b: T, fraction: number ) => T;
 type DistanceFunction<T> = ( a: T, b: T ) => number;

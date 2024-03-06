@@ -24,7 +24,7 @@
 import BooleanProperty from '../../axon/js/BooleanProperty.js';
 import Emitter from '../../axon/js/Emitter.js';
 import stepTimer from '../../axon/js/stepTimer.js';
-import TEmitter from '../../axon/js/TEmitter.js';
+import { TReadOnlyEmitter } from '../../axon/js/TEmitter.js';
 import TinyEmitter from '../../axon/js/TinyEmitter.js';
 import Utils from '../../dot/js/Utils.js';
 import optionize from '../../phet-core/js/optionize.js';
@@ -54,7 +54,7 @@ type SelfOptions<TargetTypes, TargetObjectTypes extends { [K in keyof TargetType
   // as part of the Sim time step.
   // TODO #3: {ScreenView} - animates only when the ScreenView is the active one.
   // TODO #3: {Node} - animates only when the node's trail is visible on a Display
-  stepEmitter?: TEmitter<[ number ]> | null;
+  stepEmitter?: TReadOnlyEmitter<[ number ]> | null;
 };
 
 // IMPORTANT: See AnimationTarget's config documentation, as those config can be passed in either here, or in

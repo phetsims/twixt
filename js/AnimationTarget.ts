@@ -209,9 +209,9 @@ class AnimationTarget<T, Obj = unknown> {
       assert && assert( config.attribute !== null );
 
       // @ts-expect-error - We know that config.object is an object, but TS doesn't
-      config.setValue = AnimationTarget.OBJECT_SET( config.object, config.attribute! );
+      config.setValue = AnimationTarget.OBJECT_SET( config.object, config.attribute );
       // @ts-expect-error - We know that config.object is an object, but TS doesn't
-      config.getValue = AnimationTarget.OBJECT_GET( config.object, config.attribute! );
+      config.getValue = AnimationTarget.OBJECT_GET( config.object, config.attribute );
     }
 
     // If `property` is provided, create the associated getter/setter

@@ -32,7 +32,7 @@ type SelfOptions<TargetTypes> = {
   targetOptions?: AnimationTargetOptions<unknown, Node>;
 };
 
-export type PartialTransitionOptions<T> = StrictOmit<SelfOptions<[T]>, 'fromTargets' | 'toTargets' | 'resetNode'> & AnimationOptions<unknown, unknown, [T], [Node]>;
+export type PartialTransitionOptions<T> = StrictOmit<SelfOptions<[ T ]>, 'fromTargets' | 'toTargets' | 'resetNode'> & AnimationOptions<unknown, unknown, [ T ], [ Node ]>;
 
 export type SlideTransitionOptions = PartialTransitionOptions<number>;
 export type WipeTransitionOptions = PartialTransitionOptions<Shape>;
@@ -203,7 +203,7 @@ class Transition<SelfType = unknown, SelfObjectType = unknown, TargetTypes = unk
       return Math.pow( ( 1 - ratio ) * a + ratio * b, options.gamma );
     };
 
-    const options = optionize<DissolveTransitionOptions, DissolveTransitionSelfOptions, TransitionOptions<unknown, unknown, [number], [Node]>>()( {
+    const options = optionize<DissolveTransitionOptions, DissolveTransitionSelfOptions, TransitionOptions<unknown, unknown, [ number ], [ Node ]>>()( {
       // Handles gamma correction for the opacity when required
       gamma: 1,
 

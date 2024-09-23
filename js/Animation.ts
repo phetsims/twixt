@@ -22,6 +22,7 @@
  */
 
 import BooleanProperty from '../../axon/js/BooleanProperty.js';
+import Disposable, { DisposableOptions } from '../../axon/js/Disposable.js';
 import Emitter from '../../axon/js/Emitter.js';
 import stepTimer from '../../axon/js/stepTimer.js';
 import { TReadOnlyEmitter } from '../../axon/js/TEmitter.js';
@@ -30,7 +31,6 @@ import Utils from '../../dot/js/Utils.js';
 import optionize from '../../phet-core/js/optionize.js';
 import AnimationTarget, { AnimationTargetOptions } from './AnimationTarget.js';
 import twixt from './twixt.js';
-import Disposable, { DisposableOptions } from '../../axon/js/Disposable.js';
 
 type SelfOptions<TargetTypes, TargetObjectTypes extends { [K in keyof TargetTypes]: unknown }> = {
   // Can be provided instead of setValue/property/object, and it contains an array of config-style objects that allows

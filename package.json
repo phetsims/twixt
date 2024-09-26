@@ -26,8 +26,5 @@
       "TWIXT/screen.dampedMotion",
       "TWIXT/screen.transitions"
     ]
-  },
-  "eslintConfig": {
-    "extends": "../chipper/eslint/phet-library_eslintrc.js"
   }
 }

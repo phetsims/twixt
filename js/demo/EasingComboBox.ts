@@ -6,13 +6,13 @@
  * @author Chris Malley (PixelZoom, Inc.)
  */
 
+import Property from '../../../axon/js/Property.js';
+import { EmptySelfOptions } from '../../../phet-core/js/optionize.js';
 import PhetFont from '../../../scenery-phet/js/PhetFont.js';
 import { Node, NodeTranslationOptions, Text } from '../../../scenery/js/imports.js';
 import ComboBox, { ComboBoxItem } from '../../../sun/js/ComboBox.js';
 import Easing from '../Easing.js';
 import twixt from '../twixt.js';
-import Property from '../../../axon/js/Property.js';
-import { EmptySelfOptions } from '../../../phet-core/js/optionize.js';
 
 type SelfOptions = EmptySelfOptions;
 type EasingComboBoxOptions = SelfOptions & NodeTranslationOptions;

@@ -6,18 +6,18 @@
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */
 
-import { Shape } from '../../kite/js/imports.js';
-import { Node } from '../../scenery/js/imports.js';
-import merge from '../../phet-core/js/merge.js';
-import required from '../../phet-core/js/required.js';
-import Animation, { AnimationOptions } from './Animation.js';
-import twixt from './twixt.js';
-import { AnimationTargetOptions } from './AnimationTarget.js';
-import optionize, { combineOptions, EmptySelfOptions } from '../../phet-core/js/optionize.js';
-import KeysMatching from '../../phet-core/js/types/KeysMatching.js';
-import WritableKeys from '../../phet-core/js/types/WritableKeys.js';
-import StrictOmit from '../../phet-core/js/types/StrictOmit.js';
 import Bounds2 from '../../dot/js/Bounds2.js';
+import { Shape } from '../../kite/js/imports.js';
+import merge from '../../phet-core/js/merge.js';
+import optionize, { combineOptions, EmptySelfOptions } from '../../phet-core/js/optionize.js';
+import required from '../../phet-core/js/required.js';
+import KeysMatching from '../../phet-core/js/types/KeysMatching.js';
+import StrictOmit from '../../phet-core/js/types/StrictOmit.js';
+import WritableKeys from '../../phet-core/js/types/WritableKeys.js';
+import { Node } from '../../scenery/js/imports.js';
+import Animation, { AnimationOptions } from './Animation.js';
+import { AnimationTargetOptions } from './AnimationTarget.js';
+import twixt from './twixt.js';
 
 type SelfOptions<TargetTypes> = {
   // A list of partial configurations that will individually be passed to the targets for an Animation (and thus to

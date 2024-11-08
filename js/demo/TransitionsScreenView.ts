@@ -18,11 +18,11 @@ import PhetFont from '../../../scenery-phet/js/PhetFont.js';
 import { Color, HBox, Node, NodeTranslationOptions, Rectangle, Text, VBox } from '../../../scenery/js/imports.js';
 import RectangularPushButton from '../../../sun/js/buttons/RectangularPushButton.js';
 import HSlider from '../../../sun/js/HSlider.js';
+import Tandem from '../../../tandem/js/Tandem.js';
 import Easing from '../Easing.js';
 import TransitionNode from '../TransitionNode.js';
 import twixt from '../twixt.js';
 import EasingComboBox from './EasingComboBox.js';
-import Tandem from '../../../tandem/js/Tandem.js';
 
 export default class TransitionsScreenView extends ScreenView {
 

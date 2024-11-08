@@ -10,12 +10,12 @@ import Property from '../../axon/js/Property.js';
 import Screen from '../../joist/js/Screen.js';
 import Sim, { SimOptions } from '../../joist/js/Sim.js';
 import simLauncher from '../../joist/js/simLauncher.js';
+import TModel from '../../joist/js/TModel.js';
+import Tandem from '../../tandem/js/Tandem.js';
 import AnimationScreenView from './demo/AnimationScreenView.js';
 import DampedMotionScreenView from './demo/DampedMotionScreenView.js';
 import TransitionsScreenView from './demo/TransitionsScreenView.js';
 import TwixtStrings from './TwixtStrings.js';
-import TModel from '../../joist/js/TModel.js';
-import Tandem from '../../tandem/js/Tandem.js';
 
 class EmptyModel implements TModel {
   public reset(): void {

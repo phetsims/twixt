@@ -15,11 +15,11 @@ import merge from '../../../phet-core/js/merge.js';
 import PhetFont from '../../../scenery-phet/js/PhetFont.js';
 import { Circle, Color, Node, NodeTranslationOptions, Plane, Text, VBox } from '../../../scenery/js/imports.js';
 import HSlider from '../../../sun/js/HSlider.js';
+import Tandem from '../../../tandem/js/Tandem.js';
 import Animation from '../Animation.js';
 import Easing from '../Easing.js';
 import twixt from '../twixt.js';
 import EasingComboBox from './EasingComboBox.js';
-import Tandem from '../../../tandem/js/Tandem.js';
 
 export default class AnimationScreenView extends ScreenView {
   public constructor() {

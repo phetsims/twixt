@@ -14,9 +14,9 @@ import merge from '../../../phet-core/js/merge.js';
 import PhetFont from '../../../scenery-phet/js/PhetFont.js';
 import { Circle, Node, NodeTranslationOptions, Plane, SceneryEvent, Text, VBox } from '../../../scenery/js/imports.js';
 import HSlider from '../../../sun/js/HSlider.js';
+import Tandem from '../../../tandem/js/Tandem.js';
 import DampedAnimation from '../DampedAnimation.js';
 import twixt from '../twixt.js';
-import Tandem from '../../../tandem/js/Tandem.js';
 
 export default class DampedMotionScreenView extends ScreenView {
 

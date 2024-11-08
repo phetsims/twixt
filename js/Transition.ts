@@ -252,6 +252,7 @@ class Transition<SelfType = unknown, SelfObjectType = unknown, TargetTypes = unk
         to: 0
       } ],
       resetNode: ( node: Node ) => {
+        // @ts-expect-error
         node[ attribute ] = 0;
       }
     }, options ) );

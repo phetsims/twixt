@@ -9,7 +9,8 @@
 import Property from '../../../axon/js/Property.js';
 import { EmptySelfOptions } from '../../../phet-core/js/optionize.js';
 import PhetFont from '../../../scenery-phet/js/PhetFont.js';
-import { Node, NodeTranslationOptions, Text } from '../../../scenery/js/imports.js';
+import Node, { NodeTranslationOptions } from '../../../scenery/js/nodes/Node.js';
+import Text from '../../../scenery/js/nodes/Text.js';
 import ComboBox, { ComboBoxItem } from '../../../sun/js/ComboBox.js';
 import Easing from '../Easing.js';
 import twixt from '../twixt.js';

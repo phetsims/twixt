@@ -13,7 +13,7 @@ import Vector3 from '../../dot/js/Vector3.js';
 import Vector4 from '../../dot/js/Vector4.js';
 import optionize from '../../phet-core/js/optionize.js';
 import KeysMatching from '../../phet-core/js/types/KeysMatching.js';
-import { Color } from '../../scenery/js/imports.js';
+import Color from '../../scenery/js/util/Color.js';
 import Easing from './Easing.js';
 import twixt from './twixt.js';
 

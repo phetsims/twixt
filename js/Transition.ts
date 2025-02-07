@@ -7,14 +7,14 @@
  */
 
 import Bounds2 from '../../dot/js/Bounds2.js';
-import { Shape } from '../../kite/js/imports.js';
+import Shape from '../../kite/js/Shape.js';
 import merge from '../../phet-core/js/merge.js';
 import optionize, { combineOptions, EmptySelfOptions } from '../../phet-core/js/optionize.js';
 import required from '../../phet-core/js/required.js';
 import KeysMatching from '../../phet-core/js/types/KeysMatching.js';
 import StrictOmit from '../../phet-core/js/types/StrictOmit.js';
 import WritableKeys from '../../phet-core/js/types/WritableKeys.js';
-import { Node } from '../../scenery/js/imports.js';
+import Node from '../../scenery/js/nodes/Node.js';
 import Animation, { AnimationOptions } from './Animation.js';
 import { AnimationTargetOptions } from './AnimationTarget.js';
 import twixt from './twixt.js';

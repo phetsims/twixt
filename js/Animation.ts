@@ -5,12 +5,14 @@
  *
  * We use some terminology to describe points and regions in time for an animation:
  *
+ * #begin monospace
  *             starts                            begins                                finishes
  *               |             delay               |             animation                |
  * time-->       |           (waiting)             |     (animated values changing)       |
  * ---------------------------------------------------------------------------------------------------------------------
  *               |------------------------------running-----------------------------------|
  *                                                 |-------------animating----------------|
+ * #end monospace
  *
  * TODO #3: pause/cancel (and stop->cancel renaming)
  * TODO #3: function for blending with angular/rotational values

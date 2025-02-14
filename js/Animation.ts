@@ -27,10 +27,10 @@ import Emitter from '../../axon/js/Emitter.js';
 import stepTimer from '../../axon/js/stepTimer.js';
 import { TReadOnlyEmitter } from '../../axon/js/TEmitter.js';
 import TinyEmitter from '../../axon/js/TinyEmitter.js';
-import Utils from '../../dot/js/Utils.js';
 import optionize from '../../phet-core/js/optionize.js';
 import AnimationTarget, { AnimationTargetOptions } from './AnimationTarget.js';
 import twixt from './twixt.js';
+import { clamp } from '../../dot/js/util/clamp.js';
 
 type SelfOptions<TargetTypes, TargetObjectTypes extends { [K in keyof TargetTypes]: unknown }> = {
   // Can be provided instead of setValue/property/object, and it contains an array of config-style objects that allows
@@ -314,7 +314,7 @@ class Animation<SelfType = unknown, SelfObjectType = unknown, TargetTypes = unkn
     dt = -this.remainingAnimation; // record how far past the animation we go
 
     assert && assert( this.length !== null );
-    const ratio = this.length! > 0 ? Utils.clamp( ( this.length! - this.remainingAnimation ) / this.length!, 0, 1 ) : 1;
+    const ratio = this.length! > 0 ? clamp( ( this.length! - this.remainingAnimation ) / this.length!, 0, 1 ) : 1;
     for ( let j = 0; j < this.targets.length; j++ ) {
       this.targets[ j ].update( ratio );
     }

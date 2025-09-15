@@ -44,7 +44,7 @@ class DampedAnimation {
   private _damping: number;
   private _force: number;
   private _targetValue: number;
-  private harmonic!: DampedHarmonic;
+  declare private harmonic: DampedHarmonic;
 
   public timeElapsed = 0;
 

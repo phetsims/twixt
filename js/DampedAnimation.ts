@@ -6,7 +6,7 @@
  *
  * Handles a single dimension of damped harmonic-oscillator motion (like a damped spring pulling towards the target).
  *
- * @author Jonathan Olson <jonathan.olson@colorado.edu>
+ * @author Jonathan Olson (PhET Interactive Simulations)
  */
 
 import TinyProperty from '../../axon/js/TinyProperty.js';

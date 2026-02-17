@@ -4,7 +4,7 @@
  * Holds content, and can transition to other content with a variety of animations. During a transition, there is always
  * the "from" content that animates out, and the "to" content that animates in.
  *
- * @author Jonathan Olson <jonathan.olson@colorado.edu>
+ * @author Jonathan Olson (PhET Interactive Simulations)
  */
 
 import { TReadOnlyProperty } from '../../axon/js/TReadOnlyProperty.js';

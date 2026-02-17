@@ -20,7 +20,7 @@
  * TODO #3: Hooks for attaching/detaching stepping via screens/nodes
  * TODO #3: Add documentation examples (contingent on how screen/node hooks work)
  *
- * @author Jonathan Olson <jonathan.olson@colorado.edu>
+ * @author Jonathan Olson (PhET Interactive Simulations)
  */
 
 import BooleanProperty from '../../axon/js/BooleanProperty.js';

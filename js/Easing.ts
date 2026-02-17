@@ -10,7 +10,7 @@
  *
  * TODO #23 create unit tests
  *
- * @author Jonathan Olson <jonathan.olson@colorado.edu>
+ * @author Jonathan Olson (PhET Interactive Simulations)
  */
 
 import twixt from './twixt.js';

@@ -3,7 +3,7 @@
 /**
  * Displays a demo for showing how damped motion (with DampedAnimation) works.
  *
- * @author Jonathan Olson <jonathan.olson@colorado.edu>
+ * @author Jonathan Olson (PhET Interactive Simulations)
  */
 
 import Property from '../../../axon/js/Property.js';

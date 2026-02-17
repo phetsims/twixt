@@ -3,7 +3,7 @@
 /**
  * Controls a specific animated value for an Animation.
  *
- * @author Jonathan Olson <jonathan.olson@colorado.edu>
+ * @author Jonathan Olson (PhET Interactive Simulations)
  */
 
 import TProperty from '../../axon/js/TProperty.js';

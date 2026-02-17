@@ -3,7 +3,7 @@
 /**
  * An animation that will animate one object (usually a Node) out, and another in.
  *
- * @author Jonathan Olson <jonathan.olson@colorado.edu>
+ * @author Jonathan Olson (PhET Interactive Simulations)
  */
 
 import Bounds2 from '../../dot/js/Bounds2.js';

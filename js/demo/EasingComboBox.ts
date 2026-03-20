@@ -13,7 +13,6 @@ import Node, { NodeTranslationOptions } from '../../../scenery/js/nodes/Node.js'
 import Text from '../../../scenery/js/nodes/Text.js';
 import ComboBox, { ComboBoxItem } from '../../../sun/js/ComboBox.js';
 import Easing from '../Easing.js';
-import twixt from '../twixt.js';
 
 type SelfOptions = EmptySelfOptions;
 type EasingComboBoxOptions = SelfOptions & NodeTranslationOptions;
@@ -48,5 +47,3 @@ export default class EasingComboBox extends ComboBox<Easing> {
     super( easingProperty, items, listParent, providedOptions );
   }
 }
-
-twixt.register( 'EasingComboBox', EasingComboBox );

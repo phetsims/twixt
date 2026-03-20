@@ -14,7 +14,6 @@ import optionize from '../../phet-core/js/optionize.js';
 import StrictOmit from '../../phet-core/js/types/StrictOmit.js';
 import Node, { NodeOptions } from '../../scenery/js/nodes/Node.js';
 import Transition, { DissolveTransitionOptions, SlideTransitionOptions, WipeTransitionOptions } from './Transition.js';
-import twixt from './twixt.js';
 
 type SelfOptions = {
   // Optionally may have initial content
@@ -307,5 +306,4 @@ class TransitionNode extends Node {
   }
 }
 
-twixt.register( 'TransitionNode', TransitionNode );
 export default TransitionNode;

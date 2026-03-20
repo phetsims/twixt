@@ -17,7 +17,6 @@ import WritableKeys from '../../phet-core/js/types/WritableKeys.js';
 import Node from '../../scenery/js/nodes/Node.js';
 import Animation, { AnimationOptions } from './Animation.js';
 import { AnimationTargetOptions } from './AnimationTarget.js';
-import twixt from './twixt.js';
 
 type SelfOptions<TargetTypes> = {
   // A list of partial configurations that will individually be passed to the targets for an Animation (and thus to
@@ -302,5 +301,4 @@ class Transition<SelfType = unknown, SelfObjectType = unknown, TargetTypes = unk
   }
 }
 
-twixt.register( 'Transition', Transition );
 export default Transition;

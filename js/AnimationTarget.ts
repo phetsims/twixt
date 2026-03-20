@@ -15,7 +15,6 @@ import optionize from '../../phet-core/js/optionize.js';
 import KeysMatching from '../../phet-core/js/types/KeysMatching.js';
 import Color from '../../scenery/js/util/Color.js';
 import Easing from './Easing.js';
-import twixt from './twixt.js';
 
 type BlendFunction<T> = ( a: T, b: T, fraction: number ) => T;
 type DistanceFunction<T> = ( a: T, b: T ) => number;
@@ -377,5 +376,4 @@ class AnimationTarget<T, Obj = unknown> {
   }
 }
 
-twixt.register( 'AnimationTarget', AnimationTarget );
 export default AnimationTarget;

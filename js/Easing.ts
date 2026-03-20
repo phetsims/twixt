@@ -13,8 +13,6 @@
  * @author Jonathan Olson (PhET Interactive Simulations)
  */
 
-import twixt from './twixt.js';
-
 type NumberFunction = ( t: number ) => number;
 
 class Easing {
@@ -225,5 +223,4 @@ function tIsValid( t: number ): boolean {
   return typeof t === 'number' && isFinite( t ) && t >= 0 && t <= 1;
 }
 
-twixt.register( 'Easing', Easing );
 export default Easing;

@@ -31,7 +31,6 @@ import { TReadOnlyEmitter } from '../../axon/js/TEmitter.js';
 import TinyEmitter from '../../axon/js/TinyEmitter.js';
 import optionize from '../../phet-core/js/optionize.js';
 import AnimationTarget, { AnimationTargetOptions } from './AnimationTarget.js';
-import twixt from './twixt.js';
 import { clamp } from '../../dot/js/util/clamp.js';
 
 type SelfOptions<TargetTypes, TargetObjectTypes extends { [K in keyof TargetTypes]: unknown }> = {
@@ -360,5 +359,4 @@ class Animation<SelfType = unknown, SelfObjectType = unknown, TargetTypes = unkn
   }
 }
 
-twixt.register( 'Animation', Animation );
 export default Animation;

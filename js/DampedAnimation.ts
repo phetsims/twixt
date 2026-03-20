@@ -13,7 +13,6 @@ import TinyProperty from '../../axon/js/TinyProperty.js';
 import TProperty from '../../axon/js/TProperty.js';
 import DampedHarmonic from '../../dot/js/DampedHarmonic.js';
 import optionize from '../../phet-core/js/optionize.js';
-import twixt from './twixt.js';
 
 export type DampedAnimationOptions = {
   // The current value/position.
@@ -134,5 +133,4 @@ class DampedAnimation {
   }
 }
 
-twixt.register( 'DampedAnimation', DampedAnimation );
 export default DampedAnimation;

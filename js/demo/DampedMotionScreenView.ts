@@ -21,7 +21,6 @@ import Text from '../../../scenery/js/nodes/Text.js';
 import HSlider from '../../../sun/js/HSlider.js';
 import Tandem from '../../../tandem/js/Tandem.js';
 import DampedAnimation from '../DampedAnimation.js';
-import twixt from '../twixt.js';
 
 export default class DampedMotionScreenView extends ScreenView {
 
@@ -136,5 +135,3 @@ function createSliderBox( property: Property<number>, range: Range, label: strin
     spacing: 10
   }, options ) );
 }
-
-twixt.register( 'DampedMotionScreenView', DampedMotionScreenView );

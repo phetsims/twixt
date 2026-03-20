@@ -23,7 +23,6 @@ import HSlider from '../../../sun/js/HSlider.js';
 import Tandem from '../../../tandem/js/Tandem.js';
 import Animation from '../Animation.js';
 import Easing from '../Easing.js';
-import twixt from '../twixt.js';
 import EasingComboBox from './EasingComboBox.js';
 
 export default class AnimationScreenView extends ScreenView {
@@ -135,5 +134,3 @@ function createSliderBox( property: Property<number>, range: Range, label: strin
     spacing: 10
   }, options ) );
 }
-
-twixt.register( 'AnimationScreenView', AnimationScreenView );

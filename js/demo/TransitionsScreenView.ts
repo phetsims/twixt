@@ -26,7 +26,6 @@ import HSlider from '../../../sun/js/HSlider.js';
 import Tandem from '../../../tandem/js/Tandem.js';
 import Easing from '../Easing.js';
 import TransitionNode from '../TransitionNode.js';
-import twixt from '../twixt.js';
 import EasingComboBox from './EasingComboBox.js';
 
 export default class TransitionsScreenView extends ScreenView {
@@ -155,5 +154,3 @@ function createSliderGroup( property: Property<number>, range: Range, label: str
     spacing: 10
   }, options ) );
 }
-
-twixt.register( 'TransitionsScreenView', TransitionsScreenView );

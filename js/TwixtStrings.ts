@@ -24,4 +24,6 @@ type StringsType = {
 
 const TwixtStrings = getStringModule( 'TWIXT' ) as StringsType;
 
+twixt.register( 'TwixtStrings', TwixtStrings );
+
 export default TwixtStrings;
